@@ -66,12 +66,14 @@ ${cmd({ os: 'win', code: 'net start bits && net start wuauserv', shell: 'Command
 <p>Note on versions: Microsoft ended regular support for Windows 10 in October 2025. A Windows 10 PC that no longer receives security updates is worth upgrading or replacing; the <a href="/guides/which-windows-macos-version/">version guide</a> shows how to check what you have.</p>` }
   ],
   faq: [
+    ['Does Windows Update need a lot of free space?', 'Feature updates need several gigabytes free on the system drive. Settings > System > Storage shows how much is free; Windows usually reports when there is not enough space.'],
     ['How long should I wait if Windows Update is stuck?', 'If the PC is restarting and shows “Working on updates”, give it several hours, or overnight, as long as there is drive activity. In the Settings app, a normal restart is safe if nothing moves for an hour or two.'],
     ['Can I turn off my PC during an update?', 'Avoid it while the screen says “Working on updates” or “Don’t turn off your PC”. Windows is replacing system files then. A hard power-off is a last resort after many hours without any activity.'],
     ['Is deleting the SoftwareDistribution folder safe?', 'Renaming it, with the update services stopped, is a documented repair step. It removes downloaded update files, not installed updates or your data, and Windows downloads what it needs again.'],
     ['Why does Windows Update keep failing?', 'Common reasons are too little free space, an unstable connection, a damaged download cache or a driver that conflicts with the update. Note the error code shown in Windows Update; it is the best search term on Microsoft’s support site.'],
     ['Does pausing updates leave me unprotected?', 'For a short time, yes – security fixes are delayed. Pause only as long as needed and resume updates as soon as you can.']
   ],
+  sourcesNote: 'Steps follow Microsoft’s Windows Update troubleshooting documentation, including the documented reset of the update components.',
   sources: [
     ['Microsoft Support – Troubleshoot problems updating Windows', 'https://support.microsoft.com/'],
     ['Microsoft Learn – Windows Update troubleshooting and resetting Windows Update components', 'https://learn.microsoft.com/'],

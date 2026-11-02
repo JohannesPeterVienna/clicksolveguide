@@ -21,6 +21,7 @@ for (const slug of ONLY || ORDER) {
   const mod = await import(pathToFileURL(path.join(ROOT, 'src/pages', slug + '.mjs')).href);
   const pg = mod.default;
   if (pg.slug !== slug) throw new Error('slug mismatch ' + slug);
+  if (!pg.sourcesNote) throw new Error(slug + ': sourcesNote missing');
   pg.path = `/${pg.kind === 'tool' ? 'diagnose' : 'guides'}/${slug}/`;
   if (pg.tree) pg.treeData = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/trees', pg.tree + '.json'), 'utf8'));
   content.push(pg);
@@ -96,6 +97,8 @@ const CONTROL = /<button|<select|<input|<textarea|class="cmd|<details|class="vsw
 const SCAM = `<aside class="scam" aria-labelledby="scam-h"><h2 id="scam-h">Scam protection: what this site never does</h2>
 <p>ClickSolve Guide never shows a phone number, never offers remote access and never recommends “PC optimizer”, “driver updater” or “cleaner” tools. If a pop-up says your device is infected and gives a number to call, it is a scam: close the browser tab (or the whole browser), don’t call, and don’t let anyone connect to your computer. Real error messages from Microsoft, Apple and Google do not ask you to phone anyone. <a href="/guides/tech-support-scams/">How to spot fake support pop-ups</a>.</p></aside>`;
 
+const SCAM_SHORT = `<aside class="scam" aria-label="Scam protection"><p><b>Scam protection:</b> this site never shows phone numbers, never offers remote access and never recommends “optimizer” tools. A pop-up with a number to call is a scam – close it. <a href="/guides/tech-support-scams/">How to spot fake support</a>.</p></aside>`;
+
 function vswitch(versions, id = 'vsel') {
   return `<div class="vswitch"><label for="${id}">Show steps for</label><select id="${id}">${versions.map((v) => `<option value="${v}">${esc(VERSIONS[v])}</option>`).join('')}</select><p class="vhint">Pick the system you are fixing.</p></div>`;
 }
@@ -133,7 +136,7 @@ function contentBody(pg) {
 <span class="kicker">${esc(pg.kicker)}</span>
 <h1>${pg.h1html || esc(pg.h1)}</h1>
 <p class="lede">${pg.lede}</p>
-<p class="trust"><span><b>Reviewed ${REVIEWED}</b></span><span>Applies to: ${esc(pg.applies)}</span><span>Checked against: ${esc(pg.checked)}</span><span>Publisher: AdStern, Vienna</span></p>`;
+<p class="trust"><span><b>Reviewed ${REVIEWED}</b></span><span>Applies to: ${esc(pg.applies)}</span><span>Sources: ${esc(pg.checked)}</span><span>Publisher: AdStern, Vienna</span></p>`;
   const secs = pg.sections.map((s) => `<section id="${s.id}" class="prose"><h2>${s.h2}</h2>\n${s.html}</section>`);
   const hasCtl = pg.sections.map((s) => CONTROL.test(s.html));
   // first ad: guides after the lede (before section 0), tools after section 0
@@ -155,11 +158,11 @@ function contentBody(pg) {
     if (pg.kind === 'guide' && i === 0 && pg.versions) parts.push(vswitch(pg.versions));
   });
   const faq = `<section id="faq" class="prose faq"><h2>Questions people ask</h2>${pg.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
-  const src = `<section id="sources" class="prose sources"><h2>Sources</h2><p>Menu paths and commands were checked against the vendors’ own documentation. Where we only name a source, look it up on the vendor’s support site.</p><ul>${pg.sources.map(([n, u]) => `<li>${u ? `<a href="${u}" rel="noopener">${n}</a>` : n}</li>`).join('')}</ul></section>`;
+  const src = `<section id="sources" class="prose sources"><h2>Sources</h2><p>${pg.sourcesNote} Menu paths and commands follow the vendors’ own documentation; menus can change with updates – <a href="/contact/">tell us</a> if one differs.</p><ul>${pg.sources.map(([n, u]) => `<li>${u ? `<a href="${u}" rel="noopener">${n}</a>` : n}</li>`).join('')}</ul></section>`;
   const rel = `<section class="prose" aria-labelledby="rel-h"><h2 id="rel-h">Related checks</h2><ul class="related">${pg.related.map((u) => { const r = byPath[u]; if (!r) { if (ONLY) return ''; throw new Error(pg.slug + ': related missing ' + u); } return `<li><a href="${u}"><span>${r.kind === 'tool' ? 'Diagnosis' : 'Guide'}</span>${esc(r.h1)}</a></li>`; }).join('')}</ul></section>`;
-  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – written for the rebuilt ClickSolve Guide and checked against the sources above.`}</p>`;
+  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}</p>`;
   const article = `<article>${head}
-${pg.kind === 'tool' ? toolShell(pg) + SCAM : ''}
+${pg.kind === 'tool' ? toolShell(pg) + SCAM_SHORT : ''}
 ${parts.join('\n')}
 ${pg.kind === 'guide' ? SCAM : ''}
 ${faq}

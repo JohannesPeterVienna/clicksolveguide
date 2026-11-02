@@ -44,7 +44,7 @@ ${table('Fake support versus real support', ['Scam sign', 'What real companies d
 <p>The U.S. Federal Trade Commission warns about exactly these patterns, and Microsoft states that its own error and warning messages never include phone numbers. A phone number in a pop-up is therefore a reliable sign that the message is fake.</p>` },
     { id: 'close', h2: 'How to close a fake pop-up', html: `
 <p>A scam pop-up is just a web page, even when it looks like a system message. It can’t infect anything by itself being shown. Don’t click inside it – not even on “Close” or “Cancel” buttons drawn on the page – and don’t call.</p>
-${step(1, { title: 'Close the tab or the browser', time: 'under 1 min', body: `<p>Press Esc to leave full-screen mode, then close the tab. If the page blocks that, close the whole browser: ${mp({ win11: 'Ctrl + Shift + Esc > Task Manager > select the browser > End task', win10: 'Ctrl + Shift + Esc > Task Manager > select the browser > End task', macnew: 'Command + Option + Esc > select the browser > Force Quit', macold: 'Command + Option + Esc > select the browser > Force Quit', ios: 'swipe the browser away in the app switcher', android: 'Recent apps > swipe the browser away' })}.</p>` })}
+${step(1, { title: 'Close the tab or the browser', time: 'under 1 min', body: `<p>Press and hold Esc to leave full-screen mode, then close the tab. If the page blocks that, close the whole browser: ${mp({ win11: 'Ctrl + Shift + Esc > Task Manager > select the browser > End task', win10: 'Ctrl + Shift + Esc > Task Manager > select the browser > End task', macnew: 'Command + Option + Esc > select the browser > Force Quit', macold: 'Command + Option + Esc > select the browser > Force Quit', ios: 'swipe the browser away in the app switcher', android: 'Recent apps > swipe the browser away' })}.</p>` })}
 ${step(2, { title: 'Don’t restore the tabs', time: 'under 1 min', body: `<p>When you open the browser again, it may offer to restore the last session. Decline, or close the scam tab immediately before it loads fully.</p>` })}
 ${step(3, { risk: 'setting', title: 'Remove notification permission from unknown sites', time: 'about 3 min', body: `<p>Some fake alerts arrive as browser notifications after a site was allowed to send them. In Chrome, look under Settings > Privacy and security > Site settings > Notifications; in Safari on a Mac under Settings > Websites > Notifications. Remove sites you don’t recognise.</p>`, undo: 'Allow notifications again for a site you trust from the same settings page.' })}
 ${step(4, { title: 'Run the built-in security scan if you’re worried', time: '15 min or more', body: `<p>On Windows, Windows Security (Microsoft Defender) is built in – run a scan from ${mp({ win11: 'Start > Windows Security > Virus & threat protection > Quick scan', win10: 'Start > Windows Security > Virus & threat protection > Quick scan' })}. Macs have built-in protection that updates automatically. You don’t need to download anything the pop-up recommends.</p>` })}` },
@@ -55,25 +55,27 @@ ${step(4, { title: 'Run the built-in security scan if you’re worried', time: '
 <li><b>Call your bank or card company</b> using the number on your card or statement if you paid anything or opened online banking during the call. Ask them to block or dispute the payment.</li>
 <li><b>Change passwords from another device</b> – email first, then banking and any account you signed in to while they were connected. Turn on two-step verification.</li>
 <li><b>Scan the computer</b> with the built-in security tools. If they installed other programs, a reputable local repair shop can check it.</li>
-<li><b>Report it.</b> In the U.S. at <a href="https://reportfraud.ftc.gov/" rel="noopener">ReportFraud.ftc.gov</a> and, for internet crime, at the FBI’s <a href="https://www.ic3.gov/" rel="noopener">IC3</a>; in the UK through the national fraud reporting service (<a href="https://www.actionfraud.police.uk/" rel="noopener">Action Fraud</a> in England, Wales and Northern Ireland, Police Scotland in Scotland); elsewhere to your local police.</li></ul>
+<li><b>Report it.</b> In the U.S. at <a href="https://reportfraud.ftc.gov/" rel="noopener">ReportFraud.ftc.gov</a> and, for internet crime, at the FBI’s <a href="https://www.ic3.gov/" rel="noopener">IC3</a>; in the UK through the national fraud reporting service (Report Fraud, formerly Action Fraud; in Scotland, Police Scotland); elsewhere to your local police.</li></ul>
 ${note('stop', 'Watch out for “recovery” offers.', '<p>After a scam, victims are often contacted again by people offering to get the money back for a fee. That is a second scam. Real recovery goes through your bank and the police.</p>')}` },
     { id: 'real', h2: 'How to reach real support safely', html: `
 <p>When you do need a manufacturer’s or provider’s help, start from something you already trust: the number on your contract, bill or receipt, the support section of the official app, or the company’s website reached by typing its address yourself. Be careful with search ads for “support” and “customer service”; scammers buy those too.</p>
 <p>That is also why ClickSolve Guide never shows phone numbers, never offers remote access and never recommends “optimizer”, “driver updater” or “cleaner” tools. Our diagnoses produce a fix log you can hand to real support – nothing more is needed.</p>` }
   ],
   faq: [
+    ['Is the remote-access software itself malware?', 'Programs like AnyDesk or TeamViewer are legitimate tools; scammers misuse them. The danger is who is connected, so uninstall any remote-access program a caller asked you to install.'],
     ['Can a pop-up infect my computer just by appearing?', 'A scam pop-up is a web page. Closing the tab or browser ends it. The danger comes from calling the number, installing what it suggests or entering data.'],
     ['Does Microsoft or Apple ever call me about a virus?', 'They don’t make unsolicited calls about problems on your computer. Treat any such call as a scam and hang up.'],
     ['I gave a scammer remote access. Is my computer ruined?', 'Not necessarily. Disconnect from the internet, remove the remote-access program, change passwords from another device, contact your bank if money was involved, and run a security scan.'],
     ['Why do they want gift cards?', 'Gift card codes are hard to trace and can be spent or resold quickly. No legitimate company asks for payment with gift cards.'],
-    ['Where do I report a tech support scam?', 'In the U.S. at ReportFraud.ftc.gov and the FBI’s IC3; in the UK through Action Fraud or Police Scotland; elsewhere with your national consumer authority or the police.']
+    ['Where do I report a tech support scam?', 'In the U.S. at ReportFraud.ftc.gov and the FBI’s IC3; in the UK through the national fraud reporting service (Report Fraud, formerly Action Fraud) or Police Scotland; elsewhere with your national consumer authority or the police.']
   ],
+  sourcesNote: 'Scam patterns and reporting routes follow the FTC’s consumer advice, the FBI’s IC3 and Microsoft’s guidance on support scams.',
   sources: [
     ['Federal Trade Commission – consumer advice on tech support scams', 'https://consumer.ftc.gov/'],
     ['Federal Trade Commission – ReportFraud.ftc.gov', 'https://reportfraud.ftc.gov/'],
     ['FBI Internet Crime Complaint Center (IC3)', 'https://www.ic3.gov/'],
     ['Microsoft Support – Protect yourself from tech support scams (support.microsoft.com/help/4013405)', 'https://support.microsoft.com/help/4013405'],
-    ['Action Fraud – UK national reporting centre for fraud and cyber crime', 'https://www.actionfraud.police.uk/']
+    ['UK national fraud reporting service (Report Fraud, formerly Action Fraud)', null]
   ],
   related: ['/diagnose/one-website-wont-load/', '/diagnose/printer-offline-windows-11/', '/guides/windows-update-stuck/', '/guides/which-windows-macos-version/']
 };

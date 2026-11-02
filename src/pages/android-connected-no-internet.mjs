@@ -60,6 +60,7 @@ ${note('warn', 'Two resets live next to each other.', '<p>The network reset is h
     ['Why does my phone use mobile data on Wi-Fi?', 'When Android thinks a Wi-Fi network has no internet, it may switch to mobile data so apps keep working. Fix the Wi-Fi problem, or turn off the switching feature in the Wi-Fi or connection preferences if you prefer.'],
     ['Are Samsung menus different?', 'Yes. Samsung uses “Connections” instead of “Network & internet” and “General management” for reset and date options. The guide lists both.']
   ],
+  sourcesNote: 'Paths follow Google’s Android and Pixel help; Samsung wording follows Samsung’s own support pages and may differ by One UI version.',
   sources: [
     ['Android Help – Fix Wi-Fi connection problems and Private DNS', 'https://support.google.com/android/'],
     ['Samsung support – Galaxy Wi-Fi and network reset instructions (samsung.com support)', null],

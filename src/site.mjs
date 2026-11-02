@@ -95,7 +95,7 @@ export function sitePages({ content, esc, crumbsHtml, crumbsLd, ld, ORIGIN, REVI
     'Plain-English guides for DNS errors, stuck Windows updates, slow Macs, Bluetooth, iPhone and Android Wi-Fi, router restarts and tech support scams.',
     'Guides',
     `<div class="prose"><p class="lede">Some problems are better explained than branched: what a message means, what is safe to try in which order, and when to stop and get help.</p>
-<p>Each guide states which systems it applies to, when it was last reviewed and which official documentation it was checked against. Menu paths follow the version switcher, so Windows 10 users don't read Windows 11 menus and the other way round. Commands come with a copy button and a sentence on what they do – and what they don't do – so you never paste something you don't understand.</p>
+<p>Each guide states which systems it applies to, when it was last reviewed and which official documentation it is based on. Menu paths follow the version switcher, so Windows 10 users don't read Windows 11 menus and the other way round. Commands come with a copy button and a sentence on what they do – and what they don't do – so you never paste something you don't understand.</p>
 <p>The guides deliberately avoid third-party “repair” tools. When software is needed, it comes from the operating system itself or from the device maker's official website. The <a href="/guides/tech-support-scams/">tech support scam guide</a> explains why: fake support pages and pop-ups are one of the most common ways people lose money while trying to fix a computer.</p>
 <p>Looking for an interactive check instead? The <a href="/diagnose/">diagnoses</a> ask questions and narrow the cause down for you.</p></div>`,
     guides);
@@ -118,11 +118,11 @@ export function sitePages({ content, esc, crumbsHtml, crumbsLd, ld, ORIGIN, REVI
   const howWeCheck = {
     path: '/how-we-check/', kind: 'about', loader: false,
     title: 'How we check our guides – ClickSolve Guide method',
-    description: 'How ClickSolve Guide builds its layer diagnoses, which sources the steps are checked against, what the risk labels mean and what we cannot promise.',
+    description: 'How ClickSolve Guide builds its layer diagnoses, which sources the steps are based on, what the risk labels mean and what we cannot promise.',
     h1: 'How we check our guides',
     jsonld: [crumbsLd([['Home', '/'], ['How we check', '/how-we-check/']])],
     body: `${crumbsHtml([['Home', '/'], ['How we check', '/how-we-check/']])}<article class="prose"><span class="kicker">Method</span><h1>How we check our guides</h1>
-<p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, what each page is checked against, and where the limits are.</p>
+<p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, which sources each page is based on, and where the limits are.</p>
 <p class="trust"><span><b>Reviewed ${REVIEWED}</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
 <h2 id="layers">The layer model</h2>
 <p>Every diagnosis on this site uses the same idea: a request from your screen passes through layers, and a fault sits in one of them. For internet problems the layers are your <b>device</b>, the <b>Wi-Fi</b> link, the <b>router</b>, your internet <b>provider (ISP)</b> and the <b>service</b> – the website or app at the other end. Printer problems use a shorter chain: computer and print queue, connection, router, printer.</p>
@@ -133,9 +133,9 @@ ${methodFig}
 <p>The trees are deliberately short. If a question doesn't change the outcome, it is removed. If two answers lead to the same steps, they are merged.</p>
 <h2 id="versions">Menu paths and versions</h2>
 <p>Menus differ between Windows 11 and Windows 10, and macOS renamed System Preferences to System Settings in macOS 13 Ventura. Every menu path on this site is written separately for each version it applies to, and the version switcher shows the one you choose. Android is harder: phone makers rename menus, so Android paths name the stock Android wording and, where it differs, Samsung's. When we are not sure a path is identical on every build, we write it more generally (“Settings > Network & internet”) rather than inventing a precise-looking path.</p>
-<h2 id="sources">What each page is checked against</h2>
-<p>Steps and menu paths are compared with the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
-<p>We do not claim lab testing on hardware we don't have. The trust line on each page says what a page was checked against, not that someone reproduced every fault on every device.</p>
+<h2 id="sources">Which sources each page is based on</h2>
+<p>Steps and menu paths follow the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
+<p>We do not claim lab testing on hardware we don't have. The source line at the top of each page names the documentation a page is based on – it does not mean someone reproduced every fault on every device. Menus can change with updates; tell us when one differs.</p>
 <h2 id="risk">Risk labels</h2>
 ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example'], [
   [riskLabel('harmless'), 'Reads information or restarts something. Nothing to undo.', 'Running <code>ipconfig</code>, restarting the router'],
@@ -158,7 +158,7 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
   const about = {
     path: '/about/', kind: 'about', loader: false,
     title: 'About ClickSolve Guide – who publishes it and how it works',
-    description: 'Who publishes ClickSolve Guide, how the layer diagnoses and fix log work, how the content is checked, how the site is financed and what it cannot do.',
+    description: 'Who publishes ClickSolve Guide, how the layer diagnoses and fix log work, how the content is put together, how the site is financed and what it cannot do.',
     h1: 'About ClickSolve Guide',
     jsonld: [crumbsLd([['Home', '/'], ['About', '/about/']])],
     body: `${crumbsHtml([['Home', '/'], ['About', '/about/']])}${legal('About', 'About ClickSolve Guide', `<p class="lede">ClickSolve Guide helps you find out <i>where</i> a technical problem sits – on your device, in the Wi-Fi, at the router, at your provider or at the service – before you start changing settings.</p>
@@ -166,8 +166,8 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
 <p>ClickSolve Guide is published by AdStern, an advertising agency based in Vienna, Austria (full details in the <a href="/imprint/">imprint</a>). The site is financed by advertising shown on diagnosis and guide pages. No hardware maker, software vendor or internet provider pays for mentions, and the guides contain no affiliate links.</p>
 <h2 id="method">Method in short</h2>
 <p>Each diagnosis is a decision tree: a question, a quick check, an answer that rules layers in or out. The visible layer map shows what has been ruled out. Results show only the steps for the remaining layer, written for the system you choose – Windows 11 or 10, macOS 13 or later or older macOS, iPhone and iPad, or Android. Every step has a risk label and, if it changes something, an undo. The full method is on <a href="/how-we-check/">How we check our guides</a>.</p>
-<h2 id="checks">How the content is checked</h2>
-<p>Menu paths, commands and steps are compared with the manufacturers' own documentation – Microsoft, Apple, Google and the printer makers – and every page names its sources and shows its review date. An automated test walks every path of every decision tree before publication. When we are not certain that a menu is named the same way on every version, we describe it more generally instead of guessing.</p>
+<h2 id="checks">How the content is put together</h2>
+<p>Menu paths, commands and steps are based on the manufacturers' own documentation – Microsoft, Apple, Google and the printer makers – and every page names its sources and shows its review date. An automated test walks every path of every decision tree before publication. When we are not certain that a menu is named the same way on every version, we describe it more generally instead of guessing.</p>
 <h2 id="limits">What the site cannot do</h2>
 <p>It cannot see your device or network, so a result is a well-founded likelihood, not a certainty. It doesn't replace your company's IT department, your provider's line check or a hardware repair. It never offers remote support or phone help.</p>
 <h2 id="data">Your data</h2>
@@ -211,7 +211,7 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
 <h2 id="line">Editorial line (§ 25 MedienG)</h2>
 <p>ClickSolve Guide publishes interactive diagnoses and guides that help people locate and fix everyday problems with computers, phones, Wi-Fi, routers and printers. The information is general; it does not replace the device manufacturer's support or professional IT services.</p>
 <h2 id="links">External links</h2>
-<p>Links to other websites were checked when a page was last reviewed. We have no control over their content and are not responsible for it.</p>
+<p>We link to other websites only where they add information. We have no control over their content and are not responsible for it.</p>
 <h2 id="disputes">Consumer disputes</h2>
 <p>This website does not sell goods or services to consumers.</p>`)}`
   };

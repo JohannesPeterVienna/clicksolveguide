@@ -65,9 +65,9 @@ ${note('warn', 'If a page asks you to call about your printer, close it.', '<p>W
     ['Why does my printer say offline when it is on?', 'Windows reports offline when the printer doesn’t answer at the address Windows remembers. Most often the printer received a new IP address from the router, or it is on a different Wi-Fi network. The phone test in the diagnosis shows which.'],
     ['How do I turn off “Use Printer Offline” in Windows 11?', 'Open the print queue (Settings > Bluetooth & devices > Printers & scanners > your printer > Open print queue). If the window has a Printer menu, untick “Use Printer Offline” there.'],
     ['Is it safe to restart the Print Spooler?', 'Yes. It needs administrator rights and may discard documents that are still waiting, but it doesn’t remove printers, drivers or settings. Windows starts the service automatically after a restart anyway.'],
-    ['Do I need a driver updater tool?', 'No. Drivers come from Windows Update or from the printer maker’s own support website. Driver updater tools are unnecessary and some are bundled with unwanted software.'],
     ['Why is there a “Copy 1” of my printer?', 'Windows installed the printer again after it appeared at a new address. Print to the copy that shows Ready, remove the offline one, and reserve the printer’s address in the router so it doesn’t happen again.']
   ],
+  sourcesNote: 'Windows printer settings follow Microsoft Support; printer network reports and drivers are model-specific, so the maker’s support site for your model has the final word.',
   sources: [
     ['Microsoft Support – Fix printer connection and printing problems in Windows', 'https://support.microsoft.com/'],
     ['Microsoft Learn – Windows commands reference (net start, net stop)', 'https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands'],

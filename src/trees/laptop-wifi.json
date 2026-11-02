@@ -2,17 +2,33 @@
   "id": "laptop-wifi",
   "title": "Laptop won't connect to Wi-Fi",
   "layers": [
-    { "id": "device", "label": "Laptop" },
-    { "id": "wifi", "label": "Wi-Fi" },
-    { "id": "router", "label": "Router" },
-    { "id": "isp", "label": "ISP" },
-    { "id": "service", "label": "Service" }
+    {
+      "id": "device",
+      "label": "Laptop"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi"
+    },
+    {
+      "id": "router",
+      "label": "Router"
+    },
+    {
+      "id": "isp",
+      "label": "ISP"
+    },
+    {
+      "id": "service",
+      "label": "Service"
+    }
   ],
   "start": "q_what",
   "steps": {
     "l_on": {
       "title": "Make sure Wi-Fi is on and Airplane mode is off",
-      "risk": "harmless", "time": "under 1 min",
+      "risk": "harmless",
+      "time": "under 1 min",
       "text": "Check the Wi-Fi switch in the system menu. Some laptops also have a Wi-Fi key (an antenna symbol on a function key) or a small switch on the side that turns the radio off completely.",
       "paths": {
         "win11": "Quick settings (network icon on the taskbar) > Wi-Fi and Airplane mode tiles",
@@ -23,7 +39,8 @@
     },
     "l_adapter": {
       "title": "Check the Wi-Fi adapter",
-      "risk": "setting", "time": "about 3 min",
+      "risk": "setting",
+      "time": "about 3 min",
       "text": "On Windows, open Device Manager and expand Network adapters. Look for an entry with Wireless, Wi-Fi or 802.11 in its name. A small down-arrow means it is disabled (right-click > Enable device); a yellow warning sign means a driver problem; no such entry at all means Windows does not see the hardware. On a Mac, hold Option and click the Wi-Fi icon in the menu bar to see the interface details; if macOS reports no Wi-Fi hardware, contact Apple Support.",
       "paths": {
         "win11": "Right-click Start > Device Manager > Network adapters",
@@ -35,7 +52,8 @@
     },
     "l_driver": {
       "title": "Update the Wi-Fi driver from the right source",
-      "risk": "admin", "time": "15 min",
+      "risk": "admin",
+      "time": "15 min",
       "text": "Install drivers only from Windows Update (optional updates) or from the laptop maker's official support website for your exact model. Avoid driver updater tools and download portals. On a Mac, Wi-Fi drivers come with macOS updates.",
       "paths": {
         "win11": "Settings > Windows Update > Advanced options > Optional updates",
@@ -47,12 +65,14 @@
     },
     "l_close": {
       "title": "Test right next to the router",
-      "risk": "harmless", "time": "about 2 min",
+      "risk": "harmless",
+      "time": "about 2 min",
       "text": "Carry the laptop into the same room as the router and refresh the network list. Walls, floors, mirrors, aquariums and metal furniture weaken Wi-Fi a lot, and 5 GHz and 6 GHz signals fade faster than 2.4 GHz."
     },
     "l_band": {
       "title": "Check bands and hidden networks",
-      "risk": "harmless", "time": "about 5 min",
+      "risk": "harmless",
+      "time": "about 5 min",
       "text": "Routers send on 2.4 GHz and 5 GHz; newer ones also on 6 GHz (Wi-Fi 6E and 7). An older laptop that lacks a band can't see a network that only uses it. A hidden network (name not broadcast) never appears in the list – it has to be added by name.",
       "paths": {
         "win11": "Settings > Network & internet > Wi-Fi > Manage known networks > Add network",
@@ -63,7 +83,8 @@
     },
     "l_forget": {
       "title": "Forget the network on the laptop",
-      "risk": "setting", "time": "about 2 min",
+      "risk": "setting",
+      "time": "about 2 min",
       "text": "A saved profile with an old password or old security settings makes the laptop fail silently or ask for the password again and again. Removing it lets you join fresh.",
       "paths": {
         "win11": "Settings > Network & internet > Wi-Fi > Manage known networks > (your network) > Forget",
@@ -75,17 +96,20 @@
     },
     "l_password": {
       "title": "Enter the password carefully",
-      "risk": "harmless", "time": "about 2 min",
+      "risk": "harmless",
+      "time": "about 2 min",
       "text": "Wi-Fi passwords are case-sensitive; 0 and O or 1 and l are easily confused. Use the 'show password' option while typing. The factory password is usually on a label on the router (WPA key, Wireless key, Network key) – unless someone changed it."
     },
     "l_restart": {
       "title": "Restart laptop and router",
-      "risk": "harmless", "time": "about 7 min",
+      "risk": "harmless",
+      "time": "about 7 min",
       "text": "Restart the router (power off, 30 seconds, power on, two to five minutes to start). Then restart the laptop – a real restart, not just closing the lid."
     },
     "l_random": {
       "title": "Switch off random (private) hardware addresses for this network",
-      "risk": "setting", "time": "about 3 min",
+      "risk": "setting",
+      "time": "about 3 min",
       "text": "With this option the laptop presents a different hardware (MAC) address to the network. Routers with a MAC filter or device approval list then treat it as an unknown device and refuse it.",
       "paths": {
         "win11": "Settings > Network & internet > Wi-Fi > (your network) properties > Random hardware addresses",
@@ -96,14 +120,16 @@
     },
     "l_security": {
       "title": "Check the router's Wi-Fi security mode",
-      "risk": "setting", "time": "10 min",
+      "risk": "setting",
+      "time": "10 min",
       "text": "In the router's app or admin page, look at the Wi-Fi security setting. 'WPA2/WPA3' mixed (transition) mode works with old and new devices; 'WPA3 only' locks out older laptops. Never switch to WEP or an open network – both are insecure. Also check for a MAC filter or device limit.",
       "undo": "Set the security mode back to the value you noted before the change."
     },
     "l_reset": {
       "title": "Reset the laptop's network settings",
-      "risk": "last", "time": "15 min",
-      "text": "Windows' Network reset removes every saved Wi-Fi network, VPN connection and custom network setting and reinstalls the adapters, then restarts the PC. Do it only after the other steps, with passwords at hand.",
+      "risk": "last",
+      "time": "15 min",
+      "text": "Windows' Network reset removes every saved Wi-Fi network, VPN connection and custom network setting and reinstalls the adapters. The PC restarts by itself after about five minutes – save open work first. Do it only after the other steps, with passwords at hand.",
       "paths": {
         "win11": "Settings > Network & internet > Advanced network settings > Network reset",
         "win10": "Settings > Network & Internet > Status > Network reset",
@@ -114,86 +140,203 @@
     },
     "l_router_restart": {
       "title": "Restart the router",
-      "risk": "harmless", "time": "about 5 min",
+      "risk": "harmless",
+      "time": "about 5 min",
       "text": "Unplug the router (and modem, if separate) for 30 seconds, plug the modem in first, then the router, and wait two to five minutes. Don't press the recessed Reset button – that is a factory reset."
     },
     "l_support": {
       "title": "Contact the laptop maker through its official site",
-      "risk": "harmless", "time": "varies",
+      "risk": "harmless",
+      "time": "varies",
       "text": "If the Wi-Fi hardware is missing or keeps failing, it may need repair. Use the support contact on the manufacturer's official website or your receipt – not a number from an ad or a pop-up. The fix log on this page shows support what you already checked."
     }
   },
   "nodes": {
     "q_what": {
-      "type": "question", "layer": "wifi",
+      "type": "question",
+      "layer": "wifi",
       "q": "What exactly happens when you try to connect?",
       "answers": [
-        { "label": "My network isn't in the list", "clear": ["isp", "service"], "next": "q_any" },
-        { "label": "It's listed, but connecting fails or the password is rejected", "clear": ["isp", "service"], "next": "q_password" },
-        { "label": "It connects, but says 'No internet'", "clear": ["device"], "next": "r_nointernet" }
+        {
+          "label": "My network isn't in the list",
+          "clear": [
+            "isp",
+            "service"
+          ],
+          "next": "q_any"
+        },
+        {
+          "label": "It's listed, but connecting fails or the password is rejected",
+          "clear": [
+            "isp",
+            "service"
+          ],
+          "next": "q_password"
+        },
+        {
+          "label": "It connects, but says 'No internet'",
+          "clear": [
+            "device"
+          ],
+          "next": "r_nointernet"
+        }
       ]
     },
     "q_any": {
-      "type": "question", "layer": "device",
+      "type": "question",
+      "layer": "device",
       "q": "With Wi-Fi on and Airplane mode off – does the laptop see any networks at all?",
-      "steps": ["l_on"],
+      "steps": [
+        "l_on"
+      ],
       "answers": [
-        { "label": "Yes, neighbors' networks – just not mine", "clear": ["device"], "suspect": ["wifi", "router"], "next": "q_others_see" },
-        { "label": "No networks at all", "suspect": ["device"], "next": "q_adapter" },
-        { "label": "Wi-Fi was off – now my network shows up", "next": "r_switched_off" }
+        {
+          "label": "Yes, neighbors' networks – just not mine",
+          "clear": [
+            "device"
+          ],
+          "suspect": [
+            "wifi",
+            "router"
+          ],
+          "next": "q_others_see"
+        },
+        {
+          "label": "No networks at all",
+          "suspect": [
+            "device"
+          ],
+          "next": "q_adapter"
+        },
+        {
+          "label": "Wi-Fi was off – now my network shows up",
+          "next": "r_switched_off"
+        }
       ]
     },
     "q_adapter": {
-      "type": "question", "layer": "device",
+      "type": "question",
+      "layer": "device",
       "q": "Is the Wi-Fi adapter present and working?",
-      "steps": ["l_adapter"],
+      "steps": [
+        "l_adapter"
+      ],
       "answers": [
-        { "label": "It was disabled – enabled it, now networks appear", "next": "r_switched_off" },
-        { "label": "Warning sign, or no Wi-Fi adapter listed", "next": "r_adapter" },
-        { "label": "It looks fine, but still no networks", "next": "r_adapter_soft" }
+        {
+          "label": "It was disabled – enabled it, now networks appear",
+          "next": "r_switched_off"
+        },
+        {
+          "label": "Warning sign, or no Wi-Fi adapter listed",
+          "next": "r_adapter"
+        },
+        {
+          "label": "It looks fine, but still no networks",
+          "next": "r_adapter_soft"
+        }
       ]
     },
     "q_others_see": {
-      "type": "question", "layer": "router",
+      "type": "question",
+      "layer": "router",
       "q": "Do other devices see and use your network right now?",
       "answers": [
-        { "label": "Yes, phones and other devices use it", "clear": ["router"], "suspect": ["wifi"], "next": "q_close" },
-        { "label": "No, nobody sees it", "next": "r_router_off" }
+        {
+          "label": "Yes, phones and other devices use it",
+          "clear": [
+            "router"
+          ],
+          "suspect": [
+            "wifi"
+          ],
+          "next": "q_close"
+        },
+        {
+          "label": "No, nobody sees it",
+          "next": "r_router_off"
+        }
       ]
     },
     "q_close": {
-      "type": "question", "layer": "wifi",
+      "type": "question",
+      "layer": "wifi",
       "q": "Does your network appear when the laptop is right next to the router?",
-      "steps": ["l_close"],
+      "steps": [
+        "l_close"
+      ],
       "answers": [
-        { "label": "Yes, close by it appears", "next": "r_range" },
-        { "label": "No, still not listed", "next": "r_band" }
+        {
+          "label": "Yes, close by it appears",
+          "next": "r_range"
+        },
+        {
+          "label": "No, still not listed",
+          "next": "r_band"
+        }
       ]
     },
     "q_password": {
-      "type": "question", "layer": "wifi",
+      "type": "question",
+      "layer": "wifi",
       "q": "Forget the network, then join with the password typed carefully. Does it connect?",
-      "steps": ["l_forget", "l_password"],
+      "steps": [
+        "l_forget",
+        "l_password"
+      ],
       "answers": [
-        { "label": "Yes, it connects now", "next": "r_profile" },
-        { "label": "No – it still fails or keeps asking for the password", "next": "q_phone" }
+        {
+          "label": "Yes, it connects now",
+          "next": "r_profile"
+        },
+        {
+          "label": "No – it still fails or keeps asking for the password",
+          "next": "q_phone"
+        }
       ]
     },
     "q_phone": {
-      "type": "question", "layer": "router",
+      "type": "question",
+      "layer": "router",
       "q": "Can a phone join the same network with the same password?",
       "answers": [
-        { "label": "Yes, the phone joins", "clear": ["router"], "suspect": ["device"], "next": "q_restart" },
-        { "label": "No, the phone is refused too", "clear": ["device"], "suspect": ["router"], "next": "r_router_pw" }
+        {
+          "label": "Yes, the phone joins",
+          "clear": [
+            "router"
+          ],
+          "suspect": [
+            "device"
+          ],
+          "next": "q_restart"
+        },
+        {
+          "label": "No, the phone is refused too",
+          "clear": [
+            "device"
+          ],
+          "suspect": [
+            "router"
+          ],
+          "next": "r_router_pw"
+        }
       ]
     },
     "q_restart": {
-      "type": "question", "layer": "device",
+      "type": "question",
+      "layer": "device",
       "q": "Restart the router and the laptop, then try again. Does it connect?",
-      "steps": ["l_restart"],
+      "steps": [
+        "l_restart"
+      ],
       "answers": [
-        { "label": "Yes, it connects", "next": "r_restart" },
-        { "label": "No, still refused", "next": "r_compat" }
+        {
+          "label": "Yes, it connects",
+          "next": "r_restart"
+        },
+        {
+          "label": "No, still refused",
+          "next": "r_compat"
+        }
       ]
     },
     "r_nointernet": {
@@ -201,74 +344,114 @@
       "title": "Joining works – the next problem is the internet",
       "text": "The laptop joins the Wi-Fi, so the connection to the router is established. 'No internet' is a different problem with its own diagnosis.",
       "why": "Being connected proves that the Wi-Fi password and the laptop's adapter work.",
-      "link": { "href": "/diagnose/wifi-connected-no-internet/", "label": "Continue with: Wi-Fi connected but no internet" }
+      "link": {
+        "href": "/diagnose/wifi-connected-no-internet/",
+        "label": "Continue with: Wi-Fi connected but no internet"
+      }
     },
     "r_switched_off": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Solved: the laptop's Wi-Fi radio was off",
       "text": "Airplane mode, a function key or a disabled adapter had switched the radio off. Some laptops turn it off when the battery saver kicks in or after a sleep; if it happens often, install the current Wi-Fi driver.",
-      "steps": ["l_driver"],
+      "steps": [
+        "l_driver"
+      ],
       "why": "Networks appeared as soon as the radio was switched on."
     },
     "r_adapter": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Likely here: the laptop's Wi-Fi adapter",
       "text": "Windows doesn't see a working Wi-Fi adapter. Install the driver for your exact model from the maker's support site (download it on another device and copy it over with a USB stick, or use a network cable). If no adapter is listed at all, the hardware may be disabled in the firmware or defective – contact the maker.",
-      "steps": ["l_driver", "l_support"],
+      "steps": [
+        "l_driver",
+        "l_support"
+      ],
       "why": "No networks at all, and the adapter is missing or reports an error."
     },
     "r_adapter_soft": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Likely here: the laptop's Wi-Fi software",
-      "text": "The adapter is present but finds nothing, while other devices see networks. A driver update and, as the last step, a network reset usually bring it back.",
-      "steps": ["l_driver", "l_reset", "l_support"],
-      "why": "Neighbors' networks are invisible only to this laptop."
+      "text": "The adapter is present but finds no networks. A driver update and, as the last step, a network reset usually bring it back. If other devices nearby see networks, that confirms the laptop is the problem.",
+      "steps": [
+        "l_driver",
+        "l_reset",
+        "l_support"
+      ],
+      "why": "The adapter is listed without errors, yet the laptop finds no networks at all – the radio's software side is the next suspect."
     },
     "r_router_off": {
-      "type": "result", "likely": "router",
+      "type": "result",
+      "likely": "router",
       "title": "Likely here: the router isn't broadcasting",
       "text": "No device sees your network, so the router's Wi-Fi is off, restarting or broken. Check the Wi-Fi light and button on the router (some have a Wi-Fi on/off button or a schedule) and restart it.",
-      "steps": ["l_router_restart"],
+      "steps": [
+        "l_router_restart"
+      ],
       "why": "The network is invisible to every device, not only the laptop."
     },
     "r_range": {
-      "type": "result", "likely": "wifi",
+      "type": "result",
+      "likely": "wifi",
       "title": "Likely here: signal range",
       "text": "Your laptop sees the network only near the router, so the signal is too weak where you use it. Move the router to a central, raised, open spot, use a mesh system or a repeater from a known brand, or use 2.4 GHz further away.",
       "why": "The same laptop sees the network at short range."
     },
     "r_band": {
-      "type": "result", "likely": "wifi",
+      "type": "result",
+      "likely": "wifi",
       "title": "Likely here: band or hidden network",
       "text": "Other devices use the network, but the laptop never sees it even up close. Either the router sends it on a band the laptop doesn't support (often 6 GHz, sometimes 5 GHz on old laptops), or the network is hidden. Add the network by name, or switch on 2.4 GHz in the router.",
-      "steps": ["l_band", "l_driver"],
+      "steps": [
+        "l_band",
+        "l_driver"
+      ],
       "why": "The router works for others, and distance is not the cause."
     },
     "r_profile": {
-      "type": "result", "likely": "wifi",
+      "type": "result",
+      "likely": "wifi",
       "title": "Solved: an outdated saved network",
       "text": "The laptop had stored an old password or old security settings for this network. Joining fresh created a clean profile.",
       "why": "The same laptop connected right after the old profile was removed."
     },
     "r_router_pw": {
-      "type": "result", "likely": "router",
+      "type": "result",
+      "likely": "router",
       "title": "Likely here: the router's password or access rules",
       "text": "A phone is refused with the same password, so the password is wrong or the router refuses new devices – through a MAC filter, a device limit, or 'new device approval' in a router app. Check the router's app or admin page, or the label if the password was never changed.",
-      "steps": ["l_security", "l_router_restart"],
+      "steps": [
+        "l_security",
+        "l_router_restart"
+      ],
       "why": "Two different devices fail with the same password."
     },
     "r_restart": {
-      "type": "result", "likely": ["device", "router"],
+      "type": "result",
+      "likely": [
+        "device",
+        "router"
+      ],
       "title": "Solved: the restart cleared it",
       "text": "Either the router or the laptop had a stuck Wi-Fi state. If it returns, update the laptop's Wi-Fi driver and ask your provider about router firmware.",
-      "steps": ["l_driver"],
+      "steps": [
+        "l_driver"
+      ],
       "why": "The connection worked after restarting both ends."
     },
     "r_compat": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Likely here: a mismatch between laptop and router",
       "text": "Phones join, the laptop doesn't – even after restarts. Common causes are random hardware addresses meeting a router filter, WPA3-only security on an older laptop, or an outdated Wi-Fi driver. Work through the steps in order; the network reset is the last one.",
-      "steps": ["l_random", "l_driver", "l_security", "l_reset"],
+      "steps": [
+        "l_random",
+        "l_driver",
+        "l_security",
+        "l_reset"
+      ],
       "why": "The router accepts other devices with the same password, so the laptop's side of the handshake is the difference."
     }
   }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How we check our guides – ClickSolve Guide method</title>
-<meta name="description" content="How ClickSolve Guide builds its layer diagnoses, which sources the steps are checked against, what the risk labels mean and what we cannot promise.">
+<meta name="description" content="How ClickSolve Guide builds its layer diagnoses, which sources the steps are based on, what the risk labels mean and what we cannot promise.">
 <link rel="canonical" href="https://clicksolveguide.com/how-we-check/">
 <meta name="google-adsense-account" content="ca-pub-7811071715414905">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-G-T00HRG2YVF']=true;</script>
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ClickSolve Guide">
 <meta property="og:title" content="How we check our guides">
-<meta property="og:description" content="How ClickSolve Guide builds its layer diagnoses, which sources the steps are checked against, what the risk labels mean and what we cannot promise.">
+<meta property="og:description" content="How ClickSolve Guide builds its layer diagnoses, which sources the steps are based on, what the risk labels mean and what we cannot promise.">
 <meta property="og:url" content="https://clicksolveguide.com/how-we-check/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -31,7 +31,7 @@
 </div></header>
 <main id="main" class="wrap">
 <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><span aria-current="page">How we check</span></li></ol></nav><article class="prose"><span class="kicker">Method</span><h1>How we check our guides</h1>
-<p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, what each page is checked against, and where the limits are.</p>
+<p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, which sources each page is based on, and where the limits are.</p>
 <p class="trust"><span><b>Reviewed November 2, 2026</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
 <h2 id="layers">The layer model</h2>
 <p>Every diagnosis on this site uses the same idea: a request from your screen passes through layers, and a fault sits in one of them. For internet problems the layers are your <b>device</b>, the <b>Wi-Fi</b> link, the <b>router</b>, your internet <b>provider (ISP)</b> and the <b>service</b> – the website or app at the other end. Printer problems use a shorter chain: computer and print queue, connection, router, printer.</p>
@@ -53,9 +53,9 @@
 <p>The trees are deliberately short. If a question doesn't change the outcome, it is removed. If two answers lead to the same steps, they are merged.</p>
 <h2 id="versions">Menu paths and versions</h2>
 <p>Menus differ between Windows 11 and Windows 10, and macOS renamed System Preferences to System Settings in macOS 13 Ventura. Every menu path on this site is written separately for each version it applies to, and the version switcher shows the one you choose. Android is harder: phone makers rename menus, so Android paths name the stock Android wording and, where it differs, Samsung's. When we are not sure a path is identical on every build, we write it more generally (“Settings > Network & internet”) rather than inventing a precise-looking path.</p>
-<h2 id="sources">What each page is checked against</h2>
-<p>Steps and menu paths are compared with the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
-<p>We do not claim lab testing on hardware we don't have. The trust line on each page says what a page was checked against, not that someone reproduced every fault on every device.</p>
+<h2 id="sources">Which sources each page is based on</h2>
+<p>Steps and menu paths follow the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
+<p>We do not claim lab testing on hardware we don't have. The source line at the top of each page names the documentation a page is based on – it does not mean someone reproduced every fault on every device. Menus can change with updates; tell us when one differs.</p>
 <h2 id="risk">Risk labels</h2>
 <div class="tablewrap"><table><caption>The four risk labels used on every step</caption><thead><tr><th scope="col">Label</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row"><span class="risk risk-harmless" title="Nothing changes on your device that you would need to undo.">Harmless</span></th><td>Reads information or restarts something. Nothing to undo.</td><td>Running <code>ipconfig</code>, restarting the router</td></tr><tr><th scope="row"><span class="risk risk-setting" title="Changes one setting; the undo is listed with the step.">Changes a setting</span></th><td>Changes one setting. The undo is printed with the step.</td><td>Forgetting a Wi-Fi network, changing DNS servers</td></tr><tr><th scope="row"><span class="risk risk-admin" title="Needs an administrator account or password.">Admin needed</span></th><td>Needs an administrator account or password.</td><td>Restarting the Print Spooler, flushing DNS on a Mac</td></tr><tr><th scope="row"><span class="risk risk-last" title="Removes saved settings or data; do the other checks first.">Last resort</span></th><td>Removes saved settings or data; only after the other steps.</td><td>Windows Network reset, resetting the Mac printing system</td></tr></tbody></table></div>
 <h2 id="never">What we leave out on purpose</h2>

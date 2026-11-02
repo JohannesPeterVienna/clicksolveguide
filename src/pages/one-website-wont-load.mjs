@@ -72,6 +72,7 @@ ${note('stop', 'Never click past a certificate warning to sign in or pay.', '<p>
     ['Why does a wrong clock cause security warnings?', 'Certificates are valid for a fixed period. If the device believes it is a different year, a valid certificate looks expired or not yet valid. Setting the time automatically fixes that without weakening any protection.'],
     ['How do I know if a site is blocked by my network?', 'A block page often names the filter or provider. Without one, the sign is that the site fails on every device on your Wi-Fi but opens on mobile data.']
   ],
+  sourcesNote: 'Browser behavior and certificate warnings follow each browser maker’s help pages; certificate validity periods follow Let’s Encrypt’s documentation.',
   sources: [
     ['Google Chrome Help – privacy and certificate errors', 'https://support.google.com/chrome/'],
     ['Mozilla Support – Firefox security warnings', 'https://support.mozilla.org/'],

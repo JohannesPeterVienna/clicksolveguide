@@ -57,9 +57,9 @@ ${note('warn', 'Skip the cleaner apps.', '<p>“Mac cleaner” and “optimizer�
     ['Why is my Mac slow after a macOS update?', 'macOS rebuilds the Spotlight index and other background data after big updates, and Photos may reanalyze your library. Keep the Mac on power; it typically recovers by itself within hours to a day.'],
     ['How much free space does a Mac need?', 'Apple doesn’t publish one fixed number for everyday use. In practice, keep a comfortable margin free, and more before a major macOS update, which needs several gigabytes to install.'],
     ['Do I need a Mac cleaner app?', 'No. macOS manages caches itself, and Storage settings plus Activity Monitor show what you need. Some cleaner apps are classified as adware.'],
-    ['Is a lot of “used” memory a problem?', 'Not by itself. Watch the memory pressure graph: green is fine even if most memory is used, because macOS uses free memory for caching.'],
     ['What is kernel_task using so much CPU?', 'On many Macs, kernel_task uses CPU time to keep the processor cooler when the Mac is hot. Make sure the vents aren’t blocked and the Mac isn’t lying on a soft surface.']
   ],
+  sourcesNote: 'Activity Monitor and storage features are described as in Apple’s Activity Monitor and Mac User Guides.',
   sources: [
     ['Apple Support – Activity Monitor User Guide', 'https://support.apple.com/guide/activity-monitor/welcome/mac'],
     ['Apple Support – Mac User Guide: free up storage space', 'https://support.apple.com/'],

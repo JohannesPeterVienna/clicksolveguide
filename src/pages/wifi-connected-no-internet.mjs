@@ -79,6 +79,7 @@ ${cmd({ os: 'win', code: 'nslookup example.com', what: 'asks your DNS server for
     ['Is “No internet, secured” a security problem?', 'No. “Secured” only means the Wi-Fi is password-protected and encrypted. “No internet” means Windows’ connectivity test failed. It says nothing about viruses or hacking.'],
     ['How long should I wait after restarting the router?', 'Give it two to five minutes. The modem first has to synchronize with the provider’s line, then the router logs in and starts its Wi-Fi. Testing too early makes a working restart look like a failure.']
   ],
+  sourcesNote: 'The layer checks follow Microsoft’s Wi-Fi troubleshooting article and the Apple and Android help pages for Wi-Fi; the commands are documented in Microsoft’s command reference.',
   sources: [
     ['Microsoft Support – Fix Wi-Fi connection issues in Windows', 'https://support.microsoft.com/help/10741'],
     ['Microsoft Learn – Windows command reference: ipconfig, ping, nslookup', 'https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig'],

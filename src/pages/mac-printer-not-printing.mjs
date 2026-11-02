@@ -67,9 +67,8 @@ ${note('warn', 'Before a reset, note what you have.', '<p>Write down each printe
     ['Why does my Mac say the printer is paused?', 'macOS pauses a printer’s queue after a job fails, for example because the printer was off or out of paper. It stays paused until you click Resume in the queue window, even after the printer is fine again.'],
     ['What is AirPrint and do I need a driver?', 'AirPrint is Apple’s driverless printing standard, supported by most current printers. With AirPrint you don’t need extra software. Some printers also offer a model-specific driver, which you can choose when adding the printer.'],
     ['What does “Reset printing system” delete?', 'All printers, all waiting print jobs and printer presets on that Mac. It doesn’t delete documents. Afterwards you add your printers again.'],
-    ['My iPhone prints but my Mac doesn’t – why?', 'Then the printer and network work, and the Mac’s printer entry is the problem. Remove the printer and add it again, trying AirPrint and the maker’s driver in turn.'],
-    ['Where did System Preferences go?', 'Since macOS 13 Ventura it is called System Settings, with a different layout. The diagnosis shows both versions of each menu path – choose your version in the switcher.']
   ],
+  sourcesNote: 'All Mac settings on this page follow Apple’s Mac User Guide for Printers & Scanners.',
   sources: [
     ['Apple Support – Mac User Guide: Printers & Scanners settings, print queue and resetting the printing system', 'https://support.apple.com/'],
     ['Apple Support – About AirPrint', null],

@@ -58,6 +58,7 @@ ${note('warn', 'No Bluetooth “fixer” downloads.', '<p>Everything on this pag
     ['Why does my Bluetooth mouse lag?', 'Low battery, distance, interference from Wi-Fi or USB 3 devices, and power-saving settings. Charge it, move the receiver or PC closer, and test without power saving.'],
     ['Can I fix Bluetooth with a network reset?', 'Windows’ network reset targets network adapters and settings. For Bluetooth, removing and re-pairing devices and checking the adapter and driver are the relevant steps.']
   ],
+  sourcesNote: 'Windows Bluetooth settings follow Microsoft Support’s Bluetooth troubleshooting pages.',
   sources: [
     ['Microsoft Support – Fix Bluetooth problems in Windows', 'https://support.microsoft.com/'],
     ['Microsoft Support – Pair a Bluetooth device in Windows', null],

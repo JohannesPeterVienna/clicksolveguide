@@ -215,7 +215,7 @@
     if (/Windows NT 10\.0/.test(ua)) {
       var major = parseInt(info.platformVersion || '', 10);
       if (major >= 13) return 'win11';
-      if (major >= 1 && major <= 12) return 'win10';
+      if (major >= 1 && major <= 10) return 'win10';
       return null; // could be either – the user agent string says "10.0" on both
     }
     if (/Mac OS X/.test(ua)) return 'macnew';

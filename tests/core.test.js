@@ -54,6 +54,27 @@ test('layer map: answers clear and suspect layers, results mark likely', () => {
   assert.equal(b.layers.router, 'suspect');
 });
 
+test('wifi: r_device (blames this device) is reachable only after "Yes – other devices work"', () => {
+  const t = trees.find((x) => x.id === 'wifi-no-internet');
+  const runs = C.allRuns(t).filter((r) => r.end === 'r_device');
+  assert.ok(runs.length > 0);
+  for (const r of runs) {
+    const atOthers = r.state.path.find((p) => p.node === 'q_others');
+    assert.ok(atOthers, 'path passes q_others');
+    assert.equal(t.nodes.q_others.answers[atOthers.answer].label, 'Yes – other devices work');
+  }
+  // the "no other device" branch ends neutral, never in r_device
+  const solo = C.allRuns(t).filter((r) => r.state.path.some((p) => p.node === 'q_others' && t.nodes.q_others.answers[p.answer].label.startsWith('I have no other')));
+  assert.ok(solo.length > 0);
+  for (const r of solo) assert.notEqual(r.end, 'r_device');
+});
+
+test('chrome: failing in every browser does not rule out the device', () => {
+  const t = trees.find((x) => x.id === 'site-cant-be-reached');
+  const a = t.nodes.q_browser.answers[1];
+  assert.ok(!(a.clear || []).includes('device'));
+});
+
 test('replay ignores invalid saved answers', () => {
   const t = trees[0];
   const st = C.replay(t, [0, 99, 'x']);
@@ -97,6 +118,8 @@ test('suggestVersion reads only what the browser reliably reports', () => {
   assert.equal(C.suggestVersion({ ua: win, platformVersion: '15.0.0' }), 'win11');
   assert.equal(C.suggestVersion({ ua: win, platformVersion: '13.0.0' }), 'win11');
   assert.equal(C.suggestVersion({ ua: win, platformVersion: '10.0.0' }), 'win10');
+  assert.equal(C.suggestVersion({ ua: win, platformVersion: '1.0.0' }), 'win10');
+  assert.equal(C.suggestVersion({ ua: win, platformVersion: '11.0.0' }), null);
   assert.equal(C.suggestVersion({ ua: win, platformVersion: null }), null);
   assert.equal(C.suggestVersion({ ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', maxTouchPoints: 0 }), 'macnew');
   assert.equal(C.suggestVersion({ ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', maxTouchPoints: 5 }), 'ios');

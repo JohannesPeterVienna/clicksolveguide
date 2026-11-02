@@ -55,7 +55,7 @@ ${cmd({ os: 'mac', code: 'sw_vers', what: 'prints the product name, the macOS ve
 <p data-show-for="none" class="small">On iPhone, iPad and Android, use the About page in Settings shown above.</p>
 <p>The macOS version number maps to a name: 13 is Ventura, 14 is Sonoma and 15 is Sequoia; macOS 12 is Monterey and 11 is Big Sur. Apple names each yearly release, and About This Mac shows both the name and the number.</p>` },
     { id: 'support', h2: 'Is your version still supported?', html: `
-<p>Microsoft ended support for Windows 10 on October 14, 2025: after that date, regular Windows 10 installations no longer get security updates unless they are enrolled in Microsoft’s Extended Security Updates program for a limited time. Windows 11 versions are supported for a fixed period after release; Settings > Windows Update shows when a newer version is available.</p>
+<p>Microsoft ended support for Windows 10 on October 14, 2025: since then, regular Windows 10 installations no longer get security updates. Paid Extended Security Updates were available for a limited time. Windows 11 versions are supported for a fixed period after release; Settings > Windows Update shows when a newer version is available.</p>
 <p>Apple doesn’t publish fixed end dates for macOS, but in practice security updates focus on the current release and the previous ones. If Software Update no longer offers anything for your Mac, it may be too old for current macOS versions. For phones, the maker decides how long updates come – check the About page and the maker’s official support site.</p>
 ${note('warn', 'Pop-ups about “expired” systems can be fake.', '<p>Real update notices appear in Windows Update or Software Update, not as browser pop-ups with phone numbers. See our <a href="/guides/tech-support-scams/">scam guide</a>.</p>')}` }
   ],
@@ -63,9 +63,9 @@ ${note('warn', 'Pop-ups about “expired” systems can be fake.', '<p>Real upda
     ['How do I know if I have Windows 10 or 11?', 'Open Settings > System > About, or type winver into the Start search. The edition line says Windows 10 or Windows 11.'],
     ['Why does a website think my Windows 11 PC is Windows 10?', 'Browsers report “Windows NT 10.0” for both. Only Chromium browsers can reveal the difference through Client Hints, and only when a site asks for it.'],
     ['What macOS version do I have?', 'Choose Apple menu > About This Mac. You see the name (such as Sonoma) and the version number. In Terminal, sw_vers prints the same.'],
-    ['What do 23H2 and 24H2 mean?', 'They are Windows release names: the year (2023, 2024) and the half in which the release came out. Each release is supported for a set period.'],
     ['Is it safe to keep using Windows 10?', 'Without security updates, the risk grows over time. Microsoft ended regular support in October 2025; upgrading to Windows 11 (if the PC qualifies) or replacing the PC keeps you protected.']
   ],
+  sourcesNote: 'Version locations follow Microsoft, Apple and Google support pages; the Windows 11 detection rule follows Microsoft’s documentation on User-Agent Client Hints.',
   sources: [
     ['Microsoft Support – Which version of Windows operating system am I running?', 'https://support.microsoft.com/'],
     ['Microsoft Learn – Detect Windows 11 using User-Agent Client Hints (Microsoft Edge documentation)', 'https://learn.microsoft.com/'],

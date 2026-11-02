@@ -67,8 +67,8 @@ ${note('warn', 'Choose the right reset.', '<p>In the Reset menu, “Reset Networ
     ['Does Reset Network Settings delete my photos?', 'No. It deletes network settings – saved Wi-Fi networks and passwords, VPN settings and similar. Photos, apps and messages stay. Only “Erase All Content and Settings” wipes the phone.'],
     ['Should I turn off Private Wi-Fi Address?', 'Only for a network that needs to recognise your phone, such as a home router with a device filter. It protects your privacy on other networks, so leave it on there.'],
     ['What does “Weak Security” mean?', 'The network uses outdated encryption. The connection works, but data is less protected. If it’s your router, switch its security to WPA2 or WPA3.'],
-    ['Why can my iPad see the network but my iPhone can’t?', 'The devices may support different bands, or the iPhone is further from the router. Test both next to the router; if only the iPhone fails, forget the network on it and restart it.']
   ],
+  sourcesNote: 'Settings paths and messages follow Apple’s iPhone User Guide and Apple Support articles on Wi-Fi.',
   sources: [
     ['Apple Support – iPhone User Guide: Connect iPhone to a Wi-Fi network', 'https://support.apple.com/'],
     ['Apple Support – Use private Wi-Fi addresses on Apple devices', null],

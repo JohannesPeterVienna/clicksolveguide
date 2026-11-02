@@ -2,37 +2,57 @@
   "id": "site-cant-be-reached",
   "title": "\"This site can't be reached\" in Chrome",
   "layers": [
-    { "id": "device", "label": "Chrome" },
-    { "id": "wifi", "label": "Wi-Fi" },
-    { "id": "router", "label": "Router" },
-    { "id": "isp", "label": "DNS / ISP" },
-    { "id": "service", "label": "Website" }
+    {
+      "id": "device",
+      "label": "Chrome"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi"
+    },
+    {
+      "id": "router",
+      "label": "Router"
+    },
+    {
+      "id": "isp",
+      "label": "DNS / ISP"
+    },
+    {
+      "id": "service",
+      "label": "Website"
+    }
   ],
   "start": "q_code",
   "steps": {
     "c_code": {
       "title": "Read the code under the message",
-      "risk": "harmless", "time": "under 1 min",
+      "risk": "harmless",
+      "time": "under 1 min",
       "text": "Chrome prints a short code in capital letters below 'This site can't be reached', for example DNS_PROBE_FINISHED_NXDOMAIN or ERR_CONNECTION_TIMED_OUT. On a phone you may need to tap Details. The code says at which point the connection stopped."
     },
     "c_typo": {
       "title": "Check the address letter by letter",
-      "risk": "harmless", "time": "under 1 min",
+      "risk": "harmless",
+      "time": "under 1 min",
       "text": "Look for swapped letters, a missing dot, a wrong ending (.co instead of .com) or extra words. Type the address yourself or use a bookmark you made earlier. Be careful with addresses from messages: scammers register lookalike names."
     },
     "c_others": {
       "title": "Open two other well-known sites",
-      "risk": "harmless", "time": "under 1 min",
+      "risk": "harmless",
+      "time": "under 1 min",
       "text": "Open two large websites you rarely visit, in new tabs. If they load, the internet connection itself works and you can focus on this one address."
     },
     "c_mobile": {
       "title": "Try the same address on mobile data",
-      "risk": "harmless", "time": "about 1 min",
+      "risk": "harmless",
+      "time": "about 1 min",
       "text": "On your phone, switch Wi-Fi off so it uses mobile data, and open the same address. Mobile data uses a different network and usually different DNS servers – a clean comparison with your home connection."
     },
     "c_incognito": {
       "title": "Try an Incognito window and a second browser",
-      "risk": "harmless", "time": "about 2 min",
+      "risk": "harmless",
+      "time": "about 2 min",
       "text": "In Chrome, open the menu (three dots) > New Incognito window – it starts without extensions (unless you allowed them there) and without stored cookies. Then try the address in a second browser such as Edge, Safari or Firefox.",
       "paths": {
         "win11": "Chrome menu (⋮) > New Incognito window",
@@ -45,25 +65,49 @@
     },
     "c_flush": {
       "title": "Clear the DNS cache of the device",
-      "risk": "harmless", "time": "about 1 min",
+      "risk": "harmless",
+      "time": "about 1 min",
       "text": "The device remembers recent lookups. If a site moved to a new address, an old entry keeps pointing to the wrong place until it expires or is cleared.",
       "cmds": [
-        { "os": "win", "code": "ipconfig /flushdns", "what": "Empties Windows' cache of remembered name lookups.", "not": "It does not change DNS servers, Wi-Fi settings or browser data." },
-        { "os": "mac", "code": "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder", "what": "Clears the Mac's DNS cache and reloads the name service. Asks for your Mac login password.", "not": "It changes no settings and deletes no files.", "admin": true }
+        {
+          "os": "win",
+          "code": "ipconfig /flushdns",
+          "what": "Empties Windows' cache of remembered name lookups.",
+          "not": "It does not change DNS servers, Wi-Fi settings or browser data."
+        },
+        {
+          "os": "mac",
+          "code": "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder",
+          "what": "Clears the Mac's DNS cache and reloads the name service. Asks for your Mac login password.",
+          "not": "It changes no settings and deletes no files.",
+          "admin": true
+        }
       ]
     },
     "c_lookup": {
       "title": "Ask DNS directly",
-      "risk": "harmless", "time": "about 1 min",
+      "risk": "harmless",
+      "time": "about 1 min",
       "text": "Replace example.com with the address that fails. 'Non-existent domain' or 'NXDOMAIN' means your DNS server says the name does not exist; a timeout means the DNS server did not answer at all.",
       "cmds": [
-        { "os": "win", "code": "nslookup example.com", "what": "Asks your configured DNS server for the address of the name.", "not": "It does not contact the website itself." },
-        { "os": "mac", "code": "nslookup example.com", "what": "Asks your configured DNS server for the address of the name.", "not": "It does not contact the website itself." }
+        {
+          "os": "win",
+          "code": "nslookup example.com",
+          "what": "Asks your configured DNS server for the address of the name.",
+          "not": "It does not contact the website itself."
+        },
+        {
+          "os": "mac",
+          "code": "nslookup example.com",
+          "what": "Asks your configured DNS server for the address of the name.",
+          "not": "It does not contact the website itself."
+        }
       ]
     },
     "c_chrome_reset": {
       "title": "Clear this site's data and pause extensions",
-      "risk": "setting", "time": "5 min",
+      "risk": "setting",
+      "time": "5 min",
       "text": "Turn off extensions one by one (VPN, ad blocker, security and proxy extensions first) and reload. If that doesn't help, delete cached images and files for the last 24 hours. Also check Chrome's 'Use secure DNS' setting: a custom provider that is blocked on your network makes every lookup fail in Chrome only.",
       "paths": {
         "win11": "Chrome menu (⋮) > Extensions > Manage Extensions; Settings > Privacy and security > Security > Use secure DNS",
@@ -77,150 +121,309 @@
     },
     "c_vpn": {
       "title": "Pause VPN or security web filter",
-      "risk": "setting", "time": "about 3 min",
+      "risk": "setting",
+      "time": "about 3 min",
       "text": "ERR_CONNECTION_RESET and ERR_CONNECTION_CLOSED often come from software that inspects connections: VPNs, proxies, 'web shield' features of security suites, or a company or school filter. Pause it for one test.",
       "undo": "Turn the VPN or protection back on right after the test."
     },
     "c_dns_change": {
       "title": "Try a different DNS server for one test",
-      "risk": "setting", "time": "10 min",
-      "text": "Your router normally passes on the provider's DNS servers. If they fail or block the name, a public resolver such as Cloudflare (1.1.1.1), Google (8.8.8.8) or Quad9 (9.9.9.9) can be entered on this device as a test. Note: a block can also be deliberate – a parental control, school or company filter.",
+      "risk": "admin",
+      "time": "10 min",
+      "text": "Your router normally passes on the provider's DNS servers. If they fail or block the name, you can point this one device at a public resolver as a test. On Windows, macOS and iPhone/iPad you enter server addresses, for example Cloudflare (1.1.1.1), Google (8.8.8.8) or Quad9 (9.9.9.9); Windows may ask for administrator approval. Android's Private DNS accepts only a hostname, not an address: one.one.one.one, dns.google or dns.quad9.net. A block can also be deliberate – a parental control, school or company filter.",
       "paths": {
         "win11": "Settings > Network & internet > Wi-Fi > (your network) properties > DNS server assignment > Edit",
-        "win10": "Settings > Network & Internet > Wi-Fi > (your network) > Properties > IP settings > Edit",
+        "win10": "Settings > Network & Internet > Wi-Fi > (your network) > IP settings > Edit",
         "macnew": "System Settings > Wi-Fi > Details… next to your network > DNS",
         "macold": "System Preferences > Network > Wi-Fi > Advanced > DNS",
         "ios": "Settings > Wi-Fi > (i) next to your network > Configure DNS",
-        "android": "Settings > Network & internet > Private DNS (Samsung: Settings > Connections > More connection settings > Private DNS)"
+        "android": "Settings > Network & internet > Private DNS > Private DNS provider hostname (Samsung: Settings > Connections > More connection settings > Private DNS)"
       },
-      "undo": "Set DNS back to Automatic (DHCP) – on iPhone 'Automatic', on Android 'Automatic' or 'Off' in Private DNS. Write down any servers that were there before."
+      "undo": "Set DNS back to Automatic (DHCP) on Windows, remove the added servers on Mac, choose 'Automatic' under Configure DNS on iPhone, and set Android's Private DNS back to 'Automatic'. Write down any servers or hostname that were there before."
     },
     "c_status": {
       "title": "Look for the site's own status information",
-      "risk": "harmless", "time": "about 3 min",
+      "risk": "harmless",
+      "time": "about 3 min",
       "text": "Large services run an official status page or post outages on their verified social accounts. For a small site, ask someone elsewhere to try. If nobody can reach it, only the site owner can fix it."
     }
   },
   "nodes": {
     "q_code": {
-      "type": "question", "layer": "service",
+      "type": "question",
       "q": "Which code does Chrome show under the message?",
-      "steps": ["c_code"],
+      "steps": [
+        "c_code"
+      ],
       "answers": [
-        { "label": "DNS_PROBE_FINISHED_NXDOMAIN or ERR_NAME_NOT_RESOLVED", "next": "q_typo" },
-        { "label": "ERR_INTERNET_DISCONNECTED", "clear": ["service", "isp"], "suspect": ["device", "wifi"], "next": "r_offline" },
-        { "label": "ERR_CONNECTION_TIMED_OUT or ERR_CONNECTION_REFUSED", "next": "q_others" },
-        { "label": "ERR_CONNECTION_RESET or ERR_CONNECTION_CLOSED", "suspect": ["device"], "next": "q_others" },
-        { "label": "Another code, or none", "next": "q_others" }
+        {
+          "label": "DNS_PROBE_FINISHED_NXDOMAIN or ERR_NAME_NOT_RESOLVED",
+          "next": "q_typo"
+        },
+        {
+          "label": "ERR_INTERNET_DISCONNECTED",
+          "clear": [
+            "service",
+            "isp"
+          ],
+          "suspect": [
+            "device",
+            "wifi"
+          ],
+          "next": "r_offline"
+        },
+        {
+          "label": "ERR_CONNECTION_TIMED_OUT or ERR_CONNECTION_REFUSED",
+          "next": "q_others"
+        },
+        {
+          "label": "ERR_CONNECTION_RESET or ERR_CONNECTION_CLOSED",
+          "suspect": [
+            "device"
+          ],
+          "next": "q_others"
+        },
+        {
+          "label": "Another code, or none",
+          "next": "q_others"
+        }
       ]
     },
     "q_typo": {
-      "type": "question", "layer": "service",
+      "type": "question",
+      "layer": "service",
       "q": "Is the address definitely spelled correctly?",
-      "steps": ["c_typo"],
+      "steps": [
+        "c_typo"
+      ],
       "answers": [
-        { "label": "I found a typo – corrected, it works", "clear": ["device", "wifi", "router", "isp"], "next": "r_typo" },
-        { "label": "Yes, it's correct (bookmark or typed carefully)", "next": "q_others" }
+        {
+          "label": "I found a typo – corrected, it works",
+          "clear": [
+            "device",
+            "wifi",
+            "router",
+            "isp"
+          ],
+          "next": "r_typo"
+        },
+        {
+          "label": "Yes, it's correct (bookmark or typed carefully)",
+          "next": "q_others"
+        }
       ]
     },
     "q_others": {
-      "type": "question", "layer": "router",
+      "type": "question",
+      "layer": "router",
       "q": "Do other websites open in Chrome right now?",
-      "steps": ["c_others"],
+      "steps": [
+        "c_others"
+      ],
       "answers": [
-        { "label": "Yes, other sites open", "clear": ["wifi", "router"], "suspect": ["service"], "next": "q_mobile" },
-        { "label": "No, nothing opens", "clear": ["service"], "suspect": ["wifi", "router", "isp"], "next": "r_offline" }
+        {
+          "label": "Yes, other sites open",
+          "clear": [
+            "wifi",
+            "router"
+          ],
+          "suspect": [
+            "service"
+          ],
+          "next": "q_mobile"
+        },
+        {
+          "label": "No, nothing opens",
+          "clear": [
+            "service"
+          ],
+          "suspect": [
+            "wifi",
+            "router",
+            "isp"
+          ],
+          "next": "r_offline"
+        }
       ]
     },
     "q_mobile": {
-      "type": "question", "layer": "isp",
+      "type": "question",
+      "layer": "isp",
       "q": "Does the address open on a phone using mobile data (Wi-Fi off)?",
-      "steps": ["c_mobile"],
+      "steps": [
+        "c_mobile"
+      ],
       "answers": [
-        { "label": "Yes, on mobile data it opens", "clear": ["service"], "suspect": ["device", "isp"], "next": "q_browser" },
-        { "label": "No, it fails there too", "clear": ["device", "isp"], "next": "q_status" }
+        {
+          "label": "Yes, on mobile data it opens",
+          "clear": [
+            "service"
+          ],
+          "suspect": [
+            "device",
+            "isp"
+          ],
+          "next": "q_browser"
+        },
+        {
+          "label": "No, it fails there too",
+          "clear": [
+            "device",
+            "isp"
+          ],
+          "next": "q_status"
+        }
       ]
     },
     "q_status": {
-      "type": "question", "layer": "service",
+      "type": "question",
+      "layer": "service",
       "q": "Does the site's status page – or anyone else – confirm a problem?",
-      "steps": ["c_status"],
+      "steps": [
+        "c_status"
+      ],
       "answers": [
-        { "label": "Yes, it's down for others too", "next": "r_site_down" },
-        { "label": "Nothing reported", "next": "r_site_unknown" }
+        {
+          "label": "Yes, it's down for others too",
+          "next": "r_site_down"
+        },
+        {
+          "label": "Nothing reported",
+          "next": "r_site_unknown"
+        }
       ]
     },
     "q_browser": {
-      "type": "question", "layer": "device",
+      "type": "question",
+      "layer": "device",
       "q": "Does it open in an Incognito window or in another browser on this device?",
-      "steps": ["c_incognito"],
+      "steps": [
+        "c_incognito"
+      ],
       "answers": [
-        { "label": "Yes, there it opens", "clear": ["isp"], "next": "r_chrome" },
-        { "label": "No, it fails in every browser", "clear": ["device"], "suspect": ["isp"], "next": "q_flush" }
+        {
+          "label": "Yes, there it opens",
+          "clear": [
+            "isp"
+          ],
+          "next": "r_chrome"
+        },
+        {
+          "label": "No, it fails in every browser",
+          "suspect": [
+            "device",
+            "isp"
+          ],
+          "next": "q_flush"
+        }
       ]
     },
     "q_flush": {
-      "type": "question", "layer": "isp",
+      "type": "question",
+      "layer": "isp",
       "q": "After clearing the DNS cache, does the site open?",
-      "steps": ["c_flush", "c_lookup"],
+      "steps": [
+        "c_flush",
+        "c_lookup"
+      ],
       "answers": [
-        { "label": "Yes, now it opens", "next": "r_cache" },
-        { "label": "No – nslookup says non-existent or times out", "next": "r_dns" },
-        { "label": "No – nslookup returns an address but the site still fails", "suspect": ["router"], "next": "r_block" }
+        {
+          "label": "Yes, now it opens",
+          "next": "r_cache"
+        },
+        {
+          "label": "No – nslookup says non-existent or times out",
+          "next": "r_dns"
+        },
+        {
+          "label": "No – nslookup returns an address but the site still fails",
+          "suspect": [
+            "router"
+          ],
+          "next": "r_block"
+        }
       ]
     },
     "r_typo": {
-      "type": "result", "likely": "service",
+      "type": "result",
+      "likely": "service",
       "title": "Solved: the address was wrong",
       "text": "NXDOMAIN means 'this name does not exist'. A single wrong letter is enough. Save the correct address as a bookmark, and be wary of any page reached through a misspelled address – lookalike domains are a common scam tool.",
       "why": "The corrected address opened immediately without any change to your device or network."
     },
     "r_offline": {
-      "type": "result", "likely": ["wifi", "router"],
+      "type": "result",
+      "likely": [
+        "wifi",
+        "router"
+      ],
       "title": "Not this website – your connection is down",
       "text": "When nothing opens, or Chrome says ERR_INTERNET_DISCONNECTED, the problem is below the website: the device's connection, the Wi-Fi, the router or the provider. The Wi-Fi diagnosis works through those layers in order.",
       "why": "A single broken website cannot stop every other website from loading.",
-      "link": { "href": "/diagnose/wifi-connected-no-internet/", "label": "Continue with: Wi-Fi connected but no internet" }
+      "link": {
+        "href": "/diagnose/wifi-connected-no-internet/",
+        "label": "Continue with: Wi-Fi connected but no internet"
+      }
     },
     "r_site_down": {
-      "type": "result", "likely": "service",
+      "type": "result",
+      "likely": "service",
       "title": "Likely here: the website itself",
       "text": "The site fails on your connection and on mobile data, and others see the same. Only the site's operator can fix it. Wait, check its status page again later, and don't download 'fix' tools offered on other pages.",
-      "steps": ["c_status"],
+      "steps": [
+        "c_status"
+      ],
       "why": "Two independent networks and other people see the same failure."
     },
     "r_site_unknown": {
-      "type": "result", "likely": "service",
+      "type": "result",
+      "likely": "service",
       "title": "Likely here: the website – or a block for your region",
       "text": "The site fails on two different networks. Either the site is down without announcing it, its domain has expired, or it does not serve your country. ERR_CONNECTION_REFUSED in particular means a server answered but refused the connection – something only the site owner can change.",
-      "steps": ["c_lookup"],
+      "steps": [
+        "c_lookup"
+      ],
       "why": "Your home network and mobile data both fail, so your Wi-Fi and router are not the difference."
     },
     "r_chrome": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Likely here: Chrome on this device",
       "text": "The same address opens in Incognito or in another browser, so the network delivers it. Something inside Chrome blocks it: an extension, stored site data, a proxy extension or Chrome's own secure-DNS setting.",
-      "steps": ["c_chrome_reset", "c_vpn"],
+      "steps": [
+        "c_chrome_reset",
+        "c_vpn"
+      ],
       "why": "Same device, same network, different browser – only Chrome differs."
     },
     "r_cache": {
-      "type": "result", "likely": "device",
+      "type": "result",
+      "likely": "device",
       "title": "Solved: an outdated DNS entry on this device",
       "text": "The device remembered an old address for the site. After clearing the cache, it asked again and got the current one. This often happens after a site moves to a new server.",
       "why": "Nothing else changed between the failing and the working attempt."
     },
     "r_dns": {
-      "type": "result", "likely": "isp",
+      "type": "result",
+      "likely": "isp",
       "title": "Likely here: the DNS server your network uses",
       "text": "Your DNS server – usually the provider's, handed out by the router – says the name doesn't exist or doesn't answer, while mobile data finds it. It may be a temporary DNS fault, a filter (parental control, school, company) or a deliberate block. Test with a different DNS server and undo it afterwards.",
-      "steps": ["c_dns_change"],
+      "steps": [
+        "c_dns_change"
+      ],
       "why": "The site works on another network and fails in every browser here, and the lookup itself fails."
     },
     "r_block": {
-      "type": "result", "likely": ["router", "isp"],
+      "type": "result",
+      "likely": [
+        "router",
+        "isp"
+      ],
       "title": "Likely here: a filter on your network",
       "text": "The name resolves, but the connection still fails only on this network. Router firewalls, parental controls, security features of the router or the provider's own blocking can stop single sites. Check the router's app or admin page for blocked sites and ask the network owner.",
-      "steps": ["c_vpn"],
+      "steps": [
+        "c_vpn"
+      ],
       "why": "DNS answers and the site works on mobile data – something on this network stops the connection itself."
     }
   }

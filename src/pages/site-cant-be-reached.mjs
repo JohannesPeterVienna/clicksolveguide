@@ -24,7 +24,7 @@ export default {
   toolTitle: 'Chrome can’t reach the site – follow the code',
   cardText: 'DNS_PROBE_FINISHED_NXDOMAIN, TIMED_OUT, REFUSED: each code points to a different layer. Start from the code.',
   chips: ['Chrome', 'DNS', 'Website'],
-  lede: 'Chrome shows the same grey dinosaur page for very different problems. The small code under the headline tells them apart. Pick the code in the diagnosis and it will lead you to the layer that failed – from a typo in the address to a block on your network.',
+  lede: 'Chrome shows the same grey error page for very different problems. The small code under the headline tells them apart. Pick the code in the diagnosis and it will lead you to the layer that failed – from a typo in the address to a block on your network.',
   applies: 'Google Chrome on Windows 11/10, macOS, iPhone/iPad, Android',
   checked: 'Google Chrome Help, Microsoft Learn',
   versions: ['win11', 'win10', 'macnew', 'macold', 'ios', 'android'],
@@ -70,8 +70,8 @@ ${cmd({ os: 'mac', code: 'sudo dscacheutil -flushcache; sudo killall -HUP mDNSRe
     ['Why does the site work in Edge but not in Chrome?', 'Then the network and the website are fine and something inside Chrome differs: an extension, the “Use secure DNS” setting, a proxy extension or stored site data.'],
     ['Is ERR_CONNECTION_REFUSED my fault?', 'Rarely. It means a server answered and refused the connection – typically the website is down or not accepting connections. A wrong proxy setting on your device can cause it too, which the browser comparison reveals.'],
     ['Should I change my DNS server to fix it?', 'Only as a test after the comparison shows a DNS problem on your network, and with a note of the old setting so you can undo it. For timeouts or refused connections, changing DNS doesn’t help.'],
-    ['Can clearing the browser cache delete my passwords?', 'Clearing cached images and files doesn’t remove saved passwords. Clearing cookies signs you out of sites. Choose the options in Chrome’s clear-data dialog deliberately, or delete data for one site only.']
   ],
+  sourcesNote: 'The error codes are the ones Chrome itself shows; their meaning and the DNS background follow Google’s Chrome Help and the DNS specification.',
   sources: [
     ['Google Chrome Help – fixing connection errors and network settings', 'https://support.google.com/chrome/'],
     ['Microsoft Learn – nslookup and ipconfig command reference', 'https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup'],

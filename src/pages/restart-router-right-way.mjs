@@ -55,9 +55,8 @@ ${step(6, { title: 'Test with a site you rarely visit', time: 'about 1 min', bod
     ['How long should I unplug the router?', 'About 30 seconds is enough for a full power-down. Then give the modem and router a few minutes each to start before you test.'],
     ['Does restarting the router delete settings?', 'No. A power cycle keeps every setting. Only a factory reset – the recessed button held for several seconds – erases them.'],
     ['Should I restart the modem or the router first?', 'Unplug both, then power up the modem first and wait until its line light is steady, then the router. With a combined box there is only one device to restart.'],
-    ['Is it bad to restart a router often?', 'Restarting doesn’t harm a router. But needing it often points to a firmware problem, overheating or an aging device worth fixing properly.'],
-    ['Can I restart the router from my phone?', 'Many routers have an app or admin page with a Restart or Reboot button, which does the same as unplugging. If the router has no internet, the app may still work over Wi-Fi.']
   ],
+  sourcesNote: 'Routers differ by maker and provider; the restart order is common practice, and your model’s manual is the authority for its lights.',
   sources: [
     ['Your router’s or provider’s manual – meaning of the status lights for your model', null],
     ['Federal Communications Commission (FCC) – consumer guides on home broadband', 'https://www.fcc.gov/'],
