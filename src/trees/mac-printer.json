@@ -1,0 +1,242 @@
+{
+  "id": "mac-printer",
+  "title": "Printer not printing from a Mac",
+  "layers": [
+    { "id": "device", "label": "Mac & queue" },
+    { "id": "wifi", "label": "Connection" },
+    { "id": "router", "label": "Router" },
+    { "id": "printer", "label": "Printer" }
+  ],
+  "start": "q_listed",
+  "steps": {
+    "m_list": {
+      "title": "Open Printers & Scanners",
+      "risk": "harmless", "time": "under 1 min",
+      "text": "The list on the left shows every printer the Mac knows. A green dot or 'Idle' means ready; other wording tells you its state.",
+      "paths": {
+        "macnew": "Apple menu > System Settings > Printers & Scanners",
+        "macold": "Apple menu > System Preferences > Printers & Scanners"
+      }
+    },
+    "m_queue": {
+      "title": "Open the printer's queue window",
+      "risk": "harmless", "time": "about 1 min",
+      "text": "The queue window shows waiting jobs and a status line at the top. While you print, the printer's icon also appears in the Dock – clicking it opens the same window.",
+      "paths": {
+        "macnew": "System Settings > Printers & Scanners > (your printer) > Printer Queue…",
+        "macold": "System Preferences > Printers & Scanners > (your printer) > Open Print Queue…"
+      }
+    },
+    "m_resume": {
+      "title": "Resume the printer and retry held jobs",
+      "risk": "harmless", "time": "about 1 min",
+      "text": "If the queue says the printer is paused, click Resume. A single job marked 'On Hold' or with an error can be resumed or deleted; delete it and print again if it stays stuck."
+    },
+    "m_panel": {
+      "title": "Check the printer's display",
+      "risk": "harmless", "time": "about 1 min",
+      "text": "Paper jam, open cover, empty tray, ink or toner warning, or a printer in deep sleep – the Mac often only sees 'waiting' or 'not connected'. Clear what the printer reports and switch it off and on."
+    },
+    "m_usb": {
+      "title": "Check the USB connection",
+      "risk": "harmless", "time": "about 3 min",
+      "text": "Connect the cable directly to the Mac or to the adapter you know works, not through a chain of hubs. Try another port and cable. Recent Macs need a USB-C adapter for most printer cables."
+    },
+    "m_netstatus": {
+      "title": "Check the printer's network status",
+      "risk": "harmless", "time": "about 3 min",
+      "text": "On the printer's panel, open the Wi-Fi or network menu, or print a network configuration report (see the manual). Note the network name and IP address; the network name must match the one the Mac uses."
+    },
+    "m_phone": {
+      "title": "Print from an iPhone or iPad",
+      "risk": "harmless", "time": "about 2 min",
+      "text": "Open a photo or a web page and choose Share > Print. If the printer appears and prints, the printer and the network work, and the problem is on the Mac."
+    },
+    "m_restart": {
+      "title": "Restart in order: printer off, router, printer on, Mac",
+      "risk": "harmless", "time": "about 10 min",
+      "text": "Switch the printer off. Restart the router and wait until the internet works. Switch the printer on and let it rejoin the Wi-Fi for a minute. Then restart the Mac."
+    },
+    "m_readd": {
+      "title": "Remove the printer and add it again",
+      "risk": "setting", "time": "10 min",
+      "text": "Removing and re-adding makes the Mac find the printer at its current address. When adding, the 'Use' menu offers 'Secure AirPrint' or 'AirPrint' and, for some models, a model-specific driver. If one choice fails, add it again with the other.",
+      "paths": {
+        "macnew": "System Settings > Printers & Scanners > (your printer) > Remove Printer…, then Add Printer, Scanner or Fax…",
+        "macold": "System Preferences > Printers & Scanners > select the printer > minus (–), then plus (+) to add"
+      },
+      "undo": "Add the printer again with the same Add button and the setting that worked before."
+    },
+    "m_update": {
+      "title": "Install macOS updates",
+      "risk": "harmless", "time": "15–60 min",
+      "text": "Apple delivers printer software for many models through Software Update. Back up first with Time Machine if you haven't recently, and keep the Mac on power during a large update.",
+      "paths": {
+        "macnew": "System Settings > General > Software Update",
+        "macold": "System Preferences > Software Update"
+      }
+    },
+    "m_rejoin": {
+      "title": "Reconnect the printer to your Wi-Fi",
+      "risk": "setting", "time": "10 min",
+      "text": "Use the Wi-Fi setup on the printer's panel or the maker's official app and choose the same network as the Mac.",
+      "undo": "Run the setup again and choose the previous network."
+    },
+    "m_reserve": {
+      "title": "Reserve the printer's address in the router",
+      "risk": "setting", "time": "10 min",
+      "text": "If the printer disappears after every router restart, reserve its IP address in the router's app or admin page (DHCP or address reservation).",
+      "undo": "Delete the reservation in the same router menu."
+    },
+    "m_reset": {
+      "title": "Reset the printing system",
+      "risk": "last", "time": "15 min",
+      "text": "This removes every printer, every waiting job and printer presets from the Mac. Use it only when one printer stays broken after removing and re-adding it. Control-click (right-click) in the empty area of the printer list and choose 'Reset printing system'. You may need an administrator password.",
+      "paths": {
+        "macnew": "System Settings > Printers & Scanners > Control-click in the printer list > Reset printing system…",
+        "macold": "System Preferences > Printers & Scanners > Control-click in the printer list > Reset printing system…"
+      },
+      "undo": "There is no undo: add each printer again afterwards with Add Printer (or the + button)."
+    }
+  },
+  "nodes": {
+    "q_listed": {
+      "type": "question", "layer": "device",
+      "q": "Does the printer appear in Printers & Scanners on the Mac?",
+      "steps": ["m_list"],
+      "answers": [
+        { "label": "Yes, it's in the list", "next": "q_status" },
+        { "label": "No, it's missing", "suspect": ["wifi"], "next": "q_conn" }
+      ]
+    },
+    "q_status": {
+      "type": "question", "layer": "device",
+      "q": "What does the queue window say at the top?",
+      "steps": ["m_queue"],
+      "answers": [
+        { "label": "It's paused, or jobs are on hold", "suspect": ["device"], "next": "q_resume" },
+        { "label": "Not connected, waiting for the printer, or can't be found", "suspect": ["wifi", "printer"], "next": "q_conn" },
+        { "label": "Jobs vanish from the queue but nothing prints", "clear": ["wifi", "router"], "suspect": ["printer"], "next": "q_panel" },
+        { "label": "An error about the driver or a filter", "clear": ["wifi", "router", "printer"], "suspect": ["device"], "next": "r_driver" }
+      ]
+    },
+    "q_resume": {
+      "type": "question", "layer": "device",
+      "q": "After clicking Resume (and deleting stuck jobs), does it print?",
+      "steps": ["m_resume"],
+      "answers": [
+        { "label": "Yes, it prints", "clear": ["wifi", "router", "printer"], "next": "r_paused" },
+        { "label": "No, it pauses again", "next": "q_panel" }
+      ]
+    },
+    "q_panel": {
+      "type": "question", "layer": "printer",
+      "q": "Does the printer's display show an error, or is it asleep?",
+      "steps": ["m_panel"],
+      "answers": [
+        { "label": "Yes – error, warning or deep sleep", "suspect": ["printer"], "next": "r_printer" },
+        { "label": "No, it looks ready", "next": "q_phone" }
+      ]
+    },
+    "q_conn": {
+      "type": "question", "layer": "wifi",
+      "q": "How is the printer connected to the Mac?",
+      "answers": [
+        { "label": "USB cable", "clear": ["router"], "next": "q_usb" },
+        { "label": "Wi-Fi or network cable", "next": "q_samenet" }
+      ]
+    },
+    "q_usb": {
+      "type": "question", "layer": "wifi",
+      "q": "With a direct port (and another cable), does the printer appear and print?",
+      "steps": ["m_usb"],
+      "answers": [
+        { "label": "Yes, it works now", "clear": ["device", "printer"], "next": "r_usb" },
+        { "label": "No", "clear": ["wifi"], "next": "r_readd" }
+      ]
+    },
+    "q_samenet": {
+      "type": "question", "layer": "wifi",
+      "q": "Is the printer on the same network as the Mac?",
+      "steps": ["m_netstatus"],
+      "answers": [
+        { "label": "Yes, same network, with an IP address", "clear": ["wifi"], "next": "q_phone" },
+        { "label": "No – another network, or none", "suspect": ["wifi"], "next": "r_printer_wifi" },
+        { "label": "I can't find out", "next": "q_phone" }
+      ]
+    },
+    "q_phone": {
+      "type": "question", "layer": "router",
+      "q": "Can an iPhone or iPad print to it?",
+      "steps": ["m_phone"],
+      "answers": [
+        { "label": "Yes, the iPhone or iPad prints", "clear": ["wifi", "router", "printer"], "suspect": ["device"], "next": "r_readd" },
+        { "label": "No, it fails there too", "clear": ["device"], "suspect": ["router", "printer"], "next": "q_restart" },
+        { "label": "I have no iPhone or iPad", "next": "q_restart" }
+      ]
+    },
+    "q_restart": {
+      "type": "question", "layer": "router",
+      "q": "Restart printer, router and Mac in order. Does it print now?",
+      "steps": ["m_restart"],
+      "answers": [
+        { "label": "Yes, it prints", "next": "r_restart" },
+        { "label": "No", "next": "r_network" }
+      ]
+    },
+    "r_paused": {
+      "type": "result", "likely": "device",
+      "title": "Solved: the queue was paused",
+      "text": "macOS pauses a printer's queue when a job fails – for example when the printer was off or out of paper at that moment. After that, it waits for you to resume, even when the printer is fine again.",
+      "why": "Resuming the queue on the Mac was enough."
+    },
+    "r_printer": {
+      "type": "result", "likely": "printer",
+      "title": "Likely here: the printer itself",
+      "text": "Clear the problem the printer shows, switch it off and on, then resume the queue on the Mac. Error codes are explained in the manual or on the maker's support site for your model.",
+      "steps": ["m_resume"],
+      "why": "The printer reports an error of its own."
+    },
+    "r_usb": {
+      "type": "result", "likely": "wifi",
+      "title": "Solved: the USB connection",
+      "text": "A loose plug, a worn cable or a hub that doesn't pass the printer through was the problem.",
+      "why": "Only the cable path changed."
+    },
+    "r_printer_wifi": {
+      "type": "result", "likely": "wifi",
+      "title": "Likely here: the printer is not on your Wi-Fi",
+      "text": "After a new router, a changed Wi-Fi password or a power cut, printers often stay off the network. Reconnect it from its panel, reserve its address, and add it on the Mac again if it doesn't reappear.",
+      "steps": ["m_rejoin", "m_reserve", "m_readd"],
+      "why": "The printer's own status shows another network or no connection."
+    },
+    "r_restart": {
+      "type": "result", "likely": "router",
+      "title": "Solved: restarting in the right order",
+      "text": "The printer had lost its address or its place on the network. If it keeps happening, reserve its address in the router.",
+      "steps": ["m_reserve"],
+      "why": "Nothing printed before and everything printed after the ordered restart."
+    },
+    "r_network": {
+      "type": "result", "likely": ["router", "printer"],
+      "title": "Likely here: printer and router aren't talking",
+      "text": "Neither the Mac nor a phone can print, even after restarts. Reconnect the printer to Wi-Fi from its own panel and check that its network report shows an IP address. If it doesn't, the printer's maker has model-specific Wi-Fi steps on its support site.",
+      "steps": ["m_rejoin", "m_reserve", "m_readd"],
+      "why": "All devices fail, so the shared part – printer and router – remains."
+    },
+    "r_readd": {
+      "type": "result", "likely": "device",
+      "title": "Likely here: the printer's setup on this Mac",
+      "text": "The printer works for other devices but not for this Mac. Remove and add it again, trying AirPrint and the model-specific driver in turn. Install pending macOS updates. Only if one printer stays broken, reset the printing system as the last step.",
+      "steps": ["m_readd", "m_update", "m_reset"],
+      "why": "The printer and network work for other devices – the Mac's printer entry is the difference."
+    },
+    "r_driver": {
+      "type": "result", "likely": "device",
+      "title": "Likely here: the printer driver on this Mac",
+      "text": "A driver or filter error means the Mac could not convert the document for the printer. Add the printer again using AirPrint, which needs no extra driver, or install the current driver through Software Update or the maker's own website.",
+      "steps": ["m_readd", "m_update"],
+      "why": "The message names the driver – the connection and printer are not involved."
+    }
+  }
+}

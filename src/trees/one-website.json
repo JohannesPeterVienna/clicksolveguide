@@ -1,0 +1,213 @@
+{
+  "id": "one-website",
+  "title": "One website won't load but others do",
+  "layers": [
+    { "id": "device", "label": "Browser" },
+    { "id": "wifi", "label": "Wi-Fi" },
+    { "id": "router", "label": "Router" },
+    { "id": "isp", "label": "ISP / DNS" },
+    { "id": "service", "label": "Website" }
+  ],
+  "start": "q_what",
+  "steps": {
+    "o_read": {
+      "title": "Read the page before you click anything",
+      "risk": "harmless", "time": "under 1 min",
+      "text": "Look at the heading and the small print. A security warning names the certificate or privacy problem (Chrome and Edge: 'Your connection isn't private', codes starting with NET::ERR_CERT; Firefox: 'Warning: Potential Security Risk Ahead'; Safari: 'This Connection Is Not Private'). An error page names a connection problem instead. Don't click 'Advanced' or any button on a warning page."
+    },
+    "o_datetime": {
+      "title": "Make sure the device's date and time are correct",
+      "risk": "setting", "time": "about 2 min",
+      "text": "Certificates are valid only for a period of time. If the device clock is wrong by days or years – for example after a dead clock battery in an old PC – secure sites can show certificate warnings. Turning on automatic time is safe; it doesn't bypass anything.",
+      "paths": {
+        "win11": "Settings > Time & language > Date & time > Set time automatically",
+        "win10": "Settings > Time & Language > Date & time > Set time automatically",
+        "macnew": "System Settings > General > Date & Time > Set time and date automatically",
+        "macold": "System Preferences > Date & Time > Set date and time automatically",
+        "ios": "Settings > General > Date & Time > Set Automatically",
+        "android": "Settings > System > Date & time > Set time automatically (Samsung: Settings > General management > Date and time)"
+      },
+      "undo": "Switch automatic time off again and set the time by hand, if you had a reason for a manual clock."
+    },
+    "o_others": {
+      "title": "Compare with two other sites",
+      "risk": "harmless", "time": "under 1 min",
+      "text": "Open two large websites you don't usually visit in new tabs. If they load normally, your connection is fine and the investigation is about this one address."
+    },
+    "o_mobile": {
+      "title": "Open the site on a phone using mobile data",
+      "risk": "harmless", "time": "about 1 min",
+      "text": "Switch Wi-Fi off on your phone and open the same address over mobile data. This uses a completely different network and DNS server. If the site opens there, the site itself is up."
+    },
+    "o_private": {
+      "title": "Use a private window, then a second browser",
+      "risk": "harmless", "time": "about 2 min",
+      "text": "A private window (Incognito in Chrome, InPrivate in Edge, Private Window in Safari and Firefox) starts without the site's cookies and usually without extensions. A second browser shows whether the problem belongs to one browser only."
+    },
+    "o_sitedata": {
+      "title": "Delete this one site's cookies and stored data",
+      "risk": "setting", "time": "about 3 min",
+      "text": "Broken cookies or a half-updated cache for this site can cause endless loading, login loops or a blank page. Delete the data for this site only, not for all sites. You will be signed out of this site.",
+      "paths": {
+        "win11": "Chrome or Edge: click the icon left of the address > Site settings (Chrome) or Cookies and site data (Edge) > Delete data",
+        "win10": "Chrome or Edge: click the icon left of the address > Site settings (Chrome) or Cookies and site data (Edge) > Delete data",
+        "macnew": "Safari > Settings > Privacy > Manage Website Data > search the site > Remove",
+        "macold": "Safari > Preferences > Privacy > Manage Website Data > search the site > Remove",
+        "ios": "Settings > Apps > Safari > Advanced > Website Data (older iOS: Settings > Safari > Advanced > Website Data) > swipe to delete the site",
+        "android": "Chrome: tap the icon left of the address > Cookies and site data (or Site settings) > Delete"
+      },
+      "undo": "Sign in to the site again. Deleted cache files are loaded fresh automatically."
+    },
+    "o_extensions": {
+      "title": "Switch off extensions one by one",
+      "risk": "setting", "time": "5 min",
+      "text": "Ad blockers, privacy, VPN, translation and shopping extensions can break single sites. Switch them off one at a time and reload until the site works; leave the culprit off for this site only if the extension offers that.",
+      "undo": "Switch each extension back on with its toggle."
+    },
+    "o_flush": {
+      "title": "Clear the device's DNS cache",
+      "risk": "harmless", "time": "about 1 min",
+      "text": "If the site recently moved to a new server, your device may still remember the old address.",
+      "cmds": [
+        { "os": "win", "code": "ipconfig /flushdns", "what": "Empties Windows' cache of remembered name lookups.", "not": "It doesn't change DNS servers or delete browser data." },
+        { "os": "mac", "code": "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder", "what": "Clears the Mac's DNS cache and reloads the name service. Asks for your Mac password.", "not": "It changes no settings.", "admin": true }
+      ]
+    },
+    "o_vpn": {
+      "title": "Pause VPN, proxy or security web filter",
+      "risk": "setting", "time": "about 3 min",
+      "text": "Some sites block VPN addresses, and security software sometimes blocks a site it considers risky. If the security software names a threat, believe it and don't continue to the site.",
+      "undo": "Turn the VPN or protection back on right after the test."
+    },
+    "o_router": {
+      "title": "Look for a block on the network",
+      "risk": "setting", "time": "10 min",
+      "text": "Router parental controls, 'safe browsing' features, a blocking DNS service, or company and school filters block chosen sites for every device on the network. Check the router's app or admin page for blocked sites or content filters, or ask whoever runs the network.",
+      "undo": "If you remove a block, note which rule it was so you can restore it – it may have been set up deliberately."
+    },
+    "o_status": {
+      "title": "Check the site's official status channel",
+      "risk": "harmless", "time": "about 3 min",
+      "text": "Many services publish an official status page or post on verified social accounts during outages. Type the site's address yourself; don't follow 'site down? call this number' pages."
+    }
+  },
+  "nodes": {
+    "q_what": {
+      "type": "question", "layer": "service",
+      "q": "What do you see when you open that site?",
+      "steps": ["o_read"],
+      "answers": [
+        { "label": "A security or privacy warning (certificate, 'not private', 'security risk')", "suspect": ["service"], "next": "stop_cert" },
+        { "label": "An error page: can't be reached, timed out, not found", "next": "q_others" },
+        { "label": "A blank page, endless loading or a broken layout", "next": "q_others" },
+        { "label": "A page saying the site is blocked by my network or provider", "clear": ["device", "wifi", "service"], "suspect": ["router", "isp"], "next": "r_blocked" }
+      ]
+    },
+    "q_others": {
+      "type": "question", "layer": "wifi",
+      "q": "Do other websites load normally on this device?",
+      "steps": ["o_others"],
+      "answers": [
+        { "label": "Yes, only this one fails", "clear": ["wifi"], "suspect": ["service"], "next": "q_mobile" },
+        { "label": "No, other sites fail too", "clear": ["service"], "next": "r_all" }
+      ]
+    },
+    "q_mobile": {
+      "type": "question", "layer": "service",
+      "q": "Does the site open on a phone using mobile data, with Wi-Fi off?",
+      "steps": ["o_mobile"],
+      "answers": [
+        { "label": "Yes, it opens on mobile data", "clear": ["service"], "suspect": ["device", "router", "isp"], "next": "q_private" },
+        { "label": "No, it fails there too", "clear": ["device", "router", "isp"], "next": "q_status" }
+      ]
+    },
+    "q_status": {
+      "type": "question", "layer": "service",
+      "q": "Does the site's official status page or account report a problem?",
+      "steps": ["o_status"],
+      "answers": [
+        { "label": "Yes, they report an outage", "next": "r_down" },
+        { "label": "Nothing reported", "next": "r_down_quiet" }
+      ]
+    },
+    "q_private": {
+      "type": "question", "layer": "device",
+      "q": "Does it work in a private window or in a second browser on this device?",
+      "steps": ["o_private"],
+      "answers": [
+        { "label": "Yes, it works there", "clear": ["router", "isp"], "next": "r_browser" },
+        { "label": "No, it fails in every browser here", "next": "q_samewifi" }
+      ]
+    },
+    "q_samewifi": {
+      "type": "question", "layer": "router",
+      "q": "Does it open on another device connected to the same Wi-Fi?",
+      "answers": [
+        { "label": "Yes, the other device opens it", "clear": ["router", "isp"], "next": "r_device" },
+        { "label": "No, it fails on every device on this Wi-Fi", "clear": ["device"], "next": "r_network" }
+      ]
+    },
+    "stop_cert": {
+      "type": "stop",
+      "title": "The browser cannot confirm this site is genuine",
+      "text": "A certificate or privacy warning means the browser could not verify that it is talking to the real site, or that nobody can read along. Never click 'Advanced', 'Proceed', 'Continue to site', 'Accept the risk' or 'Visit this website', and don't enter passwords, codes or card details. ClickSolve Guide does not give instructions for getting past these warnings.",
+      "safe": [
+        "Close the tab. Don't sign in, pay or download anything from that page.",
+        "Check that the device's date and time are correct and set to automatic – a wrong clock makes valid certificates look invalid.",
+        "On public or hotel Wi-Fi, disconnect and try later on your own network or on mobile data.",
+        "If the warning appears on many well-known sites at once, stop using that network or device for banking and passwords until it has been checked.",
+        "Type the address yourself or use a bookmark – a misspelled or lookalike address can lead to the warning.",
+        "If it is your employer's or school's site, report it to their IT team through a channel you already know – not through a phone number on the warning page."
+      ],
+      "steps": ["o_datetime"]
+    },
+    "r_blocked": {
+      "type": "result", "likely": ["router", "isp"],
+      "title": "Likely here: a deliberate block on this network",
+      "text": "A block page comes from a filter: parental controls on the router, a company or school firewall, a filtering DNS service, or the provider following a legal order. The website itself may be fine. Ask the person who runs the network; don't try to get around a filter on a network that isn't yours.",
+      "steps": ["o_router"],
+      "why": "The block page itself names the network or provider as the source."
+    },
+    "r_all": {
+      "type": "result", "likely": ["wifi", "router"],
+      "title": "Not just this site – your connection has a problem",
+      "text": "When other sites fail too, start at the bottom of the layer map: device, Wi-Fi, router, provider. The Wi-Fi diagnosis does that step by step.",
+      "why": "One broken website cannot stop other websites from loading.",
+      "link": { "href": "/diagnose/wifi-connected-no-internet/", "label": "Continue with: Wi-Fi connected but no internet" }
+    },
+    "r_down": {
+      "type": "result", "likely": "service",
+      "title": "Likely here: the website is down",
+      "text": "The operator confirms a problem. Nothing on your device or network needs changing – wait and try again later. Ignore pages and ads offering a phone number or a download to 'fix' the site.",
+      "why": "The site fails on two separate networks and the operator confirms an outage."
+    },
+    "r_down_quiet": {
+      "type": "result", "likely": "service",
+      "title": "Likely here: the website or its access rules",
+      "text": "The site fails on your network and on mobile data. It may be down without notice, its domain may have expired, or it may not serve your country or block your type of connection. Try again later or reach the operator through a contact address you already know.",
+      "why": "Two independent networks show the same failure, so your own setup is not the difference."
+    },
+    "r_browser": {
+      "type": "result", "likely": "device",
+      "title": "Likely here: your browser's data or an extension",
+      "text": "The site opens in a private window or another browser, so the site and the network are fine. Stored cookies and cache for this site or an extension are the usual causes. Work through the steps – deleting one site's data signs you out of that site only.",
+      "steps": ["o_sitedata", "o_extensions"],
+      "why": "Same device, same network: only the browser profile differs."
+    },
+    "r_device": {
+      "type": "result", "likely": "device",
+      "title": "Likely here: this device (DNS cache, VPN or security software)",
+      "text": "Another device on the same Wi-Fi opens the site, and every browser on this device fails. Something device-wide blocks it: an old DNS entry, a VPN, a proxy setting or security software.",
+      "steps": ["o_flush", "o_vpn"],
+      "why": "The network delivers the site to other devices, so the difference is inside this one."
+    },
+    "r_network": {
+      "type": "result", "likely": ["router", "isp"],
+      "title": "Likely here: your router, its filters or your provider's DNS",
+      "text": "Every device on this Wi-Fi fails, but mobile data works. The network blocks or can't look up this one site – through router parental controls, a filtering DNS service, or a fault in the provider's DNS. The DNS guide shows how to test another DNS server with an undo.",
+      "steps": ["o_router"],
+      "why": "The site is up (mobile data works) and fails for every device on this network.",
+      "link": { "href": "/guides/dns-server-not-responding/", "label": "Open the DNS guide" }
+    }
+  }
+}

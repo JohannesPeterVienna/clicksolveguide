@@ -1,0 +1,140 @@
+[
+ {
+  "path": "/diagnose/wifi-connected-no-internet/",
+  "kind": "tool",
+  "words": 1994,
+  "midAd": 3
+ },
+ {
+  "path": "/diagnose/site-cant-be-reached/",
+  "kind": "tool",
+  "words": 1694,
+  "midAd": 3
+ },
+ {
+  "path": "/diagnose/one-website-wont-load/",
+  "kind": "tool",
+  "words": 1673,
+  "midAd": 3
+ },
+ {
+  "path": "/diagnose/printer-offline-windows-11/",
+  "kind": "tool",
+  "words": 1661,
+  "midAd": 3
+ },
+ {
+  "path": "/diagnose/mac-printer-not-printing/",
+  "kind": "tool",
+  "words": 1464,
+  "midAd": 3
+ },
+ {
+  "path": "/diagnose/laptop-wont-connect-wifi/",
+  "kind": "tool",
+  "words": 1616,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/iphone-wont-connect-wifi/",
+  "kind": "guide",
+  "words": 1493,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/android-connected-no-internet/",
+  "kind": "guide",
+  "words": 1346,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/dns-server-not-responding/",
+  "kind": "guide",
+  "words": 1517,
+  "midAd": 2
+ },
+ {
+  "path": "/guides/windows-update-stuck/",
+  "kind": "guide",
+  "words": 1534,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/mac-running-slow/",
+  "kind": "guide",
+  "words": 1382,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/bluetooth-not-working-windows-11/",
+  "kind": "guide",
+  "words": 1305,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/restart-router-right-way/",
+  "kind": "guide",
+  "words": 1362,
+  "midAd": 3
+ },
+ {
+  "path": "/guides/which-windows-macos-version/",
+  "kind": "guide",
+  "words": 1342,
+  "midAd": 2
+ },
+ {
+  "path": "/guides/tech-support-scams/",
+  "kind": "guide",
+  "words": 1428,
+  "midAd": 2
+ },
+ {
+  "path": "/",
+  "kind": "home",
+  "words": 1007,
+  "midAd": null
+ },
+ {
+  "path": "/diagnose/",
+  "kind": "hub",
+  "words": 440,
+  "midAd": null
+ },
+ {
+  "path": "/guides/",
+  "kind": "hub",
+  "words": 488,
+  "midAd": null
+ },
+ {
+  "path": "/about/",
+  "kind": "about",
+  "words": 415,
+  "midAd": null
+ },
+ {
+  "path": "/how-we-check/",
+  "kind": "about",
+  "words": 839,
+  "midAd": null
+ },
+ {
+  "path": "/contact/",
+  "kind": "legal",
+  "words": 163,
+  "midAd": null
+ },
+ {
+  "path": "/imprint/",
+  "kind": "legal",
+  "words": 169,
+  "midAd": null
+ },
+ {
+  "path": "/privacy/",
+  "kind": "legal",
+  "words": 1063,
+  "midAd": null
+ }
+]
