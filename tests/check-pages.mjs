@@ -34,11 +34,25 @@ for (const p of pages) {
 
   if (!html.includes(`<meta name="google-adsense-account" content="${PUB}">`)) fail(url, 'adsense meta missing');
   const consentAt = html.indexOf("gtag('consent','default'");
-  const firstGoogle = html.search(/<script[^>]+src="https:\/\/(pagead2|www\.googletagmanager)/);
+  const firstGoogle = html.search(/pagead2\.googlesyndication\.com|googletagmanager\.com/);
   if (consentAt < 0) fail(url, 'consent defaults missing');
+  // local/test guard: first script in <head>, before consent defaults and any Google reference
+  const guardAt = html.indexOf('<script>window.CSG_NO_GOOGLE=');
+  const guard = guardAt >= 0 ? html.slice(guardAt, html.indexOf('</script>', guardAt)) : '';
+  if (guardAt < 0 || html.search(/<script/) !== guardAt || guardAt > consentAt) fail(url, 'local guard missing or not the first script');
+  else for (const k of ['localhost', "'127.0.0.1'", "'::1'", "'file:'", 'stats_test=1']) if (!guard.includes(k)) fail(url, 'local guard misses ' + k);
   if (!/wait_for_update:500/.test(html) || !/ads_data_redaction',true/.test(html) || !/ga-disable-G-T00HRG2YVF'\]=true/.test(html)) fail(url, 'consent default details missing');
   if (firstGoogle >= 0 && firstGoogle < consentAt) fail(url, 'Google script before consent defaults');
-  const loader = html.includes(`adsbygoogle.js?client=${PUB}" crossorigin="anonymous"`);
+  if (/<script[^>]+src="https:\/\/pagead2/.test(html)) fail(url, 'static AdSense tag (must be the guarded inline loader)');
+  const loaderTag = (html.match(/<script data-ads-loader>([\s\S]*?)<\/script>/) || [])[1] || '';
+  const loader = !!loaderTag;
+  if (loader) {
+    if (!loaderTag.includes(`'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUB}'`) || !/s\.async=true/.test(loaderTag) || !/crossOrigin='anonymous'/.test(loaderTag)) fail(url, 'AdSense loader incomplete');
+    if (!loaderTag.startsWith('if(!window.CSG_NO_GOOGLE)')) fail(url, 'AdSense loader without local guard');
+    // as early as the static tag was: directly after the consent defaults, before styles and other scripts
+    const afterDefaults = html.slice(html.indexOf('</script>', consentAt) + 9).trimStart();
+    if (!afterDefaults.startsWith('<script data-ads-loader>')) fail(url, 'AdSense loader not directly after the consent defaults');
+  }
   if (NO_LOADER.includes(url) || noindex) { if (loader) fail(url, 'AdSense loader must not be on this page'); }
   else if (isContent || url === '/') { if (!loader) fail(url, 'AdSense loader missing'); }
   const ads = (html.match(/class="ad"/g) || []).length;
@@ -73,9 +87,10 @@ for (const p of pages) {
   if (isContent) {
     const types = lds.map((o) => o['@type']);
     const main = lds.find((o) => o['@type'] === (isTool ? 'WebApplication' : 'Article'));
-    if (!main || main.dateModified !== '2026-11-02') fail(url, 'main JSON-LD missing or wrong dateModified');
+    const mod = main && main.dateModified;
+    if (!main || main.datePublished !== '2026-11-02' || !['2026-11-02', '2026-11-03'].includes(mod)) fail(url, 'main JSON-LD missing or wrong dates');
     if (!types.includes('BreadcrumbList') || !types.includes('FAQPage')) fail(url, 'BreadcrumbList/FAQPage missing');
-    if (!html.includes('Reviewed November 2, 2026')) fail(url, 'review date missing');
+    if (!html.includes(`Reviewed November ${mod === '2026-11-03' ? 3 : 2}, 2026`)) fail(url, 'review date missing or not matching dateModified');
     if (!/<table/.test(html)) fail(url, 'no data table');
     if (!/<figure class="fig"><svg/.test(html)) fail(url, 'no inline SVG figure');
     if (!/id="sources"/.test(html)) fail(url, 'no sources section');

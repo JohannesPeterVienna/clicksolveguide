@@ -85,7 +85,8 @@ ${cmd({ os: 'win', code: 'nslookup example.com', what: 'asks your DNS server for
     ['Microsoft Learn – Windows command reference: ipconfig, ping, nslookup', 'https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig'],
     ['Apple Support – Mac User Guide and iPhone User Guide, Wi-Fi sections', 'https://support.apple.com/'],
     ['Android Help – Fix problems with Wi-Fi', 'https://support.google.com/android/'],
-    ['Cloudflare – 1.1.1.1 public DNS resolver documentation (developers.cloudflare.com)', null]
+    ['Cloudflare – 1.1.1.1 public DNS resolver documentation (developers.cloudflare.com)', null],
+    ['Google Chrome Help – Browse in Incognito mode (extensions you allowed can run there)', 'https://support.google.com/chrome/answer/2664769']
   ],
   related: ['/diagnose/laptop-wont-connect-wifi/', '/guides/restart-router-right-way/', '/guides/dns-server-not-responding/', '/guides/android-connected-no-internet/']
 };

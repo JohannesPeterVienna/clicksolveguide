@@ -21,8 +21,15 @@
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } return null; }
 
   /* ---------------- ads ---------------- */
+  // Local preview/test (localhost, 127.0.0.1, ::1, file:): never load any Google script.
+  // window.CSG_NO_GOOGLE is set by the first inline script in <head> (also for ?stats_test=1).
+  var LOCAL = (function () {
+    if (window.CSG_NO_GOOGLE) return true;
+    var K = window.CSGConsent;
+    try { return K ? K.isLocalHost(location.hostname, location.protocol, location.search) : true; } catch (e) { return true; }
+  })();
   function loadAdScript() {
-    if (document.querySelector('script[src*="adsbygoogle.js"]')) return;
+    if (LOCAL || document.querySelector('script[src*="adsbygoogle.js"]')) return;
     var s = document.createElement('script');
     s.async = true; s.crossOrigin = 'anonymous';
     s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + CLIENT;
@@ -49,10 +56,10 @@
 
   /* ---------------- consent + analytics ---------------- */
   var gtag = window.gtag || function () { (window.dataLayer = window.dataLayer || []).push(arguments); };
-  var cs = { tc: null, modeReady: false, us: null, sent: '' };
+  var cs = { tc: null, modeReady: false, us: null, gpp: null, gppOn: false, sent: '' };
   var gaOn = false;
   function startGA() {
-    if (gaOn) return; gaOn = true;
+    if (gaOn || LOCAL) return; gaOn = true;
     var s = document.createElement('script');
     s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
     document.head.appendChild(s);
@@ -69,7 +76,7 @@
     var C = window.CSGConsent;
     if (!C) return;
     var mv = cs.modeReady && C.region(cs.tc) !== 'none' ? modeValues() : null;
-    var d = C.decideConsent(cs.tc, mv, cs.us);
+    var d = C.decideConsent(cs.tc, mv, C.effectiveUsStatus(cs.us, cs.gpp));
     var analytics = d.analytics_storage === 'granted';
     window['ga-disable-' + GA_ID] = !analytics;
     var key = JSON.stringify(d);
@@ -81,9 +88,22 @@
     window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
     window.googlefc.callbackQueue.push(item);
   }
+  // current U.S. opt-out state (also later changes) from the GPP signal; without GPP it stays denied
+  function watchGpp() {
+    if (cs.gppOn || typeof window.__gpp !== 'function') return;
+    cs.gppOn = true;
+    try {
+      window.__gpp('addEventListener', function (evt, ok) {
+        if (!ok || !evt) return;
+        var pd = evt.pingData || (evt.data && evt.data.pingData) || null;
+        if (pd) { cs.gpp = window.CSGConsent ? window.CSGConsent.usStatusFromGpp(pd) : null; applyConsent(); }
+      });
+    } catch (e) { cs.gppOn = false; cs.gpp = null; }
+  }
   function watchConsent() {
     fcQueue({
       CONSENT_API_READY: function () {
+        watchGpp();
         if (typeof window.__tcfapi !== 'function') return;
         window.__tcfapi('addEventListener', 2, function (tc, ok) {
           cs.tc = ok ? tc : null;
@@ -97,6 +117,7 @@
           var u = window.googlefc.usstatesoptout;
           cs.us = u && typeof u.getInitialUsStatesOptOutStatus === 'function' ? u.getInitialUsStatesOptOutStatus() : null;
         } catch (e) { cs.us = null; }
+        watchGpp();
         applyConsent();
       }
     });
@@ -105,8 +126,22 @@
   function privacyButtons() {
     var bs = document.querySelectorAll('[data-privacy-settings]');
     for (var i = 0; i < bs.length; i++) bs[i].addEventListener('click', function () {
+      var prev = { tc: cs.tc, modeReady: cs.modeReady };
       cs.tc = null; cs.modeReady = false; applyConsent(); // withdraw first; the CMP reports the new choice
-      fcQueue(function () { try { window.googlefc.showRevocationMessage(); } catch (e) { /* CMP not reachable */ } });
+      fcQueue(function () {
+        try {
+          // U.S. state regulation applies -> U.S. opt-out dialog, otherwise the GDPR revocation message
+          window.CSGConsent.openPrivacyChoices(window.googlefc, function (userDidOptOut) {
+            try {
+              // opted out -> ads personalisation and analytics stay denied; later changes arrive via GPP
+              if (userDidOptOut) cs.gpp = window.CSGConsent.US_OPTED_OUT;
+              else { cs.tc = prev.tc; cs.modeReady = prev.modeReady; }
+              watchGpp();
+            } catch (e) { cs.gpp = null; }
+            applyConsent();
+          });
+        } catch (e) { /* CMP not reachable */ }
+      });
       loadAdScript();
     });
   }
@@ -140,7 +175,8 @@
       el.classList.toggle('mp-fallback', r.fallback);
     }
     var cmds = document.querySelectorAll('.cmd[data-os]');
-    for (var j = 0; j < cmds.length; j++) cmds[j].hidden = fam !== 'none' && cmds[j].getAttribute('data-os') !== fam;
+    // only the selected platform's commands (and copy buttons); phones and tablets get none – they use the settings path
+    for (var j = 0; j < cmds.length; j++) cmds[j].hidden = fam === 'none' || cmds[j].getAttribute('data-os') !== fam;
     var notes = document.querySelectorAll('[data-show-for]');
     for (var k = 0; k < notes.length; k++) notes[k].hidden = notes[k].getAttribute('data-show-for').split(' ').indexOf(fam) < 0;
     var sels = document.querySelectorAll('.vswitch select');

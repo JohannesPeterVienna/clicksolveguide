@@ -22,6 +22,13 @@
     admin: 'Admin needed',
     last: 'Last resort'
   };
+  var RISK_INFO = {
+    harmless: 'Nothing changes on your device that you would need to undo.',
+    setting: 'Changes one setting; the undo is listed with the step.',
+    admin: 'Needs an administrator account or password.',
+    last: 'Removes saved settings or data; do the other checks first.'
+  };
+  var MOBILE = { ios: true, android: true };
 
   function validateTree(t) {
     var errs = [];
@@ -121,16 +128,57 @@
     return id;
   }
 
-  /** Plain-text fix log. opts: { version, notes, date (string), url } */
+  /**
+   * Which terminal commands of a step belong to version v. Only the selected platform's commands:
+   * Windows versions get Windows commands, macOS versions macOS commands, phones/tablets and an
+   * unknown version none at all (they use the settings path instead).
+   */
+  function commandsFor(step, v) {
+    var fam = family(v);
+    if (!fam) return [];
+    return (step.cmds || []).filter(function (c) { return c.os === fam; });
+  }
+
+  /** Text the UI and the log show instead of commands on a phone or tablet ('' when not needed). */
+  function mobileNote(step, v) {
+    if (!MOBILE[v] || !(step.cmds && step.cmds.length)) return '';
+    var p = resolvePath(step.paths, v);
+    return 'No terminal command on ' + VERSIONS[v] + ' – ' + (p && !p.fallback ? 'use the settings path: ' + p.text : 'phones and tablets have no command line. Run this check on a Windows PC or Mac on the same network, or skip it.');
+  }
+
+  /** Lines for one step: risk label with meaning, where, commands of the chosen platform only, undo. */
+  function stepLines(L, s, n, v) {
+    L.push('  ' + n + ') ' + s.title + ' [' + RISKS[s.risk] + (s.time ? ', ' + s.time : '') + ']');
+    L.push(wrap('Risk: ' + RISKS[s.risk] + ' – ' + RISK_INFO[s.risk], 72, '     ', '       '));
+    L.push(wrap(s.text, 72, '     '));
+    var p = resolvePath(s.paths, v);
+    if (p) L.push('     Where: ' + (p.fallback ? p.label + ': ' : '') + p.text);
+    commandsFor(s, v).forEach(function (c) {
+      L.push('     Command (' + (c.os === 'win' ? 'Windows' : 'macOS') + ' · ' + (c.shell || (c.os === 'win' ? 'Command Prompt or Terminal' : 'Terminal')) + (c.admin ? ', admin needed' : '') + '): ' + c.code);
+      L.push(wrap('What it does: ' + c.what, 72, '       ', '         '));
+      if (c.not) L.push(wrap('What it does not do: ' + c.not, 72, '       ', '         '));
+    });
+    var mn = mobileNote(s, v);
+    if (mn) L.push(wrap(mn, 72, '     ', '       '));
+    L.push(wrap('Undo: ' + (s.undo || (s.risk === 'harmless' ? 'nothing to undo – this step changes nothing.' : 'no undo needed for this step.')), 72, '     ', '       '));
+  }
+
+  /** Plain-text fix log (also used for the print view). opts: { version, notes, date (string), url } */
   function fixLog(t, st, opts) {
     opts = opts || {};
     var v = opts.version, L = [];
     var line = '------------------------------------------------------------';
+    var end = t.nodes[st.node];
     L.push('CLICKSOLVE GUIDE – FIX LOG');
     L.push('Problem: ' + t.title);
     if (opts.date) L.push('Created: ' + opts.date);
     if (v && VERSIONS[v]) L.push('System: ' + VERSIONS[v]);
     if (opts.url) L.push('Diagnosis: ' + opts.url);
+    if (end && end.type === 'stop') {
+      L.push(line);
+      L.push('!! STOP NOTICE: ' + end.title);
+      L.push(wrap('This check ended in a hard stop. Do not continue on that page, do not bypass the warning and do not enter passwords, codes or card details there.', 72, '   '));
+    }
     L.push(line);
     L.push('LAYER MAP');
     t.layers.forEach(function (l) {
@@ -144,9 +192,9 @@
     st.path.forEach(function (p, i) {
       var n = t.nodes[p.node];
       L.push((i + 1) + '. ' + n.q);
+      (n.steps || []).forEach(function (id, j) { stepLines(L, t.steps[id], (i + 1) + '.' + (j + 1), v); });
       L.push('   Answer: ' + n.answers[p.answer].label);
     });
-    var end = t.nodes[st.node];
     if (end && end.type !== 'question') {
       L.push(line);
       L.push((end.type === 'stop' ? 'HARD STOP: ' : 'RESULT: ') + end.title);
@@ -158,17 +206,12 @@
       var steps = (end.steps || []).map(function (id) { return t.steps[id]; });
       if (steps.length) {
         L.push('  Recommended steps:');
-        steps.forEach(function (s, i) {
-          L.push('  ' + (i + 1) + ') ' + s.title + ' [' + RISKS[s.risk] + (s.time ? ', ' + s.time : '') + ']');
-          var p = resolvePath(s.paths, v);
-          if (p) L.push('     Where: ' + (p.fallback ? p.label + ': ' : '') + p.text);
-          (s.cmds || []).forEach(function (c) { if (!family(v) || c.os === family(v)) L.push('     Command (' + (c.os === 'win' ? 'Windows' : 'macOS') + '): ' + c.code); });
-          if (s.undo) L.push(wrap('Undo: ' + s.undo, 72, '     '));
-        });
+        steps.forEach(function (s, i) { stepLines(L, s, i + 1, v); });
       }
     } else {
       L.push(line);
       L.push('Diagnosis not finished. Next check: ' + (end ? end.q : ''));
+      if (end && end.steps) end.steps.forEach(function (id, j) { stepLines(L, t.steps[id], j + 1, v); });
     }
     var notes = (opts.notes || '').trim();
     if (notes) { L.push(line); L.push('NOTES'); notes.split(/\r?\n/).forEach(function (n) { L.push('  ' + n); }); }
@@ -223,7 +266,8 @@
   }
 
   var api = {
-    VERSIONS: VERSIONS, ORDER: ORDER, RISKS: RISKS,
+    VERSIONS: VERSIONS, ORDER: ORDER, RISKS: RISKS, RISK_INFO: RISK_INFO,
+    commandsFor: commandsFor, mobileNote: mobileNote,
     validateTree: validateTree, replay: replay, choose: choose, back: back,
     resolvePath: resolvePath, family: family, layerLabel: layerLabel,
     fixLog: fixLog, allRuns: allRuns, suggestVersion: suggestVersion

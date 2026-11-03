@@ -2,37 +2,37 @@
  {
   "path": "/diagnose/wifi-connected-no-internet/",
   "kind": "tool",
-  "words": 1951,
+  "words": 1990,
   "midAd": 3
  },
  {
   "path": "/diagnose/site-cant-be-reached/",
   "kind": "tool",
-  "words": 1610,
+  "words": 1630,
   "midAd": 3
  },
  {
   "path": "/diagnose/one-website-wont-load/",
   "kind": "tool",
-  "words": 1623,
+  "words": 1644,
   "midAd": 3
  },
  {
   "path": "/diagnose/printer-offline-windows-11/",
   "kind": "tool",
-  "words": 1585,
+  "words": 1600,
   "midAd": 3
  },
  {
   "path": "/diagnose/mac-printer-not-printing/",
   "kind": "tool",
-  "words": 1340,
+  "words": 1355,
   "midAd": 3
  },
  {
   "path": "/diagnose/laptop-wont-connect-wifi/",
   "kind": "tool",
-  "words": 1617,
+  "words": 1638,
   "midAd": 3
  },
  {
@@ -44,7 +44,7 @@
  {
   "path": "/guides/android-connected-no-internet/",
   "kind": "guide",
-  "words": 1350,
+  "words": 1416,
   "midAd": 3
  },
  {
@@ -56,7 +56,7 @@
  {
   "path": "/guides/windows-update-stuck/",
   "kind": "guide",
-  "words": 1568,
+  "words": 1819,
   "midAd": 3
  },
  {
@@ -134,7 +134,7 @@
  {
   "path": "/privacy/",
   "kind": "legal",
-  "words": 1063,
+  "words": 1117,
   "midAd": null
  }
 ]

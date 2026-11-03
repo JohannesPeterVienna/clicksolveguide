@@ -85,8 +85,10 @@
       box.appendChild(cb);
     });
     if (s.cmds && s.cmds.length) {
-      var phone = el('p', 'cmd-phone', 'No command needed on a phone or tablet – use the menu path above.');
+      // phones and tablets: no command; the note names the settings path only when one exists for that device
+      var phone = el('p', 'cmd-phone', '');
       phone.setAttribute('data-show-for', 'none');
+      phone.csgStep = s;
       box.appendChild(phone);
     }
     if (s.undo) { var u = el('p', 'undo'); u.appendChild(el('b', null, 'Undo: ')); u.appendChild(document.createTextNode(s.undo)); box.appendChild(u); }
@@ -173,7 +175,11 @@
   document.getElementById('diag-back').addEventListener('click', function () { var prev = state.layers; state = C.back(tree, state); after(prev); });
   document.getElementById('diag-reset').addEventListener('click', function () { var prev = state.layers; state = C.replay(tree, []); after(prev); });
   notes.addEventListener('input', function () { renderLog(); save(); });
-  document.addEventListener('csg:version', renderLog);
+  function renderPhoneNotes() {
+    var ns = card.querySelectorAll('.cmd-phone'), v = version();
+    for (var i = 0; i < ns.length; i++) if (ns[i].csgStep) { ns[i].textContent = C.mobileNote(ns[i].csgStep, v); if (!ns[i].textContent) ns[i].hidden = true; }
+  }
+  document.addEventListener('csg:version', function () { renderPhoneNotes(); renderLog(); });
 
   document.getElementById('log-txt').addEventListener('click', function () {
     var blob = new Blob([logText()], { type: 'text/plain;charset=utf-8' });

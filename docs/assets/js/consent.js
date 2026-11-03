@@ -51,7 +51,78 @@
     return out;
   }
 
-  var api = { decideConsent: decideConsent, region: region, allDenied: allDenied };
+  var US_SECTION = /^us/; // usnat, usca, usva, usco, usut, usct, ... (IAB GPP)
+  var OPT_OUT_FIELDS = ['SaleOptOut', 'SharingOptOut', 'TargetedAdvertisingOptOut'];
+  function segments(v) { return Object.prototype.toString.call(v) === '[object Array]' ? v : [v]; }
+
+  /**
+   * Current U.S. opt-out state from the GPP signal (__gpp 'addEventListener' / 'ping' pingData).
+   * 3 = opted out (any of sale / sharing / targeted advertising = 1, or GPC set), 2 = not opted out
+   * (a U.S. section is present and no opt-out), null = no usable signal (keep denied).
+   */
+  function usStatusFromGpp(pingData) {
+    if (!pingData || typeof pingData !== 'object' || pingData.signalStatus === 'not ready') return null;
+    var ps = pingData.parsedSections;
+    if (!ps || typeof ps !== 'object') return null;
+    var found = false, out = false;
+    Object.keys(ps).forEach(function (k) {
+      if (!US_SECTION.test(k)) return;
+      segments(ps[k]).forEach(function (seg) {
+        if (!seg || typeof seg !== 'object') return;
+        OPT_OUT_FIELDS.forEach(function (f) {
+          if (seg[f] === 1) out = true;
+          if (seg[f] === 2 || seg[f] === 0) found = true;
+        });
+        if (seg.Gpc === true) out = true;
+      });
+    });
+    return out ? 3 : (found ? 2 : null);
+  }
+
+  /**
+   * U.S. status used for the consent decision: 1 (does not apply) from the initial CMP status,
+   * otherwise only what the current GPP signal says; no GPP signal -> null (denied).
+   */
+  function effectiveUsStatus(initial, gpp) {
+    if (initial === 1) return 1;
+    return gpp === 2 || gpp === 3 ? gpp : null;
+  }
+
+  /**
+   * "Privacy settings": which consent dialog to open. fc = window.googlefc (may be missing).
+   * U.S. state regulation applies (status is not DOES_NOT_APPLY) -> the U.S. opt-out dialog;
+   * done(userDidOptOut) is called when it closes. Otherwise -> the GDPR revocation message.
+   * Returns 'us' | 'revocation' | 'none' (CMP not reachable). Never throws.
+   */
+  function openPrivacyChoices(fc, done) {
+    try {
+      var u = fc && fc.usstatesoptout;
+      if (u && typeof u.getInitialUsStatesOptOutStatus === 'function') {
+        var en = u.InitialUsStatesOptOutStatusEnum;
+        var doesNotApply = en && typeof en.DOES_NOT_APPLY === 'number' ? en.DOES_NOT_APPLY : 1;
+        var status = u.getInitialUsStatesOptOutStatus();
+        if (status !== doesNotApply && typeof u.openConfirmationDialog === 'function') {
+          u.openConfirmationDialog(function (userDidOptOut) {
+            try { if (done) done(!!userDidOptOut); } catch (e) { /* ignore */ }
+          });
+          return 'us';
+        }
+      }
+    } catch (e) { /* fall through to the revocation message */ }
+    try {
+      if (fc && typeof fc.showRevocationMessage === 'function') { fc.showRevocationMessage(); return 'revocation'; }
+    } catch (e) { /* CMP not reachable */ }
+    return 'none';
+  }
+
+  /** Local preview or test (localhost, 127.0.0.1, ::1, file:, ?stats_test=1) – no Google script is loaded there. */
+  function isLocalHost(hostname, protocol, search) {
+    if (protocol === 'file:' || /[?&]stats_test=1(&|$)/.test(String(search || ''))) return true;
+    var h = String(hostname || '').toLowerCase();
+    return h === 'localhost' || h === '127.0.0.1' || h === '::1' || h === '[::1]';
+  }
+
+  var api = { decideConsent: decideConsent, region: region, allDenied: allDenied, openPrivacyChoices: openPrivacyChoices, isLocalHost: isLocalHost, usStatusFromGpp: usStatusFromGpp, effectiveUsStatus: effectiveUsStatus, US_OPTED_OUT: 3 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CSGConsent = api;
 })(this);

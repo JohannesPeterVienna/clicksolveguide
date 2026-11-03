@@ -248,7 +248,7 @@
       "title": "Try a private window and a second browser",
       "risk": "harmless",
       "time": "about 2 min",
-      "text": "Open a private (incognito) window, which starts without extensions and cookies, and try a second browser. If pages load there, the problem is an extension, the browser's own secure-DNS setting or its cache – not the network."
+      "text": "Open a private (incognito) window, which starts without your cookies and without extensions – except any you have explicitly allowed to run there – and try a second browser. If pages load there, the problem is an extension, the browser's own secure-DNS setting or its cache – not the network."
     }
   },
   "nodes": {

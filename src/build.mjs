@@ -11,8 +11,20 @@ const ORIGIN = 'https://clicksolveguide.com';
 const GA = 'G-T00HRG2YVF';
 const PUB = 'ca-pub-7811071715414905';
 const REVIEWED = 'November 2, 2026';
-const ISO = '2026-11-02';
-const V = '20261102';
+const ISO = '2026-11-02'; // first publication
+// Pages whose content changed after first publication: dateModified, "Reviewed" line, change log and sitemap.
+const MOD_ISO = '2026-11-03', MOD_REVIEWED = 'November 3, 2026';
+const CHANGED = {
+  'wifi-connected-no-internet': 'fix log lists the risk, full text, commands for your system only and undo of every step; private-window wording; Chrome Incognito source added.',
+  'site-cant-be-reached': 'fix log lists the risk, full text, commands for your system only and undo of every step.',
+  'one-website-wont-load': 'fix log lists every step’s risk and undo and starts with a stop notice after a certificate warning.',
+  'printer-offline-windows-11': 'fix log lists the risk, full text and undo of every step.',
+  'mac-printer-not-printing': 'fix log lists the risk, full text and undo of every step.',
+  'laptop-wont-connect-wifi': 'fix log lists the risk, full text and undo of every step, including the network reset’s automatic restart.',
+  'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
+  'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
+};
+const V = '20261103';
 
 // ---------- load content ----------
 const content = [];
@@ -33,7 +45,14 @@ const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" widt
 const NAV = [['Diagnoses', '/diagnose/'], ['Guides', '/guides/'], ['Scam check', '/guides/tech-support-scams/'], ['How we check', '/how-we-check/'], ['About', '/about/']];
 
 const CONSENT_DEFAULTS = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-${GA}']=true;</script>`;
-const LOADER = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUB}" crossorigin="anonymous"></script>`;
+// Guard, first script in <head> (before consent defaults and any Google tag): local previews and tests
+// (localhost, 127.0.0.1, ::1, file:) and visits with ?stats_test=1 (kept for the browser tab) set
+// window.CSG_NO_GOOGLE – then no Google script is inserted at all (AdSense loader, its consent message, GA).
+const GUARD = `<script>window.CSG_NO_GOOGLE=(function(l){var h=l.hostname,t=false;try{if(/[?&]stats_test=1(&|$)/.test(l.search))sessionStorage.setItem('csg-stats-test','1');t=sessionStorage.getItem('csg-stats-test')==='1';}catch(e){t=/[?&]stats_test=1(&|$)/.test(l.search);}return t||l.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='::1'||h==='[::1]';})(location);</script>`;
+// AdSense loader at the same early place in <head> as the former static tag (right after the consent
+// defaults), async and with crossorigin="anonymous"; on clicksolveguide.com it behaves like the static tag.
+const ADS_SRC = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${PUB}`;
+const LOADER = `<script data-ads-loader>if(!window.CSG_NO_GOOGLE){(function(){var s=document.createElement('script');s.async=true;s.src='${ADS_SRC}';s.crossOrigin='anonymous';document.head.appendChild(s);})();}</script>`;
 
 const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 const ORG = { '@type': 'Organization', name: 'AdStern', url: ORIGIN + '/about/', address: { '@type': 'PostalAddress', streetAddress: 'Seilerstätte 8', postalCode: '1010', addressLocality: 'Vienna', addressCountry: 'AT' } };
@@ -56,6 +75,7 @@ function layout(pg) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+${GUARD}
 <title>${esc(pg.title)}</title>
 <meta name="description" content="${esc(pg.description)}">
 ${pg.noindex ? '<meta name="robots" content="noindex,follow">\n' : ''}${canonical}
@@ -136,7 +156,7 @@ function contentBody(pg) {
 <span class="kicker">${esc(pg.kicker)}</span>
 <h1>${pg.h1html || esc(pg.h1)}</h1>
 <p class="lede">${pg.lede}</p>
-<p class="trust"><span><b>Reviewed ${REVIEWED}</b></span><span>Applies to: ${esc(pg.applies)}</span><span>Sources: ${esc(pg.checked)}</span><span>Publisher: AdStern, Vienna</span></p>`;
+<p class="trust"><span><b>Reviewed ${CHANGED[pg.slug] ? MOD_REVIEWED : REVIEWED}</b></span><span>Applies to: ${esc(pg.applies)}</span><span>Sources: ${esc(pg.checked)}</span><span>Publisher: AdStern, Vienna</span></p>`;
   const secs = pg.sections.map((s) => `<section id="${s.id}" class="prose"><h2>${s.h2}</h2>\n${s.html}</section>`);
   const hasCtl = pg.sections.map((s) => CONTROL.test(s.html));
   // first ad: guides after the lede (before section 0), tools after section 0
@@ -160,7 +180,7 @@ function contentBody(pg) {
   const faq = `<section id="faq" class="prose faq"><h2>Questions people ask</h2>${pg.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
   const src = `<section id="sources" class="prose sources"><h2>Sources</h2><p>${pg.sourcesNote} Menu paths and commands follow the vendors’ own documentation; menus can change with updates – <a href="/contact/">tell us</a> if one differs.</p><ul>${pg.sources.map(([n, u]) => `<li>${u ? `<a href="${u}" rel="noopener">${n}</a>` : n}</li>`).join('')}</ul></section>`;
   const rel = `<section class="prose" aria-labelledby="rel-h"><h2 id="rel-h">Related checks</h2><ul class="related">${pg.related.map((u) => { const r = byPath[u]; if (!r) { if (ONLY) return ''; throw new Error(pg.slug + ': related missing ' + u); } return `<li><a href="${u}"><span>${r.kind === 'tool' ? 'Diagnosis' : 'Guide'}</span>${esc(r.h1)}</a></li>`; }).join('')}</ul></section>`;
-  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}</p>`;
+  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}${CHANGED[pg.slug] ? ` ${MOD_REVIEWED} – ${CHANGED[pg.slug]}` : ''}</p>`;
   const article = `<article>${head}
 ${pg.kind === 'tool' ? toolShell(pg) + SCAM_SHORT : ''}
 ${parts.join('\n')}
@@ -175,8 +195,8 @@ ${log}</article>`;
 function contentLd(pg) {
   const url = ORIGIN + pg.path;
   const main = pg.kind === 'tool'
-    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: ISO, publisher: ORG }
-    : { '@context': 'https://schema.org', '@type': 'Article', headline: pg.h1, description: pg.description, url, mainEntityOfPage: url, inLanguage: 'en-US', datePublished: ISO, dateModified: ISO, author: { '@type': 'Organization', name: 'ClickSolve Guide (AdStern)', url: ORIGIN + '/about/' }, publisher: ORG };
+    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: CHANGED[pg.slug] ? MOD_ISO : ISO, publisher: ORG }
+    : { '@context': 'https://schema.org', '@type': 'Article', headline: pg.h1, description: pg.description, url, mainEntityOfPage: url, inLanguage: 'en-US', datePublished: ISO, dateModified: CHANGED[pg.slug] ? MOD_ISO : ISO, author: { '@type': 'Organization', name: 'ClickSolve Guide (AdStern)', url: ORIGIN + '/about/' }, publisher: ORG };
   const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: pg.faq.map(([q, a]) => ({ '@type': 'Question', name: q.replace(/<[^>]+>/g, ''), acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) };
   return [main, crumbsLd(pg.crumbs), faq];
 }
@@ -209,7 +229,7 @@ for (const p of pages) {
   writeOut(rel, layout(p));
 }
 const indexable = pages.filter((p) => !p.noindex);
-writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${CHANGED[(p.path || '').split('/')[2]] || p.path === '/privacy/' ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeOut('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeOut('ads.txt', 'google.com, pub-7811071715414905, DIRECT, f08c47fec0942fa0\n');
 writeOut('CNAME', 'clicksolveguide.com\n');

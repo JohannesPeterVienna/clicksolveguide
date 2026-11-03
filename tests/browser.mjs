@@ -23,13 +23,18 @@ const srv = http.createServer((q, s) => {
 const base = `http://127.0.0.1:${srv.address().port}`;
 const urls = [...fs.readFileSync('docs/sitemap.xml', 'utf8').matchAll(/<loc>https:\/\/clicksolveguide\.com([^<]*)<\/loc>/g)].map((m) => m[1]);
 
-const browser = await chromium.launch();
+// stats.test resolves to this local server but is not a local host name: used for the ?stats_test=1 check
+const browser = await chromium.launch({ args: ['--host-resolver-rules=MAP stats.test 127.0.0.1'] });
 let fails = 0, minAdDist = Infinity, minAdWhere = '';
 const bad = (msg) => { fails++; console.log('✗ ' + msg); };
 
+// every request to a Google domain is recorded: on localhost / 127.0.0.1 there must be none at all
+const GOOGLE = /^https?:\/\/([^/]*\.)?(google|googlesyndication|googletagmanager|googleadservices|doubleclick|gstatic|google-analytics|fundingchoicesmessages\.google)\.[a-z.]+\//;
+const googleRequests = [];
 async function newCtx(width, opts = {}) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 }, acceptDownloads: true, ...opts });
-  await ctx.route(/^https?:\/\/(?!127\.0\.0\.1)/, (r) => r.abort());
+  ctx.on('request', (r) => { if (GOOGLE.test(r.url())) googleRequests.push(r.url()); });
+  await ctx.route(/^https?:\/\/(?!127\.0\.0\.1|localhost|stats\.test)/, (r) => r.abort());
   return ctx;
 }
 function watch(page, errs) {
@@ -156,6 +161,49 @@ for (const width of [390, 1366]) {
   await ctx.close();
 }
 
+// ---------- phones and tablets: no terminal commands, no copy buttons ----------
+{
+  const ctx = await newCtx(390); const page = await ctx.newPage();
+  for (const u of ['/diagnose/wifi-connected-no-internet/', '/diagnose/site-cant-be-reached/']) {
+    await page.goto(base + u); await page.waitForSelector('#tool.ready');
+    // walk to a result with command steps (DNS branch) – first answers until a .cmd appears
+    for (let i = 0; i < 12 && !(await page.locator('#diag-card .cmd').count()) && await page.locator('#diag-card .answer').count(); i++) await page.locator('#diag-card .answer').last().click();
+    for (const v of ['ios', 'android', 'win11', 'macnew']) {
+      await page.locator('.vswitch select').first().selectOption(v);
+      const vis = await page.$$eval('.cmd', (cs) => cs.filter((c) => !c.hidden && c.offsetParent !== null).map((c) => c.dataset.os));
+      const copies = await page.$$eval('button.copy', (bs) => bs.filter((b) => b.offsetParent !== null).length);
+      const log = await page.textContent('#fixlog-preview');
+      const fam = v.startsWith('win') ? 'win' : v.startsWith('mac') ? 'mac' : null;
+      if (!fam && (vis.length || copies || /Command \(/.test(log))) bad(`${u} ${v}: command or copy button visible/exported on a phone`);
+      if (fam && (vis.some((o) => o !== fam) || new RegExp(`Command \\(${fam === 'win' ? 'macOS' : 'Windows'}\\)`).test(log))) bad(`${u} ${v}: other platform's command shown/exported`);
+    }
+    if (!(await page.locator('.cmd').count())) bad(`${u}: no command block found to test`);
+    console.log(`✓ ${u}: commands only for the selected platform (none on iPhone/iPad, Android)`);
+  }
+  await ctx.close();
+}
+
+// ---------- localhost: no Google script at all ----------
+{
+  const ctx = await newCtx(1366); const page = await ctx.newPage();
+  const local = base.replace('127.0.0.1', 'localhost');
+  for (const u of ['/', '/diagnose/wifi-connected-no-internet/', '/privacy/']) {
+    await page.goto(local + u, { waitUntil: 'load' }); await page.waitForTimeout(300);
+    if (u === '/privacy/') { await page.click('[data-privacy-settings]'); await page.waitForTimeout(200); }
+    const tags = await page.$$eval('script[src]', (ss) => ss.map((s) => s.src).filter((x) => /google/.test(x)));
+    if (tags.length) bad(`localhost ${u}: Google script tag inserted: ${tags.join(', ')}`);
+  }
+  // a non-local host name with ?stats_test=1: the guard must stop every Google script, also on the next page
+  const port = srv.address().port;
+  for (const u of ['/?stats_test=1', '/diagnose/wifi-connected-no-internet/']) {
+    await page.goto(`http://stats.test:${port}${u}`, { waitUntil: 'load' }); await page.waitForTimeout(300);
+    const flag = await page.evaluate(() => window.CSG_NO_GOOGLE);
+    const tags = await page.$$eval('script[src]', (ss) => ss.map((s) => s.src).filter((x) => /google/.test(x)));
+    if (flag !== true || tags.length) bad(`stats_test ${u}: guard not active (${flag}) or Google script inserted ${tags.join(', ')}`);
+  }
+  await ctx.close();
+}
+
 // ---------- screenshots ----------
 for (const [u, name] of [['/', 'home'], ['/diagnose/wifi-connected-no-internet/', 'wifi-tool'], ['/diagnose/printer-offline-windows-11/', 'printer-tool']]) {
   for (const width of [390, 1366]) {
@@ -169,6 +217,9 @@ for (const [u, name] of [['/', 'home'], ['/diagnose/wifi-connected-no-internet/'
     }
   }
 }
+
+if (googleRequests.length) bad(`requests to Google domains on localhost/127.0.0.1: ${[...new Set(googleRequests)].slice(0, 5).join(', ')}`);
+else console.log('✓ no request to any Google domain on localhost / 127.0.0.1 / ?stats_test=1');
 
 await browser.close(); srv.close();
 console.log(`\nminimum distance between a forced-visible ad box and a control: ${Math.round(minAdDist)} px (${minAdWhere})`);
