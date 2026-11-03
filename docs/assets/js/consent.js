@@ -92,16 +92,21 @@
    * "Privacy settings": which consent dialog to open. fc = window.googlefc (may be missing).
    * U.S. state regulation applies (status is not DOES_NOT_APPLY) -> the U.S. opt-out dialog;
    * done(userDidOptOut) is called when it closes. Otherwise -> the GDPR revocation message.
+   * The U.S. dialog opens only for a known status NOT_OPTED_OUT (2) or OPTED_OUT (3) (enum values if present)
+   * and only when the latest TCF data (tc) does not say gdprApplies === true; UNKNOWN (0) or an EU visitor
+   * gets the revocation message so consent can always be withdrawn.
    * Returns 'us' | 'revocation' | 'none' (CMP not reachable). Never throws.
    */
-  function openPrivacyChoices(fc, done) {
+  function openPrivacyChoices(fc, done, tc) {
     try {
       var u = fc && fc.usstatesoptout;
       if (u && typeof u.getInitialUsStatesOptOutStatus === 'function') {
         var en = u.InitialUsStatesOptOutStatusEnum;
-        var doesNotApply = en && typeof en.DOES_NOT_APPLY === 'number' ? en.DOES_NOT_APPLY : 1;
+        var notOptedOut = en && typeof en.NOT_OPTED_OUT === 'number' ? en.NOT_OPTED_OUT : 2;
+        var optedOut = en && typeof en.OPTED_OUT === 'number' ? en.OPTED_OUT : 3;
+        var gdpr = !!(tc && typeof tc === 'object' && tc.gdprApplies === true);
         var status = u.getInitialUsStatesOptOutStatus();
-        if (status !== doesNotApply && typeof u.openConfirmationDialog === 'function') {
+        if ((status === notOptedOut || status === optedOut) && !gdpr && typeof u.openConfirmationDialog === 'function') {
           u.openConfirmationDialog(function (userDidOptOut) {
             try { if (done) done(!!userDidOptOut); } catch (e) { /* ignore */ }
           });

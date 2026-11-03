@@ -57,6 +57,7 @@
   /* ---------------- consent + analytics ---------------- */
   var gtag = window.gtag || function () { (window.dataLayer = window.dataLayer || []).push(arguments); };
   var cs = { tc: null, modeReady: false, us: null, gpp: null, gppOn: false, sent: '' };
+  var lastTc = null; // latest TCF data, kept across the click-time withdrawal
   var gaOn = false;
   function startGA() {
     if (gaOn || LOCAL) return; gaOn = true;
@@ -107,6 +108,7 @@
         if (typeof window.__tcfapi !== 'function') return;
         window.__tcfapi('addEventListener', 2, function (tc, ok) {
           cs.tc = ok ? tc : null;
+          if (ok && tc) lastTc = tc;
           if (ok && tc && tc.eventStatus === 'useractioncomplete' && window.googlefc && typeof window.googlefc.getGoogleConsentModeValues === 'function') cs.modeReady = true;
           applyConsent();
         });
@@ -139,7 +141,7 @@
               watchGpp();
             } catch (e) { cs.gpp = null; }
             applyConsent();
-          });
+          }, lastTc || prev.tc);   // latest TCF data: GDPR applies -> revocation message
         } catch (e) { /* CMP not reachable */ }
       });
       loadAdScript();

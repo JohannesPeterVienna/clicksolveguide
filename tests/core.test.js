@@ -266,7 +266,7 @@ function stubFc({ status, withEnum = true, optOut = false, throwOn } = {}) {
   return { fc, calls };
 }
 test('privacy settings: U.S. regulation applies -> U.S. opt-out dialog, callback gets the choice', () => {
-  for (const status of [0, 2, 3]) {
+  for (const status of [2, 3]) {
     const { fc, calls } = stubFc({ status, optOut: true });
     let got = null;
     assert.equal(K.openPrivacyChoices(fc, (o) => { got = o; }), 'us');
@@ -286,14 +286,41 @@ test('privacy settings: DOES_NOT_APPLY, no U.S. API or errors -> GDPR revocation
     assert.equal(K.openPrivacyChoices(fc, () => {}), 'revocation', JSON.stringify(opt));
     assert.deepEqual(calls, ['revocation']);
   }
-  // enum value from the CMP wins over the default 1
-  const { fc, calls } = stubFc({ status: 1 });
-  fc.usstatesoptout.InitialUsStatesOptOutStatusEnum = { DOES_NOT_APPLY: 7 };
+  // enum values from the CMP win over the defaults 2/3
+  const { fc, calls } = stubFc({ status: 7 });
+  fc.usstatesoptout.InitialUsStatesOptOutStatusEnum = { NOT_OPTED_OUT: 7, OPTED_OUT: 8 };
   assert.equal(K.openPrivacyChoices(fc, () => {}), 'us');
   assert.deepEqual(calls, ['us']);
+  const other = stubFc({ status: 2 });
+  other.fc.usstatesoptout.InitialUsStatesOptOutStatusEnum = { NOT_OPTED_OUT: 7, OPTED_OUT: 8 };
+  assert.equal(K.openPrivacyChoices(other.fc, () => {}), 'revocation');
   // nothing reachable / throwing -> never throws
   assert.equal(K.openPrivacyChoices(undefined, () => {}), 'none');
   assert.equal(K.openPrivacyChoices(stubFc({ throwOn: 'revocation' }).fc, () => {}), 'none');
+});
+
+test('privacy settings: EU + status 0 (UNKNOWN) -> revocation message, so consent can be withdrawn', () => {
+  for (const withEnum of [true, false]) {
+    const { fc, calls } = stubFc({ status: 0, withEnum });
+    assert.equal(K.openPrivacyChoices(fc, () => {}, { gdprApplies: true, eventStatus: 'tcloaded' }), 'revocation');
+    assert.deepEqual(calls, ['revocation']);
+  }
+  // UNKNOWN without TCF data or outside the GDPR: also the revocation message, never the U.S. dialog
+  for (const tc of [undefined, null, { gdprApplies: false }]) {
+    const { fc, calls } = stubFc({ status: 0 });
+    assert.equal(K.openPrivacyChoices(fc, () => {}, tc), 'revocation');
+    assert.deepEqual(calls, ['revocation']);
+  }
+});
+test('privacy settings: U.S. status 2 -> U.S. dialog; the same status with gdprApplies -> revocation message', () => {
+  for (const tc of [undefined, { gdprApplies: false, eventStatus: 'tcloaded' }]) {
+    const { fc, calls } = stubFc({ status: 2 });
+    assert.equal(K.openPrivacyChoices(fc, () => {}, tc), 'us');
+    assert.deepEqual(calls, ['us']);
+  }
+  const { fc, calls } = stubFc({ status: 2 });
+  assert.equal(K.openPrivacyChoices(fc, () => {}, { gdprApplies: true }), 'revocation');
+  assert.deepEqual(calls, ['revocation']);
 });
 
 // ---------- G: no Google script on local hosts ----------
