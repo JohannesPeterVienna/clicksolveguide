@@ -68,6 +68,14 @@
       "title": "Clear the device's DNS cache",
       "risk": "harmless", "time": "about 1 min",
       "text": "If the site recently moved to a new server, your device may still remember the old address.",
+      "paths": {
+        "win11": "Start > type cmd > Command Prompt, then run the command below",
+        "win10": "Start > type cmd > Command Prompt, then run the command below",
+        "macnew": "Finder > Applications > Utilities > Terminal, then run the command below",
+        "macold": "Finder > Applications > Utilities > Terminal, then run the command below",
+        "ios": "Turn on Airplane Mode (Control Center or Settings > Airplane Mode), wait about 10 seconds and turn it off again – or restart the iPhone or iPad. Either one empties its DNS cache.",
+        "android": "Turn on Airplane mode (Quick Settings – swipe down from the top), wait about 10 seconds and turn it off again – or restart the phone. Either one empties its DNS cache. In Chrome you can also open chrome://net-internals/#dns and tap 'Clear host cache'."
+      },
       "cmds": [
         { "os": "win", "code": "ipconfig /flushdns", "what": "Empties Windows' cache of remembered name lookups.", "not": "It doesn't change DNS servers or delete browser data." },
         { "os": "mac", "code": "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder", "what": "Clears the Mac's DNS cache and reloads the name service. Asks for your Mac password.", "not": "It changes no settings.", "admin": true }

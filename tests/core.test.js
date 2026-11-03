@@ -413,3 +413,32 @@ test('fix log: full step text and command conditions; network reset warns about 
   assert.ok(log.includes('What it does: ' + flush.what.replace(/\s+/g, ' ')));
   assert.ok(log.includes('What it does not do: ' + flush.not.replace(/\s+/g, ' ')));
 });
+
+// ---------- DNS cache on phones: own instructions, no "use a PC or Mac" hint ----------
+test('DNS cache steps: iPhone/iPad and Android get their own instructions, no PC/Mac hint, no command', () => {
+  const steps = [['wifi-no-internet', 's_flush'], ['site-cant-be-reached', 'c_flush'], ['one-website', 'o_flush']];
+  for (const [tid, sid] of steps) {
+    const t = trees.find((x) => x.id === tid);
+    const s = t.steps[sid];
+    for (const v of ['ios', 'android']) {
+      const p = C.resolvePath(s.paths, v);
+      assert.ok(p && !p.fallback, `${sid} ${v}: own path`);
+      const note = C.mobileNote(s, v);
+      assert.match(note, /Airplane [Mm]ode/, `${sid} ${v}`);
+      assert.doesNotMatch(note, /PC or Mac|Windows|Terminal|command line/, `${sid} ${v}`);
+      assert.deepEqual(C.commandsFor(s, v), [], `${sid} ${v}: no terminal command`);
+      assert.doesNotMatch(s.paths[v], /sudo|ipconfig|dscacheutil/);
+    }
+    assert.match(s.paths.android, /chrome:\/\/net-internals\/#dns/);
+    assert.match(s.paths.android, /Clear host cache/);
+    for (const v of ['win11', 'win10', 'macnew', 'macold']) assert.ok(!C.resolvePath(s.paths, v).fallback, `${sid} ${v}: no phone text on a computer`);
+  }
+  const t = trees.find((x) => x.id === 'wifi-no-internet');
+  const dns = C.allRuns(t).find((r) => r.end === 'r_dns');
+  const flat = C.fixLog(t, dns.state, { version: 'ios' }).replace(/\s+/g, ' ');
+  const i = flat.indexOf("Clear the device's DNS cache");
+  assert.ok(i > 0, 's_flush in the iPhone log');
+  const part = flat.slice(i, flat.indexOf('Undo:', i));
+  assert.doesNotMatch(part, /PC or Mac|skip it/);
+  assert.match(part, /restart the iPhone or iPad/);
+});

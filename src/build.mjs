@@ -15,16 +15,16 @@ const ISO = '2026-11-02'; // first publication
 // Pages whose content changed after first publication: dateModified, "Reviewed" line, change log and sitemap.
 const MOD_ISO = '2026-11-03', MOD_REVIEWED = 'November 3, 2026';
 const CHANGED = {
-  'wifi-connected-no-internet': 'fix log lists the risk, full text, commands for your system only and undo of every step; private-window wording; Chrome Incognito source added.',
-  'site-cant-be-reached': 'fix log lists the risk, full text, commands for your system only and undo of every step.',
-  'one-website-wont-load': 'fix log lists every step’s risk and undo and starts with a stop notice after a certificate warning.',
+  'wifi-connected-no-internet': 'fix log lists the risk, full text, commands for your system only and undo of every step; private-window wording; Chrome Incognito source added. Clearing the DNS cache has its own steps for iPhone, iPad and Android.',
+  'site-cant-be-reached': 'fix log lists the risk, full text, commands for your system only and undo of every step. Clearing the DNS cache has its own steps for iPhone, iPad and Android.',
+  'one-website-wont-load': 'fix log lists every step’s risk and undo and starts with a stop notice after a certificate warning. Clearing the DNS cache has its own steps for iPhone, iPad and Android.',
   'printer-offline-windows-11': 'fix log lists the risk, full text and undo of every step.',
   'mac-printer-not-printing': 'fix log lists the risk, full text and undo of every step.',
   'laptop-wont-connect-wifi': 'fix log lists the risk, full text and undo of every step, including the network reset’s automatic restart.',
   'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
   'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
 };
-const V = '20261103b';
+const V = '20261103c';
 
 // ---------- load content ----------
 const content = [];

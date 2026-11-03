@@ -68,6 +68,14 @@
       "risk": "harmless",
       "time": "about 1 min",
       "text": "The device remembers recent lookups. If a site moved to a new address, an old entry keeps pointing to the wrong place until it expires or is cleared.",
+      "paths": {
+        "win11": "Start > type cmd > Command Prompt, then run the command below",
+        "win10": "Start > type cmd > Command Prompt, then run the command below",
+        "macnew": "Finder > Applications > Utilities > Terminal, then run the command below",
+        "macold": "Finder > Applications > Utilities > Terminal, then run the command below",
+        "ios": "Turn on Airplane Mode (Control Center or Settings > Airplane Mode), wait about 10 seconds and turn it off again – or restart the iPhone or iPad. Either one empties its DNS cache.",
+        "android": "Turn on Airplane mode (Quick Settings – swipe down from the top), wait about 10 seconds and turn it off again – or restart the phone. Either one empties its DNS cache. In Chrome you can also open chrome://net-internals/#dns and tap 'Clear host cache'."
+      },
       "cmds": [
         {
           "os": "win",
