@@ -85,7 +85,7 @@
       box.appendChild(cb);
     });
     if (s.cmds && s.cmds.length) {
-      // phones and tablets: no command; the note names the settings path only when one exists for that device
+      // phones and tablets: no command; with an own path for that device only a short pointer to "Where:"
       var phone = el('p', 'cmd-phone', '');
       phone.setAttribute('data-show-for', 'none');
       phone.csgStep = s;

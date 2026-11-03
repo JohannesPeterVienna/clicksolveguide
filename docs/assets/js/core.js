@@ -139,11 +139,14 @@
     return (step.cmds || []).filter(function (c) { return c.os === fam; });
   }
 
-  /** Text the UI and the log show instead of commands on a phone or tablet ('' when not needed). */
+  /**
+   * Text the UI and the log show instead of commands on a phone or tablet ('' when not needed).
+   * With its own path for that device the steps already stand under "Where:", so only a short pointer.
+   */
   function mobileNote(step, v) {
     if (!MOBILE[v] || !(step.cmds && step.cmds.length)) return '';
     var p = resolvePath(step.paths, v);
-    return 'No terminal command on ' + VERSIONS[v] + ' – ' + (p && !p.fallback ? 'use the settings path: ' + p.text : 'phones and tablets have no command line. Run this check on a Windows PC or Mac on the same network, or skip it.');
+    return 'No terminal command on ' + VERSIONS[v] + ' – ' + (p && !p.fallback ? 'use the steps under \u2018Where\u2019.' : 'phones and tablets have no command line. Run this check on a Windows PC or Mac on the same network, or skip it.');
   }
 
   /** Lines for one step: risk label with meaning, where, commands of the chosen platform only, undo. */

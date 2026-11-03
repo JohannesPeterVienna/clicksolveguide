@@ -205,7 +205,8 @@ test('commandsFor/mobileNote: only the selected platform, nothing for phones and
   assert.deepEqual(C.commandsFor(s, 'ios'), []);
   assert.deepEqual(C.commandsFor(s, 'android'), []);
   assert.deepEqual(C.commandsFor(s, null), []);
-  assert.match(C.mobileNote(s, 'ios'), /settings path: Settings > Wi-Fi/);
+  assert.equal(C.mobileNote(s, 'ios'), 'No terminal command on ' + C.VERSIONS.ios + ' – use the steps under ‘Where’.');
+  assert.doesNotMatch(C.mobileNote(s, 'ios'), /Settings > Wi-Fi/); // the path itself stands only under "Where:"
   assert.match(C.mobileNote(s, 'android'), /no command line/);
   assert.equal(C.mobileNote(s, 'win11'), '');
   assert.equal(C.mobileNote({ paths: { ios: 'x' } }, 'ios'), '');
@@ -391,6 +392,11 @@ test('GPP: without a GPP signal a U.S.-regulated visitor stays denied', () => {
   assert.equal(K.decideConsent(out, ALL(1), K.effectiveUsStatus(2, 2)).analytics_storage, 'granted');
   assert.deepEqual(K.decideConsent(out, ALL(1), K.effectiveUsStatus(2, 3)), K.allDenied());
   assert.deepEqual(K.decideConsent(out, ALL(1), K.effectiveUsStatus(3, 3)), K.allDenied());
+  // a later GPP opt-out wins even over an initial DOES_NOT_APPLY (fail-closed)
+  assert.equal(K.effectiveUsStatus(1, 3), 3);
+  assert.equal(K.effectiveUsStatus(0, 3), 3);
+  assert.equal(K.effectiveUsStatus(1, 2), 1);
+  assert.deepEqual(K.decideConsent(out, ALL(1), K.effectiveUsStatus(1, 3)), K.allDenied());
 });
 test('page script listens to GPP and uses the effective U.S. status', () => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'docs', 'assets', 'js', 'site.js'), 'utf8');
@@ -424,8 +430,9 @@ test('DNS cache steps: iPhone/iPad and Android get their own instructions, no PC
       const p = C.resolvePath(s.paths, v);
       assert.ok(p && !p.fallback, `${sid} ${v}: own path`);
       const note = C.mobileNote(s, v);
-      assert.match(note, /Airplane [Mm]ode/, `${sid} ${v}`);
-      assert.doesNotMatch(note, /PC or Mac|Windows|Terminal|command line/, `${sid} ${v}`);
+      assert.equal(note, 'No terminal command on ' + C.VERSIONS[v] + ' – use the steps under ‘Where’.', `${sid} ${v}: short pointer, no repeated path`);
+      assert.doesNotMatch(note, /Airplane [Mm]ode|PC or Mac|Windows|command line/, `${sid} ${v}`);
+      assert.match(p.text, /Airplane [Mm]ode/, `${sid} ${v}: the steps stand under Where`);
       assert.deepEqual(C.commandsFor(s, v), [], `${sid} ${v}: no terminal command`);
       assert.doesNotMatch(s.paths[v], /sudo|ipconfig|dscacheutil/);
     }
@@ -441,4 +448,6 @@ test('DNS cache steps: iPhone/iPad and Android get their own instructions, no PC
   const part = flat.slice(i, flat.indexOf('Undo:', i));
   assert.doesNotMatch(part, /PC or Mac|skip it/);
   assert.match(part, /restart the iPhone or iPad/);
+  assert.equal(part.split(/Airplane [Mm]ode/).length - 1, (C.resolvePath(t.steps.s_flush.paths, 'ios').text.match(/Airplane [Mm]ode/g) || []).length, 'airplane-mode text only once (under Where), not repeated');
+  assert.match(part, /No terminal command on [^–]+ – use the steps under ‘Where’\./);
 });

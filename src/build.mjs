@@ -24,7 +24,7 @@ const CHANGED = {
   'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
   'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
 };
-const V = '20261103c';
+const V = '20261103d';
 
 // ---------- load content ----------
 const content = [];

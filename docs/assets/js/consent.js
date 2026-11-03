@@ -80,10 +80,11 @@
   }
 
   /**
-   * U.S. status used for the consent decision: 1 (does not apply) from the initial CMP status,
-   * otherwise only what the current GPP signal says; no GPP signal -> null (denied).
+   * U.S. status used for the consent decision: a GPP opt-out (3) always wins; otherwise 1 (does not apply)
+   * from the initial CMP status, else only what the current GPP signal says; no GPP signal -> null (denied).
    */
   function effectiveUsStatus(initial, gpp) {
+    if (gpp === 3) return 3; // a later GPP opt-out always wins, even over an initial DOES_NOT_APPLY (fail-closed)
     if (initial === 1) return 1;
     return gpp === 2 || gpp === 3 ? gpp : null;
   }
