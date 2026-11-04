@@ -31,9 +31,12 @@ const bad = (msg) => { fails++; console.log('✗ ' + msg); };
 // every request to a Google domain is recorded: on localhost / 127.0.0.1 there must be none at all
 const GOOGLE = /^https?:\/\/([^/]*\.)?(google|googlesyndication|googletagmanager|googleadservices|doubleclick|gstatic|google-analytics|fundingchoicesmessages\.google)\.[a-z.]+\//;
 const googleRequests = [];
+const local404 = [];
 async function newCtx(width, opts = {}) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 }, acceptDownloads: true, ...opts });
   ctx.on('request', (r) => { if (GOOGLE.test(r.url())) googleRequests.push(r.url()); });
+  // every local resource must exist: a 404 from the local server is a broken link or asset
+  ctx.on('response', (r) => { if (r.status() === 404 && /^https?:\/\/(127\.0\.0\.1|localhost|stats\.test)[:/]/.test(r.url())) local404.push(r.url()); });
   await ctx.route(/^https?:\/\/(?!127\.0\.0\.1|localhost|stats\.test)/, (r) => r.abort());
   return ctx;
 }
@@ -218,6 +221,8 @@ for (const [u, name] of [['/', 'home'], ['/diagnose/wifi-connected-no-internet/'
   }
 }
 
+if (local404.length) bad(`local 404 responses: ${[...new Set(local404)].slice(0, 5).join(', ')}`);
+else console.log('✓ no local 404 response');
 if (googleRequests.length) bad(`requests to Google domains on localhost/127.0.0.1: ${[...new Set(googleRequests)].slice(0, 5).join(', ')}`);
 else console.log('✓ no request to any Google domain on localhost / 127.0.0.1 / ?stats_test=1');
 

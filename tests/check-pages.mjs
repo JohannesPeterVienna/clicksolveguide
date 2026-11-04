@@ -21,7 +21,8 @@ const words = (h) => text(h).split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).l
 const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 
 const titles = new Map(), descs = new Map();
-const NO_LOADER = ['/imprint/', '/privacy/', '/contact/', '/about/', '/how-we-check/', '/diagnose/', '/guides/', '/404.html'];
+// legal pages promise no advertising: no loader there; every other indexable page has it
+const NO_LOADER = ['/imprint/', '/privacy/', '/contact/', '/404.html'];
 const CONTROL = /<button|<select|<input|<textarea|<summary|class="cmd"|class="vswitch"|class="tool"/;
 const report = [];
 
@@ -54,7 +55,7 @@ for (const p of pages) {
     if (!afterDefaults.startsWith('<script data-ads-loader>')) fail(url, 'AdSense loader not directly after the consent defaults');
   }
   if (NO_LOADER.includes(url) || noindex) { if (loader) fail(url, 'AdSense loader must not be on this page'); }
-  else if (isContent || url === '/') { if (!loader) fail(url, 'AdSense loader missing'); }
+  else if (indexable) { if (!loader) fail(url, 'AdSense loader missing'); }
   const ads = (html.match(/class="ad"/g) || []).length;
   if (!isContent && ads) fail(url, 'ad slot on a page that must not have ads');
   if (/<script[^>]+googletagmanager/.test(html)) fail(url, 'GA loaded statically');

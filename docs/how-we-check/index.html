@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-US" data-ads="no">
+<html lang="en-US" data-ads="yes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,7 @@
 <link rel="canonical" href="https://clicksolveguide.com/how-we-check/">
 <meta name="google-adsense-account" content="ca-pub-7811071715414905">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-G-T00HRG2YVF']=true;</script>
+<script data-ads-loader>if(!window.CSG_NO_GOOGLE){(function(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7811071715414905';s.crossOrigin='anonymous';document.head.appendChild(s);})();}</script>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#102033">
 <meta property="og:type" content="website">
@@ -18,11 +19,11 @@
 <meta property="og:url" content="https://clicksolveguide.com/how-we-check/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=20261103d">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261104a">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clicksolveguide.com/"},{"@type":"ListItem","position":2,"name":"How we check","item":"https://clicksolveguide.com/how-we-check/"}]}</script>
-<script src="/assets/js/consent.js?v=20261103d" defer></script>
-<script src="/assets/js/core.js?v=20261103d" defer></script>
-<script src="/assets/js/site.js?v=20261103d" defer></script>
+<script src="/assets/js/consent.js?v=20261104a" defer></script>
+<script src="/assets/js/core.js?v=20261104a" defer></script>
+<script src="/assets/js/site.js?v=20261104a" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,7 +34,7 @@
 <main id="main" class="wrap">
 <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><span aria-current="page">How we check</span></li></ol></nav><article class="prose"><span class="kicker">Method</span><h1>How we check our guides</h1>
 <p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, which sources each page is based on, and where the limits are.</p>
-<p class="trust"><span><b>Reviewed November 2, 2026</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
+<p class="trust"><span><b>Reviewed November 4, 2026</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
 <h2 id="layers">The layer model</h2>
 <p>Every diagnosis on this site uses the same idea: a request from your screen passes through layers, and a fault sits in one of them. For internet problems the layers are your <b>device</b>, the <b>Wi-Fi</b> link, the <b>router</b>, your internet <b>provider (ISP)</b> and the <b>service</b> – the website or app at the other end. Printer problems use a shorter chain: computer and print queue, connection, router, printer.</p>
 <p>A good check rules out a whole layer without changing anything. “Does another device on the same Wi-Fi work?” clears router and provider in one go. “Does the site open on mobile data?” clears the website. We order the checks so that the cheapest, safest and most informative ones come first, and we only show fixes once the layer is narrowed down.</p>
@@ -57,6 +58,8 @@
 <h2 id="sources">Which sources each page is based on</h2>
 <p>Steps and menu paths follow the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
 <p>We do not claim lab testing on hardware we don't have. The source line at the top of each page names the documentation a page is based on – it does not mean someone reproduced every fault on every device. Menus can change with updates; tell us when one differs.</p>
+<h2 id="review">How a page is written and reviewed</h2>
+<p>Pages are written with the help of AI tools from the official documentation listed under each page. Before publication, a separate review pass checks the statements, menu paths and commands against those sources, and anything that cannot be confirmed is rewritten more generally or removed. That review consists of independent AI review passes and the automated tests described above; there is no team of human editors behind the site. AdStern, the publisher, decides what goes online and is responsible for it.</p>
 <h2 id="risk">Risk labels</h2>
 <div class="tablewrap"><table><caption>The four risk labels used on every step</caption><thead><tr><th scope="col">Label</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead><tbody><tr><th scope="row"><span class="risk risk-harmless" title="Nothing changes on your device that you would need to undo.">Harmless</span></th><td>Reads information or restarts something. Nothing to undo.</td><td>Running <code>ipconfig</code>, restarting the router</td></tr><tr><th scope="row"><span class="risk risk-setting" title="Changes one setting; the undo is listed with the step.">Changes a setting</span></th><td>Changes one setting. The undo is printed with the step.</td><td>Forgetting a Wi-Fi network, changing DNS servers</td></tr><tr><th scope="row"><span class="risk risk-admin" title="Needs an administrator account or password.">Admin needed</span></th><td>Needs an administrator account or password.</td><td>Restarting the Print Spooler, flushing DNS on a Mac</td></tr><tr><th scope="row"><span class="risk risk-last" title="Removes saved settings or data; do the other checks first.">Last resort</span></th><td>Removes saved settings or data; only after the other steps.</td><td>Windows Network reset, resetting the Mac printing system</td></tr></tbody></table></div>
 <h2 id="never">What we leave out on purpose</h2>
@@ -68,7 +71,7 @@
 <p>A decision tree can only follow the answers it gets. If a check is misread – a router light that looks normal but isn't – the result can point to the wrong layer. That's why every result says why it was reached, and why “Back one step” is always available. Company-managed computers may have menus locked or changed by IT; in that case your IT department is the right first contact. For hardware faults, the device maker's support is the place to go.</p>
 <h2 id="corrections">Corrections and review</h2>
 <p>When an operating system update changes a menu, or a reader reports a path that doesn't match, the page is corrected and its review date changes. You can report errors through the <a href="/contact/">contact page</a>. Pages are reviewed again after major Windows, macOS, iOS and Android releases.</p>
-<p class="changelog">Last updated: November 2, 2026</p></article>
+<p class="changelog">Last updated: November 4, 2026</p></article>
 </main>
 <footer class="foot"><div class="wrap">
 <div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>

@@ -98,25 +98,25 @@
  {
   "path": "/diagnose/",
   "kind": "hub",
-  "words": 440,
+  "words": 1044,
   "midAd": null
  },
  {
   "path": "/guides/",
   "kind": "hub",
-  "words": 488,
+  "words": 998,
   "midAd": null
  },
  {
   "path": "/about/",
   "kind": "about",
-  "words": 416,
+  "words": 773,
   "midAd": null
  },
  {
   "path": "/how-we-check/",
   "kind": "about",
-  "words": 855,
+  "words": 943,
   "midAd": null
  },
  {
@@ -134,7 +134,7 @@
  {
   "path": "/privacy/",
   "kind": "legal",
-  "words": 1117,
+  "words": 1147,
   "midAd": null
  }
 ]

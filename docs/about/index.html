@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-US" data-ads="no">
+<html lang="en-US" data-ads="yes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,7 @@
 <link rel="canonical" href="https://clicksolveguide.com/about/">
 <meta name="google-adsense-account" content="ca-pub-7811071715414905">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-G-T00HRG2YVF']=true;</script>
+<script data-ads-loader>if(!window.CSG_NO_GOOGLE){(function(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7811071715414905';s.crossOrigin='anonymous';document.head.appendChild(s);})();}</script>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#102033">
 <meta property="og:type" content="website">
@@ -18,11 +19,11 @@
 <meta property="og:url" content="https://clicksolveguide.com/about/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=20261103d">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261104a">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clicksolveguide.com/"},{"@type":"ListItem","position":2,"name":"About","item":"https://clicksolveguide.com/about/"}]}</script>
-<script src="/assets/js/consent.js?v=20261103d" defer></script>
-<script src="/assets/js/core.js?v=20261103d" defer></script>
-<script src="/assets/js/site.js?v=20261103d" defer></script>
+<script src="/assets/js/consent.js?v=20261104a" defer></script>
+<script src="/assets/js/core.js?v=20261104a" defer></script>
+<script src="/assets/js/site.js?v=20261104a" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,17 +34,23 @@
 <main id="main" class="wrap">
 <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><span aria-current="page">About</span></li></ol></nav><article class="prose"><span class="kicker">About</span><h1>About ClickSolve Guide</h1><p class="lede">ClickSolve Guide helps you find out <i>where</i> a technical problem sits – on your device, in the Wi-Fi, at the router, at your provider or at the service – before you start changing settings.</p>
 <h2 id="who">Who publishes the site</h2>
-<p>ClickSolve Guide is published by AdStern, an advertising agency based in Vienna, Austria (full details in the <a href="/imprint/">imprint</a>). The site is financed by advertising shown on diagnosis and guide pages. No hardware maker, software vendor or internet provider pays for mentions, and the guides contain no affiliate links.</p>
+<p>ClickSolve Guide is published by AdStern (Johannes Peter), an advertising agency based in Vienna, Austria (full details in the <a href="/imprint/">imprint</a>). It is a small independent site, not a company with a support staff or a test lab. The site is financed by advertising shown on the diagnosis, guide and overview pages; the imprint, privacy policy and contact page carry no advertising. No hardware maker, software vendor or internet provider pays for mentions, and the guides contain no affiliate links.</p>
 <h2 id="method">Method in short</h2>
 <p>Each diagnosis is a decision tree: a question, a quick check, an answer that rules layers in or out. The visible layer map shows what has been ruled out. Results show only the steps for the remaining layer, written for the system you choose – Windows 11 or 10, macOS 13 or later or older macOS, iPhone and iPad, or Android. Every step has a risk label and, if it changes something, an undo. The full method is on <a href="/how-we-check/">How we check our guides</a>.</p>
 <h2 id="checks">How the content is put together</h2>
-<p>Menu paths, commands and steps are based on the manufacturers' own documentation – Microsoft, Apple, Google and the printer makers – and every page names its sources and shows its review date. An automated test walks every path of every decision tree before publication. When we are not certain that a menu is named the same way on every version, we describe it more generally instead of guessing.</p>
+<p>Menu paths, commands and steps are based on the manufacturers' own documentation – Microsoft, Apple, Google and the printer makers – and every page names its sources and shows its review date. When we are not certain that a menu is named the same way on every version, we describe it more generally instead of guessing.</p>
+<p>The pages are written with the help of AI tools, working from that official documentation. Before a page is published, it goes through a separate review pass that checks its statements, menu paths and commands against the sources it names; findings from that pass are fixed or the statement is removed. That review is done by independent AI review passes and automated tests, not by a team of human editors – the site does not have one. The publisher decides what is published and is responsible for it.</p>
+<h2 id="tests">What the automated tests check</h2>
+<p>The automated tests run before every publication and stop it when one of them fails. They walk every possible path of every decision tree and fail if a path ends nowhere, loops, refers to a missing step, or offers a step that changes a setting without an undo. They build the fix log for every path and check that it contains the answers, the result and the risk label of each step. They check that the commands shown match the system you chose, and that phones and tablets get settings paths instead of terminal commands. A page check fails on any broken internal link, and every page is loaded in a headless browser at phone and desktop width to catch script errors and layouts wider than the screen.</p>
+<p>What the tests cannot do is press buttons on your router or open the settings of every phone model. Nobody at ClickSolve Guide has reproduced each fault on each device, and the pages don't claim so. The “Sources” line at the top of a page names the documentation it is based on; the “Reviewed” date is the day the page was last checked against those sources.</p>
+<h2 id="corrections">Corrections</h2>
+<p>Menus move with system updates, and some devices name things differently. If a step doesn't match your screen, write to us through the <a href="/contact/">contact page</a> with the page, the step and your system version. Confirmed errors are corrected, the page's review date changes and its change log says what was corrected.</p>
 <h2 id="limits">What the site cannot do</h2>
 <p>It cannot see your device or network, so a result is a well-founded likelihood, not a certainty. It doesn't replace your company's IT department, your provider's line check or a hardware repair. It never offers remote support or phone help.</p>
 <h2 id="data">Your data</h2>
 <p>Diagnosis answers, notes and your chosen system version are stored only in your browser (local storage). The fix log is created in your browser too; nothing is uploaded. Details on advertising and analytics are in the <a href="/privacy/">privacy policy</a>.</p>
 <h2 id="history">History</h2>
-<p>The first version of this site was a single browser checklist covering four common problems, with a notes field, a report download and four short guides. The idea – one check after another, with a record at the end – is still the core. In November 2026 the site was rebuilt from scratch: the checklist became six branching diagnoses with a layer map and fix log, and the short guides became the full guides you can find under <a href="/guides/">Guides</a>.</p><p class="changelog">Last updated: November 2, 2026</p></article>
+<p>The first version of this site was a single browser checklist covering four common problems, with a notes field, a report download and four short guides. The idea – one check after another, with a record at the end – is still the core. In November 2026 the site was rebuilt from scratch: the checklist became six branching diagnoses with a layer map and fix log, and the short guides became the full guides you can find under <a href="/guides/">Guides</a>.</p><p class="changelog">Last updated: November 4, 2026</p></article>
 </main>
 <footer class="foot"><div class="wrap">
 <div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>
