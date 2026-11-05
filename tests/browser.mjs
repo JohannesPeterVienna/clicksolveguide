@@ -54,7 +54,7 @@ for (const width of [390, 1366]) {
     await page.waitForTimeout(250);
     const info = await page.evaluate(() => ({
       overflow: document.documentElement.scrollWidth - window.innerWidth,
-      visibleAds: [...document.querySelectorAll('.ad')].filter((a) => a.offsetHeight > 0).length
+      visibleAds: [...document.querySelectorAll('.ad')].filter((a) => a.offsetHeight > 0 && !a.querySelector('ins.adsbygoogle[data-ad-slot]')).length
     }));
     if (info.overflow > 1) errs.push('horizontal overflow ' + info.overflow + 'px');
     if (info.visibleAds) errs.push('ad box visible without slot id');
