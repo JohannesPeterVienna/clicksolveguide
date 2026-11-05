@@ -38,6 +38,15 @@
     s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + CLIENT;
     document.head.appendChild(s);
   }
+  // Pages without ads: only Google's consent script (Funding Choices), on an explicit click – never adsbygoogle.js,
+  // so no ads (and no Auto ads) can appear on imprint, privacy, contact or 404.
+  var FC_SRC = 'https://fundingchoicesmessages.google.com/i/pub-7811071715414905?ers=1';
+  function loadConsentScript() {
+    if (LOCAL || document.querySelector('script[src*="fundingchoicesmessages.google.com"]')) return;
+    var s = document.createElement('script');
+    s.async = true; s.src = FC_SRC;
+    document.head.appendChild(s);
+  }
   function fillSlots() {
     var wide = window.matchMedia('(min-width: 1200px)').matches;
     if (SLOTS.sidebar && wide && document.querySelector('.ad[data-slot="sidebar"]')) root.classList.add('has-side');
@@ -168,7 +177,7 @@
         }, lastTc || prev.tc);   // latest TCF data: GDPR applies -> revocation message
       } catch (e) { /* CMP not reachable */ }
     });
-    loadAdScript();
+    if (adsPage) loadAdScript(); else loadConsentScript(); // the callback queue above is ready before the script runs
   }
   // "Privacy settings": Google's CMP once it has spoken, otherwise (and on pages without ads) the statistics window
   function privacyButtons() {

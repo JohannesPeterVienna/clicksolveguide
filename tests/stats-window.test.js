@@ -60,7 +60,7 @@ function page({ ads = true, stored, storage = 'ok', gpc = false, cookies = [], h
     documentElement: null, head: null, body: null,
     createElement: (t) => el(t, document),
     getElementById: (id) => document.body.querySelector('#' + id),
-    querySelector: (sel) => (/^script/.test(sel) ? (scripts.find((s) => /adsbygoogle/.test(s.src)) || null) : document.body.querySelector(sel)),
+    querySelector: (sel) => { const m = sel.match(/^script\[src\*="([^"]+)"\]$/); return m ? (scripts.find((s) => String(s.src).includes(m[1])) || null) : document.body.querySelector(sel); },
     querySelectorAll: (sel) => document.body.querySelectorAll(sel),
     addEventListener: (ev, fn) => { document.docListeners[ev] = fn; }
   });
@@ -412,4 +412,21 @@ test('privacy policy: interim statistics section with anchor, linked from the an
   assert.match(ga, /href="#interim-statistics"/);
   for (const s of ['csg-stats', '12 months', 'Art. 6(1)(a) GDPR', '§ 165(3)', 'Global Privacy Control', 'priority', 'Visitors from the U.S.']) assert.ok(html.includes(s), s);
   assert.match(html, /Last updated: November 5, 2026/);
+});
+test('pages without ads: "Google’s ad and U.S. privacy choices" loads only Google’s consent script, never adsbygoogle.js; CMP decides, GA stays off', () => {
+  const p = page({ ads: false, stored: rec('granted') });
+  p.advance(5000);
+  p.clickSettings();
+  const more = box(p).querySelector('[data-stats-google]');
+  assert.ok(more && !box(p).querySelector('.statsbox-more').hidden);
+  box(p).fire('click', { target: more });
+  assert.equal(shown(p), false);
+  assert.deepEqual(p.scripts.map((s) => s.src), ['https://fundingchoicesmessages.google.com/i/pub-7811071715414905?ers=1']);
+  box(p).fire('click', { target: more }); // a second click: no second copy
+  assert.equal(p.scripts.length, 1);
+  p.cmp({ tc: decidedYes, mode: MODE_ALL });
+  assert.equal(p.win.revocations, 2, 'revocation message opened via the prepared callback queue');
+  assert.equal(p.saved(), null, 'Google decided: own choice deleted');
+  assert.equal(p.off(), true);
+  assert.equal(p.scripts.filter((s) => /adsbygoogle|googletagmanager/.test(s.src)).length, 0);
 });
