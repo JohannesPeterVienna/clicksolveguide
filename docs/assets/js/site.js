@@ -41,8 +41,22 @@
   // Pages without ads: only Google's consent script (Funding Choices), on an explicit click – never adsbygoogle.js,
   // so no ads (and no Auto ads) can appear on imprint, privacy, contact or 404.
   var FC_SRC = 'https://fundingchoicesmessages.google.com/i/pub-7811071715414905?ers=1';
+  // Like Google's own snippet: callback queue first (done by the caller via fcQueue), then the hidden
+  // "googlefcPresent" iframe, then the consent script – each only once. Never adsbygoogle.js.
   function loadConsentScript() {
-    if (LOCAL || document.querySelector('script[src*="fundingchoicesmessages.google.com"]')) return;
+    if (LOCAL) return;
+    window.googlefc = window.googlefc || {};
+    window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+    if (!document.querySelector('iframe[name="googlefcPresent"]')) {
+      var f = document.createElement('iframe');
+      f.name = 'googlefcPresent';
+      f.setAttribute('name', 'googlefcPresent');
+      f.setAttribute('aria-hidden', 'true');
+      f.tabIndex = -1;
+      f.style.display = 'none'; f.style.width = '0'; f.style.height = '0'; f.style.border = 'none'; f.style.zIndex = '-1000'; f.style.left = '-1000px'; f.style.top = '-1000px';
+      document.body.appendChild(f);
+    }
+    if (document.querySelector('script[src*="fundingchoicesmessages.google.com"]')) return;
     var s = document.createElement('script');
     s.async = true; s.src = FC_SRC;
     document.head.appendChild(s);
@@ -115,7 +129,7 @@
     else if (iw.phase !== 'active' && !iw.wiped && C.googleRefusesAnalytics(cs.tc, mv)) { iw.wiped = true; wipeGa(); }
     // the window is in charge and GA goes (or stays) off although "granted" was chosen – GPC or a U.S. opt-out:
     // the _ga cookies go as well
-    else if (iw.phase === 'active' && !iw.wiped && (wasOn || (iw.rec && iw.rec.choice === 'granted'))) { iw.wiped = true; wipeGa(); }
+    else if (iw.phase === 'active' && !iw.wiped && (wasOn || (iw.rec && iw.rec.choice === 'granted') || GPC || usOptedOut())) { iw.wiped = true; wipeGa(); }
     if (iw.box && !iw.box.hidden) fillBox(!!iw.opener); // e.g. a GPP opt-out while the window is open: only the notice remains
   }
   function wipeGa() {
@@ -182,7 +196,9 @@
         }, lastTc || prev.tc);   // latest TCF data: GDPR applies -> revocation message
       } catch (e) { /* CMP not reachable */ }
     });
-    if (adsPage) loadAdScript(); else loadConsentScript(); // the callback queue above is ready before the script runs
+    // CMP already there (or the ad loader on this page is still bringing it): the queued callback runs, nothing is loaded.
+    // Otherwise only Google's consent script – never adsbygoogle.js. This never sets any ad consent.
+    if (typeof window.__tcfapi !== 'function' && !document.querySelector('script[src*="adsbygoogle.js"]')) loadConsentScript();
   }
   // "Privacy settings": Google's CMP once it has spoken, otherwise (and on pages without ads) the statistics window
   function privacyButtons() {
@@ -315,7 +331,7 @@
     else if (blocked) now.textContent = 'You opted out under a U.S. state privacy law, so Google Analytics stays off on this site.';
     else if (rec) now.textContent = 'Your current choice: ' + (rec.choice === 'granted' ? 'allowed' : 'declined') + ' on ' + longDate(rec.at) + '.';
     else now.textContent = onRequest ? 'Nothing chosen yet – statistics are off.' : '';
-    if (iw.phase === 'quiet' && !blocked) now.textContent += ' This page loads no Google code; the choice applies on the guide and diagnosis pages.';
+    if (iw.phase === 'quiet' && !blocked) now.textContent += ' On this page Google\u2019s consent script loads only if you click the link below; the choice applies on the guide and diagnosis pages.';
     now.hidden = !now.textContent;
     b.querySelector('.statsbox-acts').hidden = blocked;
     b.querySelector('.statsbox-one').hidden = !blocked;
@@ -334,10 +350,21 @@
       fillBox(!!opener);
       iw.box.hidden = false;
       root.classList.add('statsbox-on');
+      document.addEventListener('keydown', escAnywhere);
       root.style.setProperty('--statsbox-room', iw.box.offsetHeight + 'px'); // the footer stays reachable
       if (opener) iw.box.querySelector('#statsbox-h').focus(); // opened on request: focus moves in
       else announce('A question about statistics appeared at the bottom of the page.'); // shown by itself: focus stays put
     } catch (e) { /* no DOM: nothing to show */ }
+  }
+  // Escape also closes the open window when the focus is elsewhere – unless another element uses Escape itself
+  function escAnywhere(e) {
+    if (!e || (e.key !== 'Escape' && e.key !== 'Esc') || e.defaultPrevented) return;
+    var t = e.target;
+    try {
+      if (t && t.closest && (t.closest('select') || t.closest('dialog[open]') || t.closest('[role="dialog"]:not(#statsbox)') || t.closest('[aria-expanded="true"]'))) return;
+    } catch (err) { /* ignore */ }
+    e.preventDefault();
+    closeBox(true);
   }
   function closeBox(returnFocus) {
     var b = iw.box;
@@ -346,6 +373,7 @@
     try { inside = b.contains(document.activeElement); } catch (e) { inside = false; }
     b.hidden = true;
     root.classList.remove('statsbox-on');
+    document.removeEventListener('keydown', escAnywhere);
     var o = iw.opener;
     iw.opener = null;
     try {
@@ -462,7 +490,7 @@
 
   privacyButtons();
   var saved = readStats();
-  if (saved && saved.choice === 'denied') wipeGa(); // a stored "no": no Google Analytics cookie may linger
+  if (GPC || (saved && saved.choice === 'denied')) wipeGa(); // GPC or a stored "no": no Google Analytics cookie may linger
   if (adsPage) { loadAdScript(); fillSlots(); }
   watchConsent();
   if (adsPage) setTimeout(startInterim, window.CSGConsent ? window.CSGConsent.STATS_WAIT_MS : 3000);

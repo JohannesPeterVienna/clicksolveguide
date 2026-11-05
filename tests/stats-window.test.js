@@ -20,6 +20,8 @@ function matches(n, sel) {
   if (!n || !n.tag) return false;
   if (sel[0] === '.') return n.className.split(/\s+/).includes(sel.slice(1));
   if (sel[0] === '#') return n.id === sel.slice(1);
+  const nm = sel.match(/^(\w+)\[name="([^"]+)"\]$/);
+  if (nm) return n.tag === nm[1] && n.attrs.name === nm[2];
   const a = sel.match(/^\[([\w-]+)\]$/);
   if (a) return a[1] in n.attrs;
   if (sel === 'header.top') return n.tag === 'header' && n.className === 'top';
@@ -62,7 +64,8 @@ function page({ ads = true, stored, storage = 'ok', gpc = false, cookies = [], h
     getElementById: (id) => document.body.querySelector('#' + id),
     querySelector: (sel) => { const m = sel.match(/^script\[src\*="([^"]+)"\]$/); return m ? (scripts.find((s) => String(s.src).includes(m[1])) || null) : document.body.querySelector(sel); },
     querySelectorAll: (sel) => document.body.querySelectorAll(sel),
-    addEventListener: (ev, fn) => { document.docListeners[ev] = fn; }
+    addEventListener: (ev, fn) => { (document.docListeners[ev] = document.docListeners[ev] || []).push(fn); },
+    removeEventListener: (ev, fn) => { document.docListeners[ev] = (document.docListeners[ev] || []).filter((f) => f !== fn); }
   });
   Object.defineProperty(document, 'cookie', {
     get() { return jar.join('; '); },
@@ -76,7 +79,7 @@ function page({ ads = true, stored, storage = 'ok', gpc = false, cookies = [], h
   document.documentElement = el('html', document);
   document.documentElement.setAttribute('data-ads', ads ? 'yes' : 'no');
   document.head = el('head', document);
-  document.head.appendChild = (s) => { scripts.push(s); return s; };
+  document.head.appendChild = (s) => { s.queueAtLoad = win.googlefc && win.googlefc.callbackQueue ? win.googlefc.callbackQueue.length : -1; scripts.push(s); return s; };
   document.body = el('body', document);
   const top = el('header', document); top.className = 'top'; document.body.appendChild(top);
   const main = el('main', document); main.id = 'main'; document.body.appendChild(main);
@@ -130,6 +133,7 @@ function page({ ads = true, stored, storage = 'ok', gpc = false, cookies = [], h
   const p = {
     win, document, store, updates, calls, scripts, cookieWrites, advance, cmp, pick, gtm, settings,
     fire: (tc) => tcf(tc, true), jar: () => jar,
+    docKey: (key, target) => { const e = { key, target, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } }; (document.docListeners.keydown || []).slice().forEach((fn) => fn(e)); },
     clickSettings: () => settings.fire('click', { currentTarget: settings }),
     saved: () => (store.has(KEY) ? JSON.parse(store.get(KEY)) : null),
     off: () => win[OFF]
@@ -471,4 +475,86 @@ test('round 2: "Privacy settings" within the first 3 s with a silent CMP opens t
   assert.equal(shown(p), true);
   assert.equal(p.document.activeElement, box(p).querySelector('#statsbox-h'));
   assert.equal(p.win.revocations, undefined, 'Google message not opened');
+});
+// ---------- final round (E1–E8) ----------
+test('E1: consent script like Google\'s snippet – queue first, then one hidden googlefcPresent iframe, then the script once', () => {
+  const p = page({ ads: false });
+  p.clickSettings();
+  const more = box(p).querySelector('[data-stats-google]');
+  box(p).fire('click', { target: more });
+  p.clickSettings(); box(p).fire('click', { target: box(p).querySelector('[data-stats-google]') });
+  const frames = p.document.body.querySelectorAll('iframe');
+  assert.equal(frames.length, 1);
+  assert.equal(frames[0].attrs.name, 'googlefcPresent');
+  assert.equal(frames[0].style.display, 'none');
+  assert.equal(frames[0].style.width, '0');
+  assert.equal(frames[0].style.height, '0');
+  assert.equal(p.scripts.length, 1);
+  assert.equal(p.scripts[0].src, 'https://fundingchoicesmessages.google.com/i/pub-7811071715414905?ers=1');
+  assert.ok(p.scripts[0].queueAtLoad >= 1, 'callback queued before the script');
+});
+test('E2: ad page with a silent CMP – Google button only in the window opened on request; click loads nothing more, no ad consent', () => {
+  const p = page();
+  p.advance(3000);
+  assert.equal(box(p).querySelector('.statsbox-more').hidden, true, 'not in the window that appeared by itself');
+  p.clickSettings();
+  assert.equal(box(p).querySelector('.statsbox-more').hidden, false);
+  const before = p.scripts.length;
+  assert.ok(p.scripts.some((s) => /adsbygoogle/.test(s.src)), 'ad page: the ad loader is already there');
+  box(p).fire('click', { target: box(p).querySelector('[data-stats-google]') });
+  assert.equal(p.scripts.length, before, 'nothing loaded again');
+  assert.equal(p.document.body.querySelectorAll('iframe').length, 0);
+  p.cmp({ tc: hiddenTc });
+  assert.equal(p.win.revocations, 1, 'Google\'s revocation message opened');
+  assert.ok(noAdGrant(p.updates));
+});
+test('E3/E4: Escape closes the window with the focus elsewhere, not when a select uses it; focus goes to main without an opener', () => {
+  const p = page();
+  p.advance(3000);
+  p.docKey('Escape', { closest: (sel) => (sel === 'select' ? {} : null) });
+  assert.equal(shown(p), true, 'select keeps its Escape');
+  p.docKey('Escape', { closest: () => null });
+  assert.equal(shown(p), false);
+  assert.equal(p.saved(), null);
+  assert.equal((p.document.docListeners.keydown || []).length, 0, 'listener only while open');
+  const q = page();
+  q.advance(3000);
+  q.document.activeElement = box(q).querySelector('.statsbox-x');
+  box(q).fire('click', { target: box(q).querySelector('.statsbox-x') });
+  assert.equal(q.document.activeElement, q.document.getElementById('main'));
+  assert.equal(q.document.getElementById('main').tabIndex, -1);
+});
+test('E5: closing without a choice never reopens by itself in the same page view', () => {
+  const p = page();
+  p.clickSettings(); // within the first 3 s
+  box(p).fire('click', { target: box(p).querySelector('.statsbox-x') });
+  p.advance(10000);
+  assert.equal(shown(p), false);
+});
+test('E6: window on pages without ads does not claim "no Google code"', () => {
+  const p = page({ ads: false });
+  p.clickSettings();
+  const t = textOf(box(p));
+  assert.doesNotMatch(t, /loads no Google code/);
+  assert.match(t, /consent script loads only if you click/);
+  const html = fs.readFileSync(path.join(__dirname, '..', 'docs', 'privacy', 'index.html'), 'utf8');
+  assert.match(html, /stores nothing, changes nothing and is not consent: without a saved choice, statistics stay off and we ask again on the next page; a choice saved earlier stays as it is/);
+});
+test('E7: GPC deletes existing _ga on load without any stored choice (also on pages without ads); U.S. opt-out too', () => {
+  const g = page({ gpc: true, cookies: ['_ga=GA1.1.5', '_ga_T00HRG2YVF=GS1', 'x=1'] });
+  assert.deepEqual(g.jar(), ['x=1']);
+  const q = page({ ads: false, gpc: true, cookies: ['_ga=GA1.1.5'] });
+  assert.deepEqual(q.jar(), []);
+  const u = page({ cookies: ['_ga=GA1.1.5'] });
+  u.cmp({ tc: hiddenTc, us: 3 });
+  u.advance(3000);
+  assert.equal(shown(u), false);
+  assert.deepEqual(u.jar(), []);
+  assert.equal(u.off(), true);
+});
+test('E8: dialog visible = displayStatus visible OR (cmpuishown and not hidden/disabled)', () => {
+  assert.equal(K.cmpVoice({ gdprApplies: true, eventStatus: 'tcloaded', tcString: '', displayStatus: 'visible' }), 'showing');
+  assert.equal(K.cmpVoice({ gdprApplies: true, eventStatus: 'cmpuishown' }), 'showing');
+  assert.equal(K.cmpVoice({ gdprApplies: true, eventStatus: 'cmpuishown', displayStatus: 'hidden' }), 'silent');
+  assert.equal(K.cmpVoice({ gdprApplies: true, eventStatus: 'cmpuishown', displayStatus: 'disabled' }), 'silent');
 });
