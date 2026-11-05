@@ -24,9 +24,11 @@ const CHANGED = {
   'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
   'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
 };
-const V = '20261104a';
+const V = '20261105a';
 // Pages changed on 2026-11-04 (overview texts, About method, ad scope in the privacy policy): sitemap lastmod.
-const CHANGED_0411 = ['/diagnose/', '/guides/', '/about/', '/how-we-check/', '/privacy/'];
+const CHANGED_0411 = ['/diagnose/', '/guides/', '/about/', '/how-we-check/'];
+// Changed on 2026-11-05: privacy policy (interim statistics window).
+const CHANGED_0511 = ['/privacy/'];
 
 // ---------- load content ----------
 const content = [];
@@ -231,7 +233,7 @@ for (const p of pages) {
   writeOut(rel, layout(p));
 }
 const indexable = pages.filter((p) => !p.noindex);
-writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${CHANGED_0511.includes(p.path) ? '2026-11-05' : CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeOut('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeOut('ads.txt', 'google.com, pub-7811071715414905, DIRECT, f08c47fec0942fa0\n');
 writeOut('CNAME', 'clicksolveguide.com'); // as committed on main (no trailing newline)
