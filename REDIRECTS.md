@@ -9,6 +9,8 @@ Stand: 2.11.2026. The previous site was a single browser checklist (four problem
 | /privacy.html | /privacy/ |
 | /advertise.html | /contact/ |
 | /contact.html | /contact/ |
+| /windows-storage-review.html | /guides/windows-update-stuck/ (Windows storage: free space before updates) |
+| /firefox-one-site-data.html | /diagnose/one-website-wont-load/ (clearing one site's data) |
 
 The old checklist's function (one check after another, notes, report download) now lives in the six diagnoses under /diagnose/ (notes field + fix log as .txt/print).
 

@@ -1,6 +1,7 @@
 /*
  * ClickSolve Guide – page runtime.
- * 1. Ad slots: hidden until a slot ID is configured in SLOTS (all empty = nothing rendered).
+ * 1. Ad slots: hidden until a slot ID is configured in SLOTS (all empty = nothing rendered), and even then
+ *    collapsed (no label, no gap) until Google actually delivers an ad (data-ad-status="filled").
  * 2. Consent: Google Consent Mode updates from the Google CMP; GA4 only when analytics is granted.
  * 3. Interim statistics window: while Google's CMP gives no decision and shows nothing (~3 s after start),
  *    an own window asks for analytics only (analytics_storage; ad_* always stay denied).
@@ -76,8 +77,17 @@
       if (name !== 'sidebar') { ins.setAttribute('data-ad-format', 'auto'); ins.setAttribute('data-full-width-responsive', 'true'); }
       box.appendChild(ins);
       box.hidden = false;
+      showOnceFilled(box, ins);
       try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) { box.hidden = true; }
     }
+  }
+  // The box stays collapsed (site.css, :has()) until Google reports data-ad-status="filled".
+  // For browsers without :has(), mirror that state as .ad-filled.
+  function showOnceFilled(box, ins) {
+    if (!(window.CSS && CSS.supports && CSS.supports('selector(:has(a))'))) root.classList.add('no-has');
+    var sync = function () { box.classList.toggle('ad-filled', ins.getAttribute('data-ad-status') === 'filled'); };
+    sync();
+    if (typeof MutationObserver === 'function') new MutationObserver(sync).observe(ins, { attributes: true, attributeFilter: ['data-ad-status'] });
   }
 
   /* ---------------- consent + analytics ---------------- */

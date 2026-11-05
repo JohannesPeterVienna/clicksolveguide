@@ -24,7 +24,7 @@ const CHANGED = {
   'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
   'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
 };
-const V = '20261105b';
+const V = '20261105c';
 // Pages changed on 2026-11-04 (overview texts, About method, ad scope in the privacy policy): sitemap lastmod.
 const CHANGED_0411 = ['/diagnose/', '/guides/', '/about/', '/how-we-check/'];
 // Changed on 2026-11-05: privacy policy (interim statistics window).

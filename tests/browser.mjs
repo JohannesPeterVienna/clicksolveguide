@@ -54,15 +54,21 @@ for (const width of [390, 1366]) {
     await page.waitForTimeout(250);
     const info = await page.evaluate(() => ({
       overflow: document.documentElement.scrollWidth - window.innerWidth,
-      visibleAds: [...document.querySelectorAll('.ad')].filter((a) => a.offsetHeight > 0 && !a.querySelector('ins.adsbygoogle[data-ad-slot]')).length
+      // nothing is filled on localhost: every ad box (label and rules included) must take no room
+      visibleAds: [...document.querySelectorAll('.ad')].filter((a) => a.offsetHeight > 0 && !a.querySelector('ins.adsbygoogle[data-ad-status="filled"]')).length
     }));
     if (info.overflow > 1) errs.push('horizontal overflow ' + info.overflow + 'px');
-    if (info.visibleAds) errs.push('ad box visible without slot id');
+    if (info.visibleAds) errs.push('empty ad box visible (no ad delivered)');
     // force every ad box visible like a filled 250 px unit and measure the gap to every control
     const dist = await page.evaluate(() => {
       document.documentElement.classList.add('has-side');
       const ads = [...document.querySelectorAll('.ad')];
-      ads.forEach((a) => { a.hidden = false; a.style.minHeight = a.dataset.slot === 'sidebar' ? '600px' : '250px'; });
+      ads.forEach((a) => {
+        a.hidden = false; a.style.minHeight = a.dataset.slot === 'sidebar' ? '600px' : '250px';
+        let ins = a.querySelector('ins.adsbygoogle');
+        if (!ins) { ins = document.createElement('ins'); ins.className = 'adsbygoogle'; a.appendChild(ins); }
+        ins.setAttribute('data-ad-status', 'filled');   // as if Google had delivered an ad
+      });
       const ctl = [...document.querySelectorAll('button, select, input, textarea, summary, a.btn, .cmd, .tool, .answer')]
         .map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0 && r.height > 0);
       let min = Infinity;
@@ -86,6 +92,38 @@ for (const width of [390, 1366]) {
   }
   await ctx.close();
 }
+
+// ---------- ad boxes: Google never fills anything here; "unfilled" stays collapsed, "filled" opens the box ----------
+for (const width of [390, 1366]) {
+  const ctx = await newCtx(width);
+  for (const u of ['/guides/windows-update-stuck/', '/diagnose/one-website-wont-load/']) {
+    const page = await ctx.newPage();
+    const errs = []; watch(page, errs);
+    await page.goto(base + u, { waitUntil: 'load' });
+    const r = await page.evaluate(async () => {
+      const tick = () => new Promise((ok) => setTimeout(ok, 0));   // MutationObserver reports asynchronously
+      const shown = () => [...document.querySelectorAll('.ad')].filter((a) => a.offsetHeight > 0 || parseFloat(getComputedStyle(a).marginTop) > 0).length;
+      const ins = [...document.querySelectorAll('.ad:not([hidden]) ins.adsbygoogle')];
+      const none = shown();
+      ins.forEach((i) => i.setAttribute('data-ad-status', 'unfilled')); await tick();
+      const unfilled = shown();
+      ins.forEach((i) => i.setAttribute('data-ad-status', 'filled')); await tick();
+      const boxes = ins.map((i) => i.parentElement);
+      return { ins: ins.length, none, unfilled, filled: shown(),
+        label: boxes.every((b) => b.querySelector('.ad-label').offsetHeight > 0),
+        cls: boxes.every((b) => b.classList.contains('ad-filled')),
+        gap: Math.min(...boxes.filter((b) => b.dataset.slot !== 'sidebar').map((b) => parseFloat(getComputedStyle(b).marginTop))) };
+    });
+    if (!r.ins) errs.push('no ad box filled in');
+    if (r.none || r.unfilled) errs.push(`empty ad box visible (${r.none} without status, ${r.unfilled} unfilled)`);
+    if (r.filled !== r.ins || !r.label || !r.cls) errs.push(`filled ad box not shown (${r.filled}/${r.ins}, label ${r.label}, class ${r.cls})`);
+    if (r.gap !== 48) errs.push(`filled ad box lost its 48 px margin (${r.gap})`);
+    if (errs.length) bad(`ad boxes ${width}px ${u}\n   ${errs.join('\n   ')}`);
+    await page.close();
+  }
+  await ctx.close();
+}
+console.log('✓ ad boxes: nothing visible without a delivered ad, filled boxes shown with label');
 
 // ---------- every diagnosis: walk all first answers to a result, then each first-level branch ----------
 const tools = urls.filter((u) => u.startsWith('/diagnose/') && u !== '/diagnose/');

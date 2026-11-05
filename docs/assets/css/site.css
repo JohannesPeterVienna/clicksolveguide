@@ -258,6 +258,13 @@ tbody th { font-weight: 700; }
 .ad { margin: 48px auto; padding: 8px 0; text-align: center; min-height: 0; clear: both; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .ad-label { display: block; font: .7rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .side .ad { margin-top: 0; }
+/* An ad box with no ad delivered shows nothing: no “Advertisement” label, no rules, no margin or height.
+   It opens only once Google sets data-ad-status="filled" on its ins (the width stays for AdSense's measurement).
+   :has() does this; browsers without it get html.no-has and .ad-filled from site.js (MutationObserver). */
+.ad:not(:has(ins.adsbygoogle[data-ad-status="filled"])),
+.no-has .ad:not(.ad-filled) { height: 0 !important; min-height: 0 !important; margin-top: 0 !important; margin-bottom: 0 !important; padding: 0 !important; border: 0 !important; overflow: hidden !important; }
+.ad:not(:has(ins.adsbygoogle[data-ad-status="filled"])) .ad-label,
+.no-has .ad:not(.ad-filled) .ad-label { display: none; }
 
 /* ---------- FAQ, sources ---------- */
 .faq details { border-bottom: 1px solid var(--line); padding: 12px 0; }

@@ -15,7 +15,10 @@ export const OLD_URLS = [
   ['/imprint.html', '/imprint/'],
   ['/privacy.html', '/privacy/'],
   ['/advertise.html', '/contact/'],
-  ['/contact.html', '/contact/']
+  ['/contact.html', '/contact/'],
+  // still indexed from the old site (Search Console, Nov 2026): to the closest new page
+  ['/windows-storage-review.html', '/guides/windows-update-stuck/'],
+  ['/firefox-one-site-data.html', '/diagnose/one-website-wont-load/']
 ];
 
 const RIS = 'https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10007517';
