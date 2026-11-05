@@ -286,7 +286,7 @@
     bar.appendChild(x);
     var h = node('h2', null, 'Count this visit?');
     h.id = 'statsbox-h'; h.tabIndex = -1;
-    var p = node('p', null, 'With your OK, Google Analytics (Google Ireland Ltd.) counts visits and which pages are read, and sets _ga cookies; data may be processed in the USA. Statistics only – this is not consent to advertising. Your choice is kept in this browser for 12 months. ');
+    var p = node('p', null, 'With your OK, Google Analytics (Google Ireland Ltd.) counts visits and which pages are read, and sets _ga cookies; data may be processed in the USA. Statistics only – this is not consent to advertising. Your choice is kept in this browser for 12 months; change or withdraw it any time under \u201cPrivacy settings\u201d at the bottom of every page. ');
     p.id = 'statsbox-p';
     var a = node('a', null, 'Privacy policy');
     a.href = '/privacy/#interim-statistics';
@@ -333,6 +333,7 @@
     else now.textContent = onRequest ? 'Nothing chosen yet – statistics are off.' : '';
     if (iw.phase === 'quiet' && !blocked) now.textContent += ' On this page Google\u2019s consent script loads only if you click the link below; the choice applies on the guide and diagnosis pages.';
     now.hidden = !now.textContent;
+    var intro = b.querySelector('#statsbox-p'); if (intro) intro.hidden = GPC; // GPC: no question to answer
     b.querySelector('.statsbox-acts').hidden = blocked;
     b.querySelector('.statsbox-one').hidden = !blocked;
     b.querySelector('.statsbox-more').hidden = !onRequest;
