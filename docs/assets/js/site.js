@@ -10,9 +10,10 @@
   'use strict';
   var CLIENT = 'ca-pub-7811071715414905';
   var SLOTS = {
-    afterIntro: '', // 970×250 / 728×90 desktop, 300×250 or 320×100 mobile – after the lede (guides) or the first explanation (tools)
-    midArticle: '', // 300×250 between two text sections
-    sidebar: ''     // 300×600 half page, guides only, from 1200 px, not sticky
+    // Shared responsive AdSense units “Themen-Websites – …” (account pub-7811071715414905)
+    afterIntro: '7497607759', // 970×250 / 728×90 desktop, 300×250 or 320×100 mobile – after the lede (guides) or the first explanation (tools)
+    midArticle: '1292301217', // 300×250 between two text sections
+    sidebar: '1292301217'     // 300×600 half page, guides only, from 1200 px, not sticky
   };
   var GA_ID = 'G-T00HRG2YVF';
   var root = document.documentElement;

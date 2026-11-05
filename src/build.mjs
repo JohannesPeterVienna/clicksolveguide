@@ -84,12 +84,12 @@ ${pg.noindex ? '<meta name="robots" content="noindex,follow">\n' : ''}${canonica
 <meta name="google-adsense-account" content="${PUB}">
 ${CONSENT_DEFAULTS}
 ${pg.loader ? LOADER + '\n' : ''}${pg.refresh ? `<meta http-equiv="refresh" content="0; url=${pg.refresh}">\n` : ''}<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#102033">
+<meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="${pg.kind === 'guide' ? 'article' : 'website'}">
 <meta property="og:site_name" content="ClickSolve Guide">
 <meta property="og:title" content="${esc(pg.h1 || pg.title)}">
 <meta property="og:description" content="${esc(pg.description)}">
-${pg.noindex ? '' : `<meta property="og:url" content="${ORIGIN}${pg.path}">\n`}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+${pg.noindex ? '' : `<meta property="og:url" content="${ORIGIN}${pg.path}">\n<meta property="og:image" content="${ORIGIN}/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">\n`}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v=${V}">
 ${(pg.jsonld || []).map(ld).join('\n')}

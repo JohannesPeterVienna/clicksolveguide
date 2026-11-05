@@ -172,10 +172,11 @@ test('site JavaScript never writes HTML strings (textContent only)', () => {
   }
 });
 
-test('ad slot IDs are all empty until AdSense units exist', () => {
+test('ad slot IDs are the shared AdSense units of the account (10 digits each)', () => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'docs', 'assets', 'js', 'site.js'), 'utf8');
   const block = src.match(/var SLOTS = \{([\s\S]*?)\};/)[1];
-  for (const m of block.matchAll(/(\w+):\s*'([^']*)'/g)) assert.equal(m[2], '', m[1]);
+  const slots = Object.fromEntries([...block.matchAll(/(\w+):\s*'([^']*)'/g)].map(m => [m[1], m[2]]));
+  assert.deepEqual(slots, { afterIntro: '7497607759', midArticle: '1292301217', sidebar: '1292301217' });
 });
 
 // ---------- C1: commands only for the selected platform ----------

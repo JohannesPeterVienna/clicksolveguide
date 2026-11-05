@@ -59,6 +59,7 @@ export function sitePages({ content, esc, crumbsHtml, crumbsLd, ld, ORIGIN, REVI
 <section aria-labelledby="diag-h"><h2 id="diag-h">Pick the symptom</h2>
 <p class="prose">Each diagnosis is an interactive decision tree. Your answers update the layer map on the page, and the fix log records what you checked – ready to download or print for IT, your provider or a repair shop.</p>
 <ul class="cards">${tools.map(card).join('')}</ul></section>
+<section class="vorteile" aria-labelledby="vt-h"><h2 id="vt-h">What you get</h2><ul><li><b>Find the broken layer first</b><span>Device, app, account, network or service – a decision tree narrows it down.</span></li><li><b>Fixes in the right order</b><span>Safe, reversible steps first; nothing that risks your data.</span></li><li><b>A fix log to hand over</b><span>What you checked, ready to download or print for IT, support or a repair shop.</span></li><li><b>Honest about scams</b><span>No fake “support” numbers, no remote-access tricks – and how to spot them.</span></li><li><b>Runs in your browser</b><span>Your answers stay on your device; nothing is uploaded.</span></li><li><b>Free, no sign-up</b><span>No account, no paywall, no tech jargon you have to know first.</span></li></ul></section>
 <section class="band" aria-labelledby="how-h"><div class="wrap" style="padding:0">
 <h2 id="how-h">How a layer diagnosis works</h2>
 <ol class="rules">
