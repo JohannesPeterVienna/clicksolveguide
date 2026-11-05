@@ -4,7 +4,7 @@
   "description": "clicksolveguide.com – static site for GitHub Pages (docs/), built by src/build.mjs",
   "scripts": {
     "build": "node src/build.mjs",
-    "test": "node --test tests/core.test.js && node tests/check-pages.mjs",
+    "test": "node --test tests/core.test.js tests/stats-window.test.js && node tests/check-pages.mjs",
     "test:browser": "node tests/browser.mjs"
   }
 }

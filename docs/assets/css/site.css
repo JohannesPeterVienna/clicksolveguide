@@ -321,3 +321,22 @@ tbody th { font-weight: 700; }
 .vorteile li{display:flex;flex-direction:column;gap:2px;padding:.8rem 0;border-bottom:1px solid var(--vt-line)}
 .vorteile b::before{content:"✓";color:var(--vt-acc);margin-right:.45rem}
 .vorteile span{opacity:.85;font-size:.93rem}
+
+/* Interim statistics window (5 Nov 2026): fixed, so it never moves page content; bottom right, full width on phones. */
+.statsbox{position:fixed;z-index:50;right:20px;bottom:20px;width:min(390px,calc(100vw - 40px));max-height:calc(100vh - 40px);overflow:auto;background:var(--bg);color:var(--ink);border:2px solid var(--ink);border-radius:var(--r);box-shadow:0 10px 30px rgba(0,0,0,.18);font-size:.95rem;line-height:1.5}
+.statsbox-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--navy);color:var(--on-navy);border-bottom:3px solid var(--green);padding:0 0 0 14px}
+.statsbox-bar .mono{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9fe3c6}
+.statsbox-x{flex:none;width:44px;height:44px;background:none;border:0;color:var(--on-navy);font:400 1.6rem/1 var(--sans);cursor:pointer}
+.statsbox-x:hover{color:#9fe3c6}
+.statsbox h2{font-size:1.15rem;margin:14px 16px 6px}
+.statsbox p{margin:0 16px 10px}
+.statsbox-now{font:.8rem/1.5 var(--mono);color:var(--muted);border-left:3px solid var(--green);padding-left:8px}
+.statsbox-acts{display:flex;gap:10px;margin:4px 16px 12px}
+.statsbox-pick{flex:1 1 0;min-width:0;min-height:44px;padding:10px 12px;font:700 1rem/1.2 var(--sans);background:var(--bg);color:var(--ink);border:2px solid var(--ink);border-radius:var(--r);cursor:pointer}
+.statsbox-pick:hover{border-color:var(--green);box-shadow:inset 0 -3px 0 var(--green)}
+.statsbox-more{font-size:.85rem}
+.statsbox-more .linklike{min-height:44px;text-align:left}
+.statsbox-say{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+html.statsbox-on .foot{padding-bottom:var(--statsbox-room,0px)}
+@media (max-width:560px){.statsbox{left:0;right:0;bottom:0;width:auto;max-height:75vh;border-width:2px 0 0;border-radius:0}}
+@media print{.statsbox,.statsbox-say{display:none!important}html.statsbox-on .foot{padding-bottom:0}}

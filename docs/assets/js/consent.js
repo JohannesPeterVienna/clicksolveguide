@@ -11,6 +11,7 @@
  *   consent, AND the mode value for the purpose is 1 (GRANTED).
  * Outside (gdprApplies === false): the U.S. state status must be 1 (does not apply) or
  *   2 (not opted out), and the mode value 1 (GRANTED) or 3 (NOT_APPLICABLE).
+ * Interim statistics window rules: see the end of this file (only while the CMP gives no decision).
  */
 (function (root) {
   'use strict';
@@ -128,7 +129,92 @@
     return h === 'localhost' || h === '127.0.0.1' || h === '::1' || h === '[::1]';
   }
 
-  var api = { decideConsent: decideConsent, region: region, allDenied: allDenied, openPrivacyChoices: openPrivacyChoices, isLocalHost: isLocalHost, usStatusFromGpp: usStatusFromGpp, effectiveUsStatus: effectiveUsStatus, US_OPTED_OUT: 3 };
+  /* ---------- interim statistics window (since 5 Nov 2026) ----------
+   * Google's consent message is published but currently reports displayStatus "hidden", so no TCF decision
+   * ever arrives and Google Analytics never starts. While that is so, an own small window asks for statistics
+   * only. The pure rules live here (testable in Node); the window itself is built in site.js. */
+  var STATS_KEY = 'csg-stats', STATS_VERSION = 1, STATS_MONTHS = 12, STATS_WAIT_MS = 3000;
+
+  /**
+   * What Google's CMP has said with this TCF event:
+   *   'decided' – useractioncomplete, or tcloaded with a non-empty tcString (a stored decision)
+   *   'outside' – gdprApplies === false (the site's normal logic for non-EU visitors applies)
+   *   'showing' – its own message is on screen (cmpuishown or displayStatus "visible"; hidden/disabled do NOT count)
+   *   'silent'  – nothing usable (no data, tcloaded without decision, cmpuishown with displayStatus hidden/disabled)
+   */
+  function cmpVoice(tc) {
+    if (!tc || typeof tc !== 'object') return 'silent';
+    if (tc.gdprApplies === false) return 'outside';
+    if (tc.eventStatus === 'useractioncomplete') return 'decided';
+    if (tc.eventStatus === 'tcloaded' && typeof tc.tcString === 'string' && tc.tcString !== '') return 'decided';
+    if (tc.displayStatus === 'hidden' || tc.displayStatus === 'disabled') return 'silent';
+    if (tc.displayStatus === 'visible' || tc.eventStatus === 'cmpuishown') return 'showing';
+    return 'silent';
+  }
+
+  /** Same day and time STATS_MONTHS calendar months later (ms). */
+  function statsExpiry(at) {
+    var d = new Date(at);
+    d.setMonth(d.getMonth() + STATS_MONTHS);
+    return d.getTime();
+  }
+
+  /** Stored window choice (raw localStorage string) -> {v, choice, at} or null (missing, broken, other version, in the future, expired). */
+  function readStatsChoice(raw, now) {
+    var rec;
+    try { rec = JSON.parse(raw); } catch (e) { return null; }
+    if (!rec || typeof rec !== 'object' || rec.v !== STATS_VERSION) return null;
+    if (rec.choice !== 'granted' && rec.choice !== 'denied') return null;
+    if (typeof rec.at !== 'number' || !isFinite(rec.at) || rec.at > now) return null;
+    return now < statsExpiry(rec.at) ? { v: rec.v, choice: rec.choice, at: rec.at } : null;
+  }
+  function statsRecord(choice, now) { return { v: STATS_VERSION, choice: choice === 'granted' ? 'granted' : 'denied', at: now }; }
+
+  /**
+   * Consent Mode update while the window decides: ONLY analytics_storage, never ad_* (they stay denied).
+   * Granted only with a stored/selected 'granted', no Global Privacy Control and no U.S. opt-out
+   * (initial CMP status 3 or a GPP opt-out 3).
+   */
+  function interimUpdate(rec, gpc, usInitial, gpp) {
+    var ok = !!rec && rec.choice === 'granted' && gpc !== true && usInitial !== 3 && gpp !== 3;
+    return { analytics_storage: ok ? 'granted' : 'denied' };
+  }
+
+  /**
+   * A clear "no" to analytics from Google's CMP (then the _ga cookies are deleted, whether or not the window
+   * was ever active): a real decision without purpose 1 or without Google (vendor 755), or a Consent Mode
+   * analytics value DENIED (2) after a decision or outside the GDPR. Values that may still be on their way do not count.
+   */
+  function googleRefusesAnalytics(tc, modeValues) {
+    var v = cmpVoice(tc);
+    if (v === 'decided') {
+      var p1 = tc.purpose && tc.purpose.consents && tc.purpose.consents[1] === true;
+      var g = tc.vendor && tc.vendor.consents && tc.vendor.consents[GOOGLE_VENDOR] === true;
+      if (!p1 || !g) return true;
+    }
+    return (v === 'decided' || v === 'outside') && !!modeValues && typeof modeValues === 'object' && modeValues.analyticsStoragePurposeConsentStatus === 2;
+  }
+
+  /** document.cookie assignments that delete every _ga / _ga_* cookie for the host itself and every parent domain. */
+  function gaCookieWipes(cookieString, hostname) {
+    var names = [];
+    String(cookieString || '').split(';').forEach(function (c) {
+      var n = c.split('=')[0].replace(/^\s+|\s+$/g, '');
+      if (/^_ga($|_)/.test(n) && names.indexOf(n) < 0) names.push(n);
+    });
+    var parts = String(hostname || '').toLowerCase().split('.').filter(Boolean);
+    var scopes = [''];
+    for (var i = 0; i < parts.length - 1; i++) scopes.push('; domain=.' + parts.slice(i).join('.'));
+    var out = [];
+    names.forEach(function (n) {
+      scopes.forEach(function (s) { out.push(n + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0; path=/' + s); });
+    });
+    return out;
+  }
+
+  var api = { decideConsent: decideConsent, region: region, allDenied: allDenied, openPrivacyChoices: openPrivacyChoices, isLocalHost: isLocalHost, usStatusFromGpp: usStatusFromGpp, effectiveUsStatus: effectiveUsStatus, US_OPTED_OUT: 3,
+    cmpVoice: cmpVoice, readStatsChoice: readStatsChoice, statsRecord: statsRecord, statsExpiry: statsExpiry, interimUpdate: interimUpdate, googleRefusesAnalytics: googleRefusesAnalytics, gaCookieWipes: gaCookieWipes,
+    STATS_KEY: STATS_KEY, STATS_VERSION: STATS_VERSION, STATS_WAIT_MS: STATS_WAIT_MS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CSGConsent = api;
 })(this);
