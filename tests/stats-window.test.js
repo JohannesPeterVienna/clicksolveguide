@@ -430,3 +430,45 @@ test('pages without ads: "Google’s ad and U.S. privacy choices" loads only Goo
   assert.equal(p.off(), true);
   assert.equal(p.scripts.filter((s) => /adsbygoogle|googletagmanager/.test(s.src)).length, 0);
 });
+test('round 2: stored "granted" + GPC or a later GPP opt-out -> GA off and the _ga cookies deleted', () => {
+  const g = page({ gpc: true, stored: rec('granted'), cookies: ['_ga=GA1.1.5', '_ga_T00HRG2YVF=GS1', 'other=1'] });
+  g.advance(3000);
+  assert.equal(g.off(), true);
+  assert.deepEqual(g.jar(), ['other=1']);
+  const p = page({ stored: rec('granted'), cookies: ['_ga=GA1.1.5'] });
+  let gppCb = null;
+  p.win.__gpp = (cmd, cb) => { if (cmd === 'addEventListener') gppCb = cb; };
+  p.cmp({ tc: hiddenTc });
+  p.advance(3000);
+  assert.equal(p.off(), false);
+  assert.deepEqual(p.jar(), ['_ga=GA1.1.5']);
+  gppCb({ pingData: { signalStatus: 'ready', parsedSections: { usnat: [{ SaleOptOut: 1 }] } } }, true);
+  assert.equal(p.off(), true);
+  assert.deepEqual(p.jar(), []);
+});
+test('round 2: after a U.S. opt-out "Allow" is refused and the open window switches to a notice', () => {
+  const p = page();
+  let gppCb = null;
+  p.win.__gpp = (cmd, cb) => { if (cmd === 'addEventListener') gppCb = cb; };
+  p.cmp({ tc: hiddenTc });
+  p.advance(3000);
+  assert.equal(shown(p), true);
+  const allow = box(p).querySelectorAll('[data-stats-pick]').find((b) => b.getAttribute('data-stats-pick') === 'granted');
+  gppCb({ pingData: { signalStatus: 'ready', parsedSections: { usnat: [{ TargetedAdvertisingOptOut: 1 }] } } }, true);
+  assert.equal(box(p).querySelector('.statsbox-acts').hidden, true, 'Allow/Decline hidden');
+  assert.equal(box(p).querySelector('.statsbox-one').hidden, false);
+  assert.match(textOf(box(p)), /opted out under a U\.S\. state privacy law/);
+  box(p).fire('click', { target: allow }); // a stale click on "Allow"
+  assert.equal(p.saved(), null);
+  assert.equal(p.off(), true);
+  assert.equal(p.gtm().length, 0);
+});
+test('round 2: "Privacy settings" within the first 3 s with a silent CMP opens the window at once', () => {
+  const p = page();
+  p.cmp({ tc: hiddenTc });
+  p.advance(1000);
+  p.clickSettings();
+  assert.equal(shown(p), true);
+  assert.equal(p.document.activeElement, box(p).querySelector('#statsbox-h'));
+  assert.equal(p.win.revocations, undefined, 'Google message not opened');
+});

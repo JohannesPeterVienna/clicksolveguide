@@ -106,12 +106,17 @@
       if (GPC) d.analytics_storage = 'denied';
     }
     var analytics = adsPage && d.analytics_storage === 'granted';
+    var wasOn = window['ga-disable-' + GA_ID] === false;
     window['ga-disable-' + GA_ID] = !analytics;
     var key = JSON.stringify(d);
     if (key !== cs.sent) { cs.sent = key; gtag('consent', 'update', d); }
     if (analytics) { iw.wiped = false; startGA(); }
     // Google clearly says no to analytics -> the _ga cookies go too (also when the window was never active)
     else if (iw.phase !== 'active' && !iw.wiped && C.googleRefusesAnalytics(cs.tc, mv)) { iw.wiped = true; wipeGa(); }
+    // the window is in charge and GA goes (or stays) off although "granted" was chosen – GPC or a U.S. opt-out:
+    // the _ga cookies go as well
+    else if (iw.phase === 'active' && !iw.wiped && (wasOn || (iw.rec && iw.rec.choice === 'granted'))) { iw.wiped = true; wipeGa(); }
+    if (iw.box && !iw.box.hidden) fillBox(!!iw.opener); // e.g. a GPP opt-out while the window is open: only the notice remains
   }
   function wipeGa() {
     try {
@@ -222,6 +227,11 @@
     if (!iw.rec && !GPC && !usOptedOut()) openBox(null);
   }
   function choose(choice) {
+    if (choice === 'granted' && (GPC || usOptedOut())) { // GPC or U.S. opt-out: "Allow" is not available
+      fillBox(!!iw.opener);
+      announce('Google Analytics stays off because of your privacy signal or opt-out.');
+      return;
+    }
     iw.rec = saveStats(choice);
     if (choice !== 'granted') {
       window['ga-disable-' + GA_ID] = true;
@@ -255,8 +265,8 @@
     var bar = node('div', 'statsbox-bar');
     bar.appendChild(node('span', 'mono', 'Statistics only · interim'));
     var x = button('statsbox-x', '×', 'data-stats-close');
-    x.setAttribute('aria-label', 'Close – statistics stay off');
-    x.title = 'Close – statistics stay off';
+    x.setAttribute('aria-label', 'Close without changing anything');
+    x.title = 'Close without changing anything';
     bar.appendChild(x);
     var h = node('h2', null, 'Count this visit?');
     h.id = 'statsbox-h'; h.tabIndex = -1;
