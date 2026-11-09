@@ -238,7 +238,7 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
     jsonld: [crumbsLd([['Home', '/'], ['Imprint', '/imprint/']])],
     body: `${crumbsHtml([['Home', '/'], ['Imprint', '/imprint/']])}${legal('Legal notice', 'Imprint', `<p>Information according to § 5 of the Austrian E-Commerce Act (ECG) and disclosure according to § 25 of the Austrian Media Act (MedienG).</p>
 <h2 id="owner">Media owner and publisher</h2>
-<p>AdStern – Agentur für digitales Marketing<br>Seilerstätte 8/8<br>1010 Vienna<br>Austria</p>
+<p>AdStern – Agentur für digitales Marketing<br>Seilerstätte 8/8<br>1010 Wien<br>Österreich</p>
 <p>Email: <a href="mailto:office@adstern.com">office@adstern.com</a></p>
 <h2 id="company">Business information</h2>
 <ul><li>Business activity: advertising agency (Werbeagentur)</li>
@@ -262,7 +262,7 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
     jsonld: [crumbsLd([['Home', '/'], ['Privacy', '/privacy/']])],
     body: `${crumbsHtml([['Home', '/'], ['Privacy', '/privacy/']])}${legal('Privacy', 'Privacy policy', `<p>This policy describes which personal data is processed when you visit clicksolveguide.com, why, on what legal basis, and which rights you have.</p>
 <h2 id="controller">Controller</h2>
-<p>AdStern – Agentur für digitales Marketing, Seilerstätte 8/8, 1010 Vienna, Austria, email <a href="mailto:office@adstern.com">office@adstern.com</a>. Further details are in the <a href="/imprint/">imprint</a>.</p>
+<p>AdStern – Agentur für digitales Marketing, Seilerstätte 8/8, 1010 Wien, Österreich, email <a href="mailto:office@adstern.com">office@adstern.com</a>. Further details are in the <a href="/imprint/">imprint</a>.</p>
 <h2 id="hosting">Hosting</h2>
 <p>The site consists of static files served by GitHub Pages, a service of GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. To deliver a page, your browser sends technical data to GitHub's servers: your IP address, the requested address, date and time, browser type and the referring page. GitHub uses this data to deliver and secure the service and may keep it in server logs for a limited time. Legal basis: our legitimate interest in operating a reliable and secure website (Art. 6(1)(f) GDPR). Transfers to the USA are based on the EU–U.S. Data Privacy Framework or standard contractual clauses. More in the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub General Privacy Statement</a>.</p>
 <h2 id="tools">Diagnosis answers, notes and fix logs</h2>
