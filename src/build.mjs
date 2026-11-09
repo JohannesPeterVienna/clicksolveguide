@@ -59,7 +59,7 @@ const ADS_SRC = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?
 const LOADER = `<script data-ads-loader>if(!window.CSG_NO_GOOGLE){(function(){var s=document.createElement('script');s.async=true;s.src='${ADS_SRC}';s.crossOrigin='anonymous';document.head.appendChild(s);})();}</script>`;
 
 const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
-const ORG = { '@type': 'Organization', name: 'AdStern', url: ORIGIN + '/about/', address: { '@type': 'PostalAddress', streetAddress: 'Seilerstätte 8', postalCode: '1010', addressLocality: 'Vienna', addressCountry: 'AT' } };
+const ORG = { '@type': 'Organization', name: 'AdStern – Agentur für digitales Marketing', url: ORIGIN + '/about/', address: { '@type': 'PostalAddress', streetAddress: 'Seilerstätte 8/8', postalCode: '1010', addressLocality: 'Vienna', addressCountry: 'AT' } };
 const crumbsLd = (crumbs) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: ORIGIN + url })) });
 const crumbsHtml = (crumbs) => `<nav aria-label="Breadcrumb"><ol class="crumbs">${crumbs.map(([n, u], i) => `<li>${i === crumbs.length - 1 ? `<span aria-current="page">${esc(n)}</span>` : `<a href="${u}">${esc(n)}</a>`}</li>`).join('')}</ol></nav>`;
 const adBox = (slot) => `<div class="ad" data-slot="${slot}" hidden><span class="ad-label">Advertisement</span></div>`;
