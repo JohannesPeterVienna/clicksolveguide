@@ -1,0 +1,71 @@
+{
+ "chrome": {
+  "name": "Chromium source code – net/base/net_error_list.h",
+  "url": "https://chromium.googlesource.com/chromium/src/+/main/net/base/net_error_list.h",
+  "fetched": "https://raw.githubusercontent.com/chromium/chromium/main/net/base/net_error_list.h",
+  "license": "Copyright 2012 The Chromium Authors, BSD-style license"
+ },
+ "probe": {
+  "name": "Chromium source code – components/error_page/common/net_error_info.h",
+  "url": "https://chromium.googlesource.com/chromium/src/+/main/components/error_page/common/net_error_info.h",
+  "license": "Copyright The Chromium Authors, BSD-style license"
+ },
+ "http": {
+  "name": "IANA – Hypertext Transfer Protocol (HTTP) Status Code Registry",
+  "url": "https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml",
+  "updated": ""
+ },
+ "ipv4": {
+  "name": "IANA – IPv4 Special-Purpose Address Registry",
+  "url": "https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml",
+  "updated": ""
+ },
+ "ipv6": {
+  "name": "IANA – IPv6 Special-Purpose Address Registry",
+  "url": "https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml",
+  "updated": ""
+ },
+ "ports": {
+  "name": "IANA – Service Name and Transport Protocol Port Number Registry",
+  "url": "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml",
+  "updated": ""
+ },
+ "wu": {
+  "name": "Microsoft Learn – Windows Update error codes by component",
+  "url": "https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-error-reference",
+  "license": "Microsoft Learn documentation, CC BY 4.0",
+  "updated": "2025-10-02"
+ },
+ "wucommon": {
+  "name": "Microsoft Learn – Common Windows Update errors",
+  "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/common-windows-update-errors",
+  "license": "Microsoft Learn documentation, CC BY 4.0",
+  "updated": "2026-09-11"
+ },
+ "win11": {
+  "name": "Microsoft Learn – Windows 11 release information",
+  "url": "https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information",
+  "updated": "2026-11-13"
+ },
+ "win10": {
+  "name": "Microsoft Learn – Windows 10 release information",
+  "url": "https://learn.microsoft.com/en-us/windows/release-health/release-information",
+  "updated": "2026-11-13"
+ },
+ "macos": {
+  "name": "Apple Support – Find out which macOS your Mac is using",
+  "url": "https://support.apple.com/en-us/109033",
+  "updated": "November 09, 2026"
+ },
+ "winkeys": {
+  "name": "Microsoft Support – Keyboard shortcuts in Windows",
+  "url": "https://support.microsoft.com/en-us/windows/keyboard-shortcuts-in-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec",
+  "updated": "2026-09-02"
+ },
+ "mackeys": {
+  "name": "Apple Support – Mac keyboard shortcuts",
+  "url": "https://support.apple.com/en-us/102650",
+  "updated": "September 14, 2026"
+ },
+ "_retrieved": "2026-11-18"
+}

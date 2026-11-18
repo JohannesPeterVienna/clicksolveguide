@@ -23,7 +23,12 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify({ answers: state.answers, notes: notes.value })); } catch (e) { /* storage blocked */ } }
 
   var saved = load();
-  var state = C.replay(tree, saved && Array.isArray(saved.answers) ? saved.answers : []);
+  // a shared link (#s=0.1.2&v=win11) wins over the saved state; the fragment is removed from the
+  // address bar right after reading, so it is not kept in the history entry or passed on
+  var shared = null;
+  try { shared = C.decodeShare(location.hash); } catch (e) { shared = null; }
+  if (shared) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* keep the hash */ } }
+  var state = C.replay(tree, shared ? shared.answers : (saved && Array.isArray(saved.answers) ? saved.answers : []));
   var card = document.getElementById('diag-card');
   var hist = document.getElementById('diag-hist');
   var live = tool.querySelector('.lm-live');
@@ -116,8 +121,11 @@
       group.setAttribute('aria-label', 'Your answer');
       group.appendChild(el('p', 'diag-sub', 'Your answer'));
       n.answers.forEach(function (a, i) {
-        var b = el('button', 'answer', a.label);
+        var b = el('button', 'answer');
         b.type = 'button';
+        b.appendChild(el('span', 'answer-key', String(i + 1)));
+        b.appendChild(document.createTextNode(a.label));
+        b.setAttribute('aria-keyshortcuts', String(i + 1));
         b.addEventListener('click', function () { var prev = state.layers; state = C.choose(tree, state, i); after(prev); });
         group.appendChild(b);
       });
@@ -179,7 +187,67 @@
     var ns = card.querySelectorAll('.cmd-phone'), v = version();
     for (var i = 0; i < ns.length; i++) if (ns[i].csgStep) { ns[i].textContent = C.mobileNote(ns[i].csgStep, v); if (!ns[i].textContent) ns[i].hidden = true; }
   }
-  document.addEventListener('csg:version', function () { renderPhoneNotes(); renderLog(); });
+  var sharedVersion = shared && shared.version;
+  document.addEventListener('csg:version', function () {
+    if (sharedVersion) {
+      // first version event after a shared link: show the sender's system (the switcher stays changeable)
+      var want = sharedVersion, sel = tool.querySelector('.vswitch select');
+      sharedVersion = null;
+      if (sel && sel.value !== want && sel.querySelector('option[value="' + want + '"]')) {
+        sel.value = want;
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+    }
+    renderPhoneNotes(); renderLog();
+  });
+
+  /* example cases: made-up situations that jump to a finished path */
+  var exBox = document.getElementById('diag-examples');
+  if (exBox && tree.examples && tree.examples.length) {
+    tree.examples.forEach(function (ex) {
+      var b = el('button', 'example', ex.label);
+      b.type = 'button';
+      b.addEventListener('click', function () { var prev = state.layers; state = C.replay(tree, ex.answers); after(prev); say('Example loaded: ' + ex.label + ' Use “Start over” for your own case.'); });
+      exBox.appendChild(b);
+    });
+    exBox.hidden = false;
+  }
+
+  var shareNote = document.getElementById('share-note');
+  function say(text) { if (shareNote) shareNote.textContent = text; }
+  function shareUrl() { return location.origin + location.pathname + '#' + C.encodeShare(state, version()); }
+  var shareBtn = document.getElementById('diag-share');
+  if (shareBtn) shareBtn.addEventListener('click', function () {
+    var url = shareUrl();
+    function done(ok) { say(ok ? 'Link copied. It holds your ' + state.answers.length + ' answer(s) and the chosen system – not your notes.' : 'Copy this link: ' + url); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+    else done(false);
+  });
+  if (shared) say('Opened from a shared link: ' + state.answers.length + ' answer(s) loaded. “Start over” clears them.');
+  // a shared link opened while this diagnosis is already showing
+  window.addEventListener('hashchange', function () {
+    var sh = null;
+    try { sh = C.decodeShare(location.hash); } catch (e) { sh = null; }
+    if (!sh) return;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* keep the hash */ }
+    var prev = state.layers;
+    state = C.replay(tree, sh.answers);
+    var sel = tool.querySelector('.vswitch select');
+    if (sh.version && sel && sel.value !== sh.version && sel.querySelector('option[value="' + sh.version + '"]')) { sel.value = sh.version; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+    after(prev);
+    say('Opened from a shared link: ' + state.answers.length + ' answer(s) loaded. “Start over” clears them.');
+  });
+
+  /* keyboard: 1–9 picks the answer with that number while the focus is inside the check card */
+  card.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || !/^[1-9]$/.test(e.key)) return;
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    var btns = card.querySelectorAll('button.answer');
+    var b = btns[parseInt(e.key, 10) - 1];
+    if (b) { e.preventDefault(); b.click(); }
+  });
 
   document.getElementById('log-txt').addEventListener('click', function () {
     var blob = new Blob([logText()], { type: 'text/plain;charset=utf-8' });
@@ -189,14 +257,19 @@
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
   });
-  document.getElementById('log-print').addEventListener('click', function () {
+  function printText(text) {
     var area = document.getElementById('print-area');
     if (!area) { area = el('div'); area.id = 'print-area'; document.body.appendChild(area); }
     while (area.firstChild) area.removeChild(area.firstChild);
-    area.appendChild(el('pre', null, logText()));
+    area.appendChild(el('pre', null, text));
     document.body.classList.add('print-log');
     window.print();
-  });
+  }
+  document.getElementById('log-print').addEventListener('click', function () { printText(logText()); });
+  var chk = document.getElementById('chk-print');
+  if (chk) chk.addEventListener('click', function () { printText(C.checklist(tree, version())); });
+  // for tests and for people who prefer to read it on screen: the checklist text without printing
+  tool.csgChecklist = function () { return C.checklist(tree, version()); };
   window.addEventListener('afterprint', function () { document.body.classList.remove('print-log'); });
 
   tool.classList.add('ready');

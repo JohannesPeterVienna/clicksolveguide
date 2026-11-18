@@ -72,6 +72,11 @@
         if (!n.title || !n.text || !Array.isArray(n.safe) || !n.safe.length) errs.push(id + ': stop needs title, text and safe actions');
       } else errs.push(id + ': unknown type ' + n.type);
     });
+    (t.examples || []).forEach(function (ex, i) {
+      if (!ex.label || !Array.isArray(ex.answers)) { errs.push('example ' + i + ': label/answers missing'); return; }
+      var st = replay(t, ex.answers);
+      if (st.answers.length !== ex.answers.length || !st.done) errs.push('example ' + i + ': does not end in a result');
+    });
     // every node reachable, no cycles
     var seen = {}, cyc = false;
     (function walk(id, stack) {
@@ -225,6 +230,84 @@
     return L.join('\n');
   }
 
+
+  /**
+   * Shareable state: only the answer indexes and the system key, e.g. "s=0.1.0&v=win11".
+   * Notes are never part of it. decodeShare accepts a location.hash ("#s=…") and returns null
+   * when it holds no state; anything that is not a small non-negative integer is dropped.
+   */
+  function encodeShare(st, v) {
+    var out = 's=' + (st.answers || []).join('.');
+    if (v && VERSIONS[v]) out += '&v=' + v;
+    return out;
+  }
+  function decodeShare(hash) {
+    var h = String(hash || '').replace(/^#/, '');
+    if (!/(^|&)s=/.test(h)) return null;
+    var answers = [], version = null, bad = false;
+    h.split('&').forEach(function (part) {
+      var i = part.indexOf('='), k = part.slice(0, i), val = part.slice(i + 1);
+      if (k === 's') {
+        if (val !== '') val.split('.').forEach(function (x) { if (/^\d{1,2}$/.test(x)) { if (!bad) answers.push(parseInt(x, 10)); } else bad = true; });
+      } else if (k === 'v' && VERSIONS.hasOwnProperty(val)) version = val;
+    });
+    return { answers: answers.slice(0, 40), version: version };
+  }
+
+  /**
+   * The whole tree as a blank paper checklist: every check with its how-to steps and tick boxes for
+   * the answers, each answer pointing to the next check or result; then every result with its steps.
+   * Checks are numbered in the order a reader reaches them from the start.
+   */
+  function checklist(t, v) {
+    var order = [], seen = {};
+    (function walk(id) {
+      if (seen[id]) return;
+      seen[id] = true; order.push(id);
+      var n = t.nodes[id];
+      if (n.type === 'question') n.answers.forEach(function (a) { walk(a.next); });
+    })(t.start);
+    var qs = order.filter(function (id) { return t.nodes[id].type === 'question'; });
+    var rs = order.filter(function (id) { return t.nodes[id].type !== 'question'; });
+    var name = {};
+    qs.forEach(function (id, i) { name[id] = 'check ' + (i + 1); });
+    rs.forEach(function (id, i) { name[id] = 'result ' + String.fromCharCode(65 + (i % 26)) + (i >= 26 ? '2' : ''); });
+    var line = '------------------------------------------------------------', L = [];
+    L.push('CLICKSOLVE GUIDE – PRINT CHECKLIST');
+    L.push('Problem: ' + t.title);
+    if (v && VERSIONS[v]) L.push('Menu paths and commands for: ' + VERSIONS[v]);
+    L.push(wrap('Start at check 1. Tick one answer and go where it points. Layers: ' + t.layers.map(function (l) { return l.label; }).join(' > ') + '.', 72, ''));
+    L.push(line);
+    qs.forEach(function (id, i) {
+      var n = t.nodes[id];
+      L.push('CHECK ' + (i + 1) + (n.layer ? ' (tests: ' + layerLabel(t, n.layer) + ')' : ''));
+      L.push(wrap(n.q, 72, '  '));
+      if (n.hint) L.push(wrap(n.hint, 72, '  '));
+      (n.steps || []).forEach(function (sid, j) { stepLines(L, t.steps[sid], (i + 1) + '.' + (j + 1), v); });
+      n.answers.forEach(function (a) {
+        var notes = [];
+        if (a.clear && a.clear.length) notes.push('rules out ' + a.clear.map(function (l) { return layerLabel(t, l); }).join(', '));
+        if (a.suspect && a.suspect.length) notes.push('suspect: ' + a.suspect.map(function (l) { return layerLabel(t, l); }).join(', '));
+        L.push(wrap('[ ] ' + a.label + '  ->  ' + name[a.next] + (notes.length ? ' (' + notes.join('; ') + ')' : ''), 72, '  ', '      '));
+      });
+      L.push('');
+    });
+    L.push(line);
+    rs.forEach(function (id) {
+      var n = t.nodes[id];
+      L.push(name[id].toUpperCase() + (n.type === 'stop' ? ' – HARD STOP' : '') + ': ' + n.title);
+      L.push(wrap(n.text, 72, '  '));
+      if (n.type === 'stop') n.safe.forEach(function (s) { L.push(wrap('- ' + s, 72, '    ', '      ')); });
+      (n.steps || []).forEach(function (sid, j) { stepLines(L, t.steps[sid], j + 1, v); });
+      if (n.why) L.push(wrap('Why: ' + n.why, 72, '  '));
+      L.push('');
+    });
+    L.push(line);
+    L.push('Printed from clicksolveguide.com. No phone numbers, no remote access:');
+    L.push('nobody from this site will ever call you or ask to connect to your device.');
+    return L.join('\n');
+  }
+
   function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s; }
   function wrap(text, width, indent, rest) {
     var words = String(text).split(/\s+/), out = [], cur = indent;
@@ -273,7 +356,7 @@
     commandsFor: commandsFor, mobileNote: mobileNote,
     validateTree: validateTree, replay: replay, choose: choose, back: back,
     resolvePath: resolvePath, family: family, layerLabel: layerLabel,
-    fixLog: fixLog, allRuns: allRuns, suggestVersion: suggestVersion
+    fixLog: fixLog, checklist: checklist, encodeShare: encodeShare, decodeShare: decodeShare, allRuns: allRuns, suggestVersion: suggestVersion
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.CSGCore = api;

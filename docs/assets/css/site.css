@@ -351,3 +351,55 @@ ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
 html.statsbox-on .foot{padding-bottom:var(--statsbox-room,0px)}
 @media (max-width:560px){.statsbox{left:0;right:0;bottom:0;width:auto;max-height:75vh;border-width:2px 0 0;border-radius:0}}
 @media print{.statsbox,.statsbox-say{display:none!important}html.statsbox-on .foot{padding-bottom:0}}
+
+/* Lookup, reference tables, example cases and share controls (18 Nov 2026) */
+.examples, .lookup-ex { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; }
+.ex-label { font: 700 .74rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); flex-basis: 100%; }
+.example { font: 600 .88rem/1.3 var(--sans); text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); cursor: pointer; max-width: 100%; overflow-wrap: anywhere; }
+.example:hover { border-color: var(--green); background: var(--panel); }
+.answer-key { display: inline-block; min-width: 1.6em; margin-right: 10px; padding: 2px 0; text-align: center; font: 700 .78rem/1.3 var(--mono); border: 1px solid var(--line-strong); border-radius: 4px; color: var(--muted); }
+.lookup { margin: 22px 0; padding: 18px; border: 2px solid var(--navy); border-radius: 10px; background: var(--panel); }
+@media (prefers-color-scheme: dark) { .lookup { border-color: var(--line-strong); } }
+.lookup h2 { margin: 0 0 .5em; font-size: 1.25rem; }
+.lookup-form label { display: block; font: 700 .78rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+.lookup-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.lookup-row input { flex: 1 1 14rem; min-width: 0; font: 600 1.05rem/1.2 var(--mono); padding: 12px; border-radius: var(--r); border: 2px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+.lookup-row .btn { flex: 0 0 auto; }
+.lookup-jump { max-width: 34rem; }
+.lookup-out:empty { display: none; }
+.lookup-note { margin: 10px 0 0; }
+.lk-none { margin: 8px 0; padding: 12px 14px; border: 1px dashed var(--line-strong); border-radius: var(--r); background: var(--bg); }
+.lk-card { margin: 10px 0; padding: 16px; border: 2px solid var(--amber); border-radius: var(--r); background: var(--bg); overflow-wrap: anywhere; }
+.lk-card[data-found="no"] { border: 1px dashed var(--line-strong); }
+.lk-card[data-found="no"] .diag-kicker { color: var(--muted); }
+.lk-card .diag-kicker { color: var(--amber); }
+.lk-title { margin: 0 0 .5em; font: 700 1.2rem/1.3 var(--mono); }
+.lk-lines { display: grid; grid-template-columns: 1fr; gap: 2px 14px; margin: 0 0 12px; }
+@media (min-width: 620px) { .lk-lines { grid-template-columns: minmax(9rem, max-content) 1fr; } }
+.lk-lines dt { font: 700 .76rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.lk-lines dd { margin: 0 0 6px; }
+.lk-meaning { margin: 0 0 12px; padding: 10px 12px; border-left: 4px solid var(--green); background: var(--green-bg); }
+.lk-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; }
+.lk-links .btn { padding: 9px 13px; font-size: .92rem; }
+.lk-share { padding: 8px 12px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); font-size: .88rem; }
+.hero .lookup { margin-top: 0; }
+.refpage .prose, .refpage > .lede { max-width: 46rem; }
+.refpage .prose:has(.reftable) { max-width: none; }
+.refpage .prose:has(.reftable) > p { max-width: 46rem; }
+.tfilter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 1.2em 0 0; }
+.tfilter label { font: 700 .76rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; flex-basis: 100%; }
+.tfilter input { flex: 1 1 12rem; min-width: 0; max-width: 26rem; font: 600 1rem/1.2 var(--sans); padding: 9px 10px; border-radius: var(--r); border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); }
+.tcount { font: .8rem/1.4 var(--mono); color: var(--muted); }
+.tcsv { font: 700 .88rem/1.2 var(--sans); padding: 9px 12px; border-radius: var(--r); border: 1px solid var(--line-strong); background: var(--bg); color: var(--ink); cursor: pointer; }
+.reftable { margin-top: .7em; max-height: 34rem; overflow: auto; }
+.reftable table { font-size: .9rem; }
+.reftable thead th { position: sticky; top: 0; z-index: 1; }
+.reftable td, .reftable th { overflow-wrap: anywhere; vertical-align: top; }
+.reftable code { white-space: normal; overflow-wrap: anywhere; }
+.reftable tr[hidden] { display: none; }
+.wrapany { overflow-wrap: anywhere; }
+kbd { font: 700 .88em/1.2 var(--mono); padding: .1em .4em; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px; background: var(--bg); white-space: nowrap; }
+@media print { .lookup-form, .lookup-ex, .examples, .tfilter, .lk-share { display: none !important; } .reftable { max-height: none; overflow: visible; } }
+/* the print copy of a fix log or checklist exists only on paper (it used to stay visible below the footer after printing) */
+@media screen { #print-area { display: none; } }
+.hero:has(.lookup) { align-items: start; }

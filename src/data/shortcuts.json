@@ -1,0 +1,137 @@
+[
+ {
+  "os": "Windows 11",
+  "keys": "Ctrl+Shift+Esc",
+  "desc": "Open Task Manager."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+I",
+  "desc": "Open Settings."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+X",
+  "desc": "Open the Quick Link menu. This shortcut is the same action as right-click on the Start menu."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+R",
+  "desc": "Open the Run dialog box."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+Pause",
+  "desc": "Opens the Settings app to the System > About page."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+A",
+  "desc": "Open the Windows 11 action center."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+Ctrl+Shift+B",
+  "desc": "Wake up the device when the screen is blank or black."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+L",
+  "desc": "Lock the computer."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+Shift+S",
+  "desc": "Select a region of the screen to capture a screenshot to the clipboard. You can then open the Snipping Tool to share or markup the image."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+PrtScn",
+  "desc": "Capture a full screen screenshot and save it to a file in the Screenshots subfolder of the Pictures folder."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+K",
+  "desc": "Open Cast from Quick Settings to connect to a display. For more information, see Screen mirroring and projecting to your PC or wireless display."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+P",
+  "desc": "Open project settings to choose a presentation display mode."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Windows key+E",
+  "desc": "Open File Explorer."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "Alt+F4",
+  "desc": "Close the active window. If no windows are open, prompt to shutdown."
+ },
+ {
+  "os": "Windows 11",
+  "keys": "F5",
+  "desc": "Refresh the active window."
+ },
+ {
+  "os": "macOS",
+  "keys": "Option-Command-Esc",
+  "desc": "Force quit an app."
+ },
+ {
+  "os": "macOS",
+  "keys": "Command–Space bar",
+  "desc": "Show or hide the Spotlight search field."
+ },
+ {
+  "os": "macOS",
+  "keys": "Command-Q",
+  "desc": "Quit the current app."
+ },
+ {
+  "os": "macOS",
+  "keys": "Command-Comma (,)",
+  "desc": "Open settings (preferences) for the front app."
+ },
+ {
+  "os": "macOS",
+  "keys": "Shift-Command-5",
+  "desc": "In macOS Mojave or later, take a screenshot or make a screen recording."
+ },
+ {
+  "os": "macOS",
+  "keys": "Control-Command-Q",
+  "desc": "Lock your screen."
+ },
+ {
+  "os": "macOS",
+  "keys": "Shift-Command-Q",
+  "desc": "Log out of your macOS user account."
+ },
+ {
+  "os": "macOS",
+  "keys": "Control–Command–Power button",
+  "desc": "On built-in keyboards without Touch ID, force your Mac to restart, without prompting to save any open and unsaved documents."
+ },
+ {
+  "os": "macOS",
+  "keys": "Control–Power button",
+  "desc": "On built-in keyboards without Touch ID, show a dialog asking whether you want to restart, sleep, or shut down."
+ },
+ {
+  "os": "macOS",
+  "keys": "Shift-Command-U",
+  "desc": "Open the Utilities folder."
+ },
+ {
+  "os": "macOS",
+  "keys": "Command-Tab",
+  "desc": "Switch to the next most recently used app among your open apps."
+ },
+ {
+  "os": "macOS",
+  "keys": "Command-P",
+  "desc": "Open a print dialog so that you can print the current document."
+ }
+]

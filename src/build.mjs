@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { esc, VERSIONS } from './lib.mjs';
 import { sitePages, ORDER, OLD_URLS } from './site.mjs';
+import { referencePages, lookupData, lookupBox, REF_ISO } from './reference.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'docs');
@@ -24,7 +25,29 @@ const CHANGED = {
   'android-connected-no-internet': 'Always-on VPN only blocks traffic together with “Block connections without VPN”; Android VPN source added.',
   'windows-update-stuck': 'update services stopped and started with separate commands; check for an existing SoftwareDistribution.old before renaming.'
 };
-const V = '20261105d';
+const V = '20261118a';
+// Changed on 2026-11-18 (Eigenwert): share link, blank checklist, example cases and number keys in the diagnoses;
+// a lookup section on every diagnosis and guide. dateModified, change log and sitemap – the "Reviewed" date
+// (last check against the sources) stays as it was.
+const NEW_ISO = REF_ISO, NEW_DATE = 'November 18, 2026';
+const TOOL_1811 = 'the diagnosis can be shared as a link (answers and system only), printed as a blank checklist of every check and result, tried with example cases and answered with the number keys';
+const REFBOX = {
+  'wifi-connected-no-internet': { kind: 'ip', h2: 'Check the address your device shows', text: 'The check “Which IP address does the device have?” decides between two very different causes. Type the address from your Wi-Fi details: the lookup names the range, quotes its official definition and says what follows.', ex: ['169.254.12.7', '192.168.1.20', '100.72.3.9'], link: ['/reference/ip-address-check/', 'IP address check and all special ranges'] },
+  'site-cant-be-reached': { kind: 'chrome', h2: 'Look up the exact code', text: 'The diagnosis groups the five most frequent codes. Chrome knows many more – 249 in its source code, plus the DNS_PROBE results. Type the code from the error page to see Chromium’s own description and the layer it points to.', ex: ['ERR_ADDRESS_UNREACHABLE', 'DNS_PROBE_FINISHED_BAD_CONFIG', 'ERR_TOO_MANY_REDIRECTS'], link: ['/reference/chrome-error-codes/', 'All Chrome network error codes'] },
+  'one-website-wont-load': { kind: 'http', h2: 'A number on the page? Look it up', text: 'If the failing page shows a three-digit number – 403, 404, 502 – the website’s server answered, and device, Wi-Fi, router, provider and DNS are ruled out in one go. The lookup says who can fix which status.', ex: ['403', '429', '502', 'ERR_TOO_MANY_REDIRECTS'], link: ['/reference/http-status-codes/', 'All HTTP status codes'] },
+  'printer-offline-windows-11': { kind: 'port', h2: 'Port numbers in the printer’s settings', text: 'The printer’s “Ports” tab and a router’s or firewall’s rules name numbers such as 9100, 631 or 3702. The lookup shows what each is registered for and where it matters for printing.', ex: ['9100', '631', '3702', '5353'], link: ['/reference/network-ports/', 'Port reference'] },
+  'mac-printer-not-printing': { kind: 'port', h2: 'Port numbers behind Mac printing', text: 'A Mac finds network printers by multicast DNS and prints over the Internet Printing Protocol. If a firewall or guest network is involved, these are the numbers to look for.', ex: ['5353', '631', '9100'], link: ['/reference/network-ports/', 'Port reference'] },
+  'laptop-wont-connect-wifi': { kind: 'ip', h2: 'Joined, but which address?', text: 'Once the laptop joins the network, the address it receives shows whether the router answered. Type it here; an address starting with 169.254 means it did not.', ex: ['169.254.12.7', '192.168.1.20'], link: ['/reference/ip-address-check/', 'IP address check and all special ranges'] },
+  'iphone-wont-connect-wifi': { kind: 'ip', h2: 'Check the address the iPhone shows', text: 'The IP address in the network’s details is a result you can read without changing anything. Type it here to see which range it is from and what that says about the router.', ex: ['169.254.12.7', '192.168.1.20'], link: ['/reference/ip-address-check/', 'IP address check and all special ranges'] },
+  'android-connected-no-internet': { kind: 'ip', h2: 'Check the address the phone shows', text: 'The IP address in the Wi-Fi network’s details tells you whether the router assigned one. Private DNS, covered above, uses port 853 – the port reference says what blocks it.', ex: ['169.254.12.7', '192.168.1.20', '853'], link: ['/reference/ip-address-check/', 'IP address check and all special ranges'] },
+  'dns-server-not-responding': { kind: 'chrome', h2: 'The browser’s own DNS codes', text: 'Windows says “DNS server isn’t responding”; Chrome and Edge report the same fault as DNS_PROBE or ERR_NAME codes, and each variant says something different about where the lookup failed.', ex: ['DNS_PROBE_FINISHED_BAD_CONFIG', 'DNS_PROBE_FINISHED_NXDOMAIN', 'ERR_NAME_NOT_RESOLVED', '53'], link: ['/reference/chrome-error-codes/', 'All Chrome network error codes'] },
+  'windows-update-stuck': { kind: 'wu', h2: 'Look up the update error code', text: 'If Windows Update shows a code such as 0x80070422 under “Update history” or next to a failed update, type it here. The lookup searches Microsoft’s two published lists and shows the official name and description.', ex: ['0x80070422', '0x8024402F', '0x80240022'], link: ['/reference/windows-update-error-codes/', 'All Windows Update error codes'] },
+  'which-windows-macos-version': { kind: 'win', h2: 'Translate the build number', text: 'winver shows an OS build such as 26100.4946. Type it here to get the Windows version, Microsoft’s end-of-updates date for it and whether newer updates are waiting.', ex: ['26100.4946', '22631', '19045'], link: ['/reference/windows-macos-versions/', 'Windows builds and macOS versions'] },
+  'restart-router-right-way': { kind: 'ip', h2: 'Read the router’s internet address', text: 'After the restart, the router’s status page shows its internet (WAN) address. Type it here and the lookup names the range: public, shared by the provider (100.64.0.0/10), or private – which on a router’s internet side means it sits behind another router or modem-router.', ex: ['100.72.3.9', '192.168.1.20'], link: ['/reference/ip-address-check/', 'IP address check and all special ranges'] },
+  'mac-running-slow': { kind: null, h2: 'Shortcuts for a Mac that barely reacts', text: 'When the pointer drags, the keyboard is faster: Option-Command-Esc opens Force Quit, Command–Space bar finds Activity Monitor. The shortcut reference quotes Apple’s description of each and says when it helps.', link: ['/reference/troubleshooting-shortcuts/', 'Troubleshooting shortcuts for Mac and Windows'] },
+  'bluetooth-not-working-windows-11': { kind: null, h2: 'Shortcuts to the Bluetooth switches', text: 'Windows key+A opens the panel with the Bluetooth and Airplane mode buttons, Windows key+I opens Settings, Windows key+X leads to Device Manager. The shortcut reference quotes Microsoft’s description of each.', link: ['/reference/troubleshooting-shortcuts/', 'Troubleshooting shortcuts for Windows and Mac'] },
+  'tech-support-scams': { kind: 'port', h2: 'Asked to “open a port”?', text: 'Fake support callers sometimes ask for remote access or for a port to be forwarded in the router. Type the number they named to see what it is registered for – and close a stuck pop-up from the keyboard with the shortcuts in the reference.', ex: ['3389', '22', '445'], link: ['/reference/troubleshooting-shortcuts/', 'Troubleshooting shortcuts for Windows and Mac'] }
+};
 // Pages changed on 2026-11-04 (overview texts, About method, ad scope in the privacy policy): sitemap lastmod.
 const CHANGED_0411 = ['/diagnose/', '/guides/', '/about/', '/how-we-check/'];
 // Changed on 2026-11-05: privacy policy (interim statistics window).
@@ -46,7 +69,7 @@ const byPath = Object.fromEntries(content.map((p) => [p.path, p]));
 
 // ---------- shared pieces ----------
 const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="6" fill="#0b7a55"/><rect x="7" y="7" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="12.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="18" width="18" height="3" rx="1.5" fill="#fff"/><rect x="7" y="23.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><path d="M5 25 27 5" stroke="#102033" stroke-width="2.4" stroke-linecap="round"/></svg>`;
-const NAV = [['Diagnoses', '/diagnose/'], ['Guides', '/guides/'], ['Scam check', '/guides/tech-support-scams/'], ['How we check', '/how-we-check/'], ['About', '/about/']];
+const NAV = [['Diagnoses', '/diagnose/'], ['Guides', '/guides/'], ['Reference', '/reference/'], ['Scam check', '/guides/tech-support-scams/'], ['How we check', '/how-we-check/'], ['About', '/about/']];
 
 const CONSENT_DEFAULTS = `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-${GA}']=true;</script>`;
 // Guard, first script in <head> (before consent defaults and any Google tag): local previews and tests
@@ -68,10 +91,11 @@ function layout(pg) {
   const canonical = pg.noindex ? (pg.canonical ? `<link rel="canonical" href="${ORIGIN}${pg.canonical}">` : '') : `<link rel="canonical" href="${ORIGIN}${pg.path}">`;
   const scripts = [`<script src="/assets/js/consent.js?v=${V}" defer></script>`, `<script src="/assets/js/core.js?v=${V}" defer></script>`, `<script src="/assets/js/site.js?v=${V}" defer></script>`];
   if (pg.kind === 'tool') scripts.push(`<script src="/assets/js/diagnose.js?v=${V}" defer></script>`);
+  if (pg.lookup) scripts.push(`<script src="/assets/js/refcore.js?v=${V}" defer></script>`, `<script src="/assets/js/lookup.js?v=${V}" defer></script>`);
   const cur = (u) => {
     const p = pg.path || '';
     if (p === u) return ' aria-current="page"';
-    const inSection = (u === '/diagnose/' && p.startsWith('/diagnose/')) || (u === '/guides/' && p.startsWith('/guides/') && p !== '/guides/tech-support-scams/');
+    const inSection = (u === '/diagnose/' && p.startsWith('/diagnose/')) || (u === '/guides/' && p.startsWith('/guides/') && p !== '/guides/tech-support-scams/') || (u === '/reference/' && p.startsWith('/reference/'));
     return inSection ? ' aria-current="true"' : '';
   };
   return `<!doctype html>
@@ -109,7 +133,7 @@ ${pg.body}
 <footer class="foot"><div class="wrap">
 <div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>
 <div><h2>Diagnoses</h2><ul>${content.filter((c) => c.kind === 'tool').map((c) => `<li><a href="${c.path}">${esc(c.short)}</a></li>`).join('')}</ul></div>
-<div><h2>Site</h2><ul><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
+<div><h2>Site</h2><ul><li><a href="/reference/">Error code lookup and reference tables</a></li><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
 </div></footer>
 </body>
 </html>
@@ -133,6 +157,7 @@ function toolShell(pg) {
 <div class="tool-bar"><span class="mono">Layer diagnosis · ${t.layers.length} layers</span><h2 id="tool-h">${esc(pg.toolTitle || t.title)}</h2></div>
 <div class="tool-in"><div class="tool-main">
 ${vswitch(pg.versions)}
+<div class="examples" id="diag-examples" hidden><span class="ex-label">Example cases (made up, to show how the check works):</span></div>
 <ol class="layermap" aria-label="Layer map: where the problem can be">${t.layers.map((l) => `<li data-layer="${l.id}" data-state="open"><span class="lm-name">${esc(l.label)}</span><span class="lm-state">not checked</span></li>`).join('')}</ol>
 <p class="lm-legend">Dashed: not checked · crossed out: ruled out · amber: suspect or likely</p>
 <p class="lm-live" aria-live="polite"></p>
@@ -147,6 +172,9 @@ ${vswitch(pg.versions)}
 <label for="diag-notes">Your notes</label>
 <textarea id="diag-notes" rows="4" placeholder="e.g. router model, when it started, error text"></textarea>
 <div class="tool-actions"><button type="button" class="primary" id="log-txt">Download .txt</button><button type="button" id="log-print">Print</button></div>
+<h3>Share or print the whole check</h3>
+<div class="tool-actions"><button type="button" id="diag-share">Copy link to this state</button><button type="button" id="chk-print">Print blank checklist</button></div>
+<p class="small" id="share-note" aria-live="polite">The link holds your answers so far and the chosen system – never your notes. The blank checklist prints every check and result of this diagnosis, for when the internet is down. Keyboard: with the focus in the check, keys 1–9 pick an answer.</p>
 <pre class="fixlog-pre" id="fixlog-preview" tabindex="0" aria-label="Fix log preview"></pre>
 </div></div>
 <script type="application/json" id="tree-data">${JSON.stringify(t).replace(/</g, '\\u003c')}</script>
@@ -161,16 +189,24 @@ function contentBody(pg) {
 <h1>${pg.h1html || esc(pg.h1)}</h1>
 <p class="lede">${pg.lede}</p>
 <p class="trust"><span><b>Reviewed ${CHANGED[pg.slug] ? MOD_REVIEWED : REVIEWED}</b></span><span>Applies to: ${esc(pg.applies)}</span><span>Sources: ${esc(pg.checked)}</span><span>Publisher: AdStern, Vienna</span></p>`;
-  const secs = pg.sections.map((s) => `<section id="${s.id}" class="prose"><h2>${s.h2}</h2>\n${s.html}</section>`);
-  const hasCtl = pg.sections.map((s) => CONTROL.test(s.html));
+  const rb = REFBOX[pg.slug];
+  if (!rb) throw new Error(pg.slug + ': REFBOX entry missing');
+  pg.lookup = true;
+  const jump = rb.kind ? `<form class="lookup-form lookup-jump" data-lookup-jump><label for="jump-q">${esc({ ip: 'IP address', chrome: 'Chrome error code', http: 'Status code or Chrome error code', port: 'Port number', wu: 'Windows Update error code', win: 'Windows build number' }[rb.kind])}</label><div class="lookup-row"><input id="jump-q" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="80" placeholder="e.g. ${esc(rb.ex[0])}"><button type="submit" class="btn">Look up</button></div></form>
+<p class="lookup-ex"><span class="ex-label">Examples (made up):</span> ${rb.ex.map((x) => `<button type="button" class="example" data-jump="${esc(x)}">${esc(x)}</button>`).join(' ')}</p>
+<p class="small">The lookup opens on the reference page and runs in your browser; what you type is not sent anywhere.</p>` : '';
+  const sections = pg.sections.concat([{ id: 'lookup-here', h2: rb.h2, html: `<p>${rb.text}</p>\n${jump}\n<p><a href="${rb.link[0]}">${esc(rb.link[1])}</a> · <a href="/reference/">all reference tables</a></p>` }]);
+  const secs = sections.map((s) => `<section id="${s.id}" class="prose"><h2>${s.h2}</h2>\n${s.html}</section>`);
+  const hasCtl = sections.map((s) => CONTROL.test(s.html));
   // first ad: guides after the lede (before section 0), tools after section 0
   const firstAfter = pg.kind === 'tool' ? 1 : 0; // index of section before which the first ad sits
   if (hasCtl[firstAfter] || (pg.kind === 'tool' && hasCtl[0])) throw new Error(pg.slug + ': section next to the first ad contains controls');
   // mid ad: between two control-free sections, near the middle, at least two sections after the first ad
   let mid = -1, best = 1e9;
-  for (let i = firstAfter + 2; i < secs.length - 1; i++) {
+  const n0 = pg.sections.length; // the appended lookup section does not move the ad
+  for (let i = firstAfter + 2; i < n0 - 1; i++) {
     if (hasCtl[i - 1] || hasCtl[i]) continue;
-    const d = Math.abs(i - secs.length / 2);
+    const d = Math.abs(i - n0 / 2);
     if (d < best) { best = d; mid = i; }
   }
   pg.midAd = mid;
@@ -184,7 +220,7 @@ function contentBody(pg) {
   const faq = `<section id="faq" class="prose faq"><h2>Questions people ask</h2>${pg.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
   const src = `<section id="sources" class="prose sources"><h2>Sources</h2><p>${pg.sourcesNote} Menu paths and commands follow the vendors’ own documentation; menus can change with updates – <a href="/contact/">tell us</a> if one differs.</p><ul>${pg.sources.map(([n, u]) => `<li>${u ? `<a href="${u}" rel="noopener">${n}</a>` : n}</li>`).join('')}</ul></section>`;
   const rel = `<section class="prose" aria-labelledby="rel-h"><h2 id="rel-h">Related checks</h2><ul class="related">${pg.related.map((u) => { const r = byPath[u]; if (!r) { if (ONLY) return ''; throw new Error(pg.slug + ': related missing ' + u); } return `<li><a href="${u}"><span>${r.kind === 'tool' ? 'Diagnosis' : 'Guide'}</span>${esc(r.h1)}</a></li>`; }).join('')}</ul></section>`;
-  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}${CHANGED[pg.slug] ? ` ${MOD_REVIEWED} – ${CHANGED[pg.slug]}` : ''}</p>`;
+  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}${CHANGED[pg.slug] ? ` ${MOD_REVIEWED} – ${CHANGED[pg.slug]}` : ''} ${NEW_DATE} – ${pg.kind === 'tool' ? TOOL_1811 + '; ' : ''}new section “${rb.h2}” with a link to the reference tables.</p>`;
   const article = `<article>${head}
 ${pg.kind === 'tool' ? toolShell(pg) + SCAM_SHORT : ''}
 ${parts.join('\n')}
@@ -199,8 +235,8 @@ ${log}</article>`;
 function contentLd(pg) {
   const url = ORIGIN + pg.path;
   const main = pg.kind === 'tool'
-    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: CHANGED[pg.slug] ? MOD_ISO : ISO, publisher: ORG }
-    : { '@context': 'https://schema.org', '@type': 'Article', headline: pg.h1, description: pg.description, url, mainEntityOfPage: url, inLanguage: 'en-US', datePublished: ISO, dateModified: CHANGED[pg.slug] ? MOD_ISO : ISO, author: { '@type': 'Organization', name: 'ClickSolve Guide (AdStern)', url: ORIGIN + '/about/' }, publisher: ORG };
+    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: NEW_ISO, publisher: ORG }
+    : { '@context': 'https://schema.org', '@type': 'Article', headline: pg.h1, description: pg.description, url, mainEntityOfPage: url, inLanguage: 'en-US', datePublished: ISO, dateModified: NEW_ISO, author: { '@type': 'Organization', name: 'ClickSolve Guide (AdStern)', url: ORIGIN + '/about/' }, publisher: ORG };
   const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: pg.faq.map(([q, a]) => ({ '@type': 'Question', name: q.replace(/<[^>]+>/g, ''), acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) };
   return [main, crumbsLd(pg.crumbs), faq];
 }
@@ -211,7 +247,9 @@ for (const pg of content) {
   const body = contentBody(pg);
   pages.push({ ...pg, body, loader: true, jsonld: contentLd(pg) });
 }
-for (const sp of sitePages({ content, esc, crumbsHtml, crumbsLd, ld, ORIGIN, REVIEWED, ISO, ORG })) pages.push(sp);
+const refPages = referencePages({ crumbsHtml, crumbsLd, ORIGIN, ORG, V });
+for (const sp of sitePages({ content, esc, crumbsHtml, crumbsLd, ld, ORIGIN, REVIEWED, ISO, ORG, lookupHtml: lookupBox(V), refPages })) pages.push(sp);
+for (const rp of refPages) pages.push(rp);
 
 // old URLs -> new pages
 for (const [oldPath, target] of OLD_URLS) {
@@ -232,8 +270,11 @@ for (const p of pages) {
   const rel = p.path === '/404.html' || p.path.endsWith('.html') ? p.path : p.path + 'index.html';
   writeOut(rel, layout(p));
 }
+writeOut('assets/data/lookup.json', JSON.stringify(lookupData()));
 const indexable = pages.filter((p) => !p.noindex);
-writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${CHANGED_0511.includes(p.path) ? '2026-11-05' : CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+// every page except contact and imprint changed on 2026-11-18
+const UNCHANGED_1811 = ['/contact/', '/imprint/'];
+writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${!UNCHANGED_1811.includes(p.path) ? NEW_ISO : CHANGED_0511.includes(p.path) ? '2026-11-05' : CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeOut('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeOut('ads.txt', 'google.com, pub-7811071715414905, DIRECT, f08c47fec0942fa0\n');
 writeOut('CNAME', 'clicksolveguide.com'); // as committed on main (no trailing newline)

@@ -245,7 +245,8 @@ test('fix log: certificate hard stop puts a stop notice at the top and keeps saf
   assert.match(log, /Safe actions:/);
   // print uses the same text as the download
   const ui = fs.readFileSync(path.join(__dirname, '..', 'docs', 'assets', 'js', 'diagnose.js'), 'utf8');
-  assert.match(ui, /area\.appendChild\(el\('pre', null, logText\(\)\)\)/);
+  assert.match(ui, /printText\(logText\(\)\)/);
+  assert.match(ui, /area\.appendChild\(el\('pre', null, text\)\)/);
   assert.match(ui, /new Blob\(\[logText\(\)\]/);
   // not a stop -> no stop notice
   const ok = C.allRuns(t).find((r) => t.nodes[r.end].type === 'result');
@@ -451,4 +452,65 @@ test('DNS cache steps: iPhone/iPad and Android get their own instructions, no PC
   assert.match(part, /restart the iPhone or iPad/);
   assert.equal(part.split(/Airplane [Mm]ode/).length - 1, (C.resolvePath(t.steps.s_flush.paths, 'ios').text.match(/Airplane [Mm]ode/g) || []).length, 'airplane-mode text only once (under Where), not repeated');
   assert.match(part, /No terminal command on [^–]+ – use the steps under ‘Where’\./);
+});
+
+// ---------- 18 Nov 2026: share link, blank checklist, example cases ----------
+test('share: encode/decode round trip for every path; notes never included', () => {
+  for (const t of trees) for (const r of C.allRuns(t)) {
+    const enc = C.encodeShare(r.state, 'win10');
+    assert.match(enc, /^s=[0-9.]*&v=win10$/);
+    const dec = C.decodeShare('#' + enc);
+    assert.deepEqual(dec, { answers: r.answers, version: 'win10' });
+    assert.equal(C.replay(t, dec.answers).node, r.end);
+  }
+});
+
+test('share: hostile or broken fragments yield nothing harmful', () => {
+  assert.equal(C.decodeShare(''), null);
+  assert.equal(C.decodeShare('#q=ERR_FAILED'), null);
+  assert.deepEqual(C.decodeShare('#s='), { answers: [], version: null });
+  assert.deepEqual(C.decodeShare('#s=1.0&v=<script>'), { answers: [1, 0], version: null });
+  assert.deepEqual(C.decodeShare('#s=1.x.2'), { answers: [1], version: null }, 'stops at the first non-number');
+  assert.deepEqual(C.decodeShare('#s=-1.2'), { answers: [], version: null });
+  assert.deepEqual(C.decodeShare('#s=1.2&v=__proto__'), { answers: [1, 2], version: null });
+  assert.equal(C.decodeShare('#s=' + Array(200).fill(0).join('.')).answers.length, 40);
+  // out-of-range indexes are cut by replay, never thrown
+  const t = trees[0];
+  assert.equal(C.replay(t, C.decodeShare('#s=99.99').answers).path.length, 0);
+  assert.equal(C.encodeShare(C.replay(t, []), 'nonsense'), 's=');
+});
+
+test('example cases: every tree has at least two, each ends in a result or stop', () => {
+  for (const t of trees) {
+    assert.ok(t.examples.length >= 2, t.id);
+    for (const ex of t.examples) {
+      const st = C.replay(t, ex.answers);
+      assert.equal(st.done, true, t.id + ': ' + ex.label);
+      assert.equal(st.answers.length, ex.answers.length);
+    }
+    const broken = JSON.parse(JSON.stringify(t));
+    broken.examples[0].answers = [0];
+    if (!C.replay(t, [0]).done) assert.ok(C.validateTree(broken).some((e) => /example 0/.test(e)));
+  }
+});
+
+test('blank checklist: names every check, answer, result and step of the tree', () => {
+  for (const t of trees) {
+    const text = C.checklist(t, 'win11');
+    assert.match(text, /PRINT CHECKLIST/);
+    const flat = text.replace(/\s+/g, ' ');
+    const has = (s) => assert.ok(flat.includes(String(s).replace(/\s+/g, ' ').trim()), t.id + ': ' + s);
+    for (const [id, n] of Object.entries(t.nodes)) {
+      if (n.type === 'question') { has(n.q); n.answers.forEach((a) => has('[ ] ' + a.label)); }
+      else has(n.title);
+      (n.steps || []).forEach((sid) => has(t.steps[sid].title));
+      assert.ok(id);
+    }
+    // every answer points to a numbered check or a lettered result
+    const targets = flat.match(/-> (check \d+|result [A-Z]2?)/g) || [];
+    const answers = Object.values(t.nodes).filter((n) => n.type === 'question').reduce((a, n) => a + n.answers.length, 0);
+    assert.equal(targets.length, answers, t.id);
+    // phones get no terminal commands on paper either
+    assert.doesNotMatch(C.checklist(t, 'ios'), /Command \((Windows|macOS)/);
+  }
 });

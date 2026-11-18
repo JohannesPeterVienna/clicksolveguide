@@ -24,6 +24,7 @@
     }
   ],
   "start": "q_what",
+  "examples": [{"label": "Network not listed, but it appears next to the router", "answers": [0, 0, 0, 0]}, {"label": "Password keeps being refused although a phone joins", "answers": [1, 1, 0, 1]}],
   "steps": {
     "l_on": {
       "title": "Make sure Wi-Fi is on and Airplane mode is off",

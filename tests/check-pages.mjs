@@ -89,9 +89,13 @@ for (const p of pages) {
     const types = lds.map((o) => o['@type']);
     const main = lds.find((o) => o['@type'] === (isTool ? 'WebApplication' : 'Article'));
     const mod = main && main.dateModified;
-    if (!main || main.datePublished !== '2026-11-02' || !['2026-11-02', '2026-11-03'].includes(mod)) fail(url, 'main JSON-LD missing or wrong dates');
+    // every diagnosis and guide changed on 2026-11-18 (lookup section, share link, checklist)
+    if (!main || main.datePublished !== '2026-11-02' || mod !== '2026-11-18') fail(url, 'main JSON-LD missing or wrong dates');
     if (!types.includes('BreadcrumbList') || !types.includes('FAQPage')) fail(url, 'BreadcrumbList/FAQPage missing');
-    if (!html.includes(`Reviewed November ${mod === '2026-11-03' ? 3 : 2}, 2026`)) fail(url, 'review date missing or not matching dateModified');
+    // "Reviewed" is the last check against the sources and stays; the change of 18 Nov is in the change log
+    if (!/Reviewed November [23], 2026/.test(html)) fail(url, 'review date missing');
+    if (!/<p class="changelog prose">[^<]*<b>Change log:<\/b>[\s\S]*?November 18, 2026 – /.test(html)) fail(url, 'change log entry for 2026-11-18 missing');
+    if (!/<section id="lookup-here" class="prose">/.test(html) || !/href="\/reference\/[a-z-]*\/?"/.test(html)) fail(url, 'lookup section with reference link missing');
     if (!/<table/.test(html)) fail(url, 'no data table');
     if (!/<figure class="fig"><svg/.test(html)) fail(url, 'no inline SVG figure');
     if (!/id="sources"/.test(html)) fail(url, 'no sources section');
@@ -112,6 +116,17 @@ for (const p of pages) {
       if (m[1] !== 'sidebar' && (CONTROL.test(before.slice(-400)) || CONTROL.test(after.slice(0, 400)))) fail(url, `ad ${m[1]} close to a control in the markup`);
     }
     report.push({ url, prose, ads });
+  }
+  if (/^\/reference\/[a-z0-9-]+\/$/.test(url)) {
+    // reference pages: sourced table(s), retrieval date, filter + CSV, WebPage JSON-LD, never an ad box
+    const wp = lds.find((o) => o['@type'] === 'WebPage');
+    if (!wp || wp.datePublished !== '2026-11-18' || wp.dateModified !== '2026-11-18') fail(url, 'WebPage JSON-LD missing or wrong dates');
+    if (!/<div class="tablewrap reftable"><table id="t-/.test(html)) fail(url, 'no reference table');
+    if (!/data-filter-for="t-/.test(html) || !/data-csv-for="t-/.test(html)) fail(url, 'table without filter or CSV export');
+    const src = (html.match(/<section id="sources"[\s\S]*?<\/section>/) || [''])[0];
+    if (!/<a href="https:\/\/[^"]+" rel="noopener">/.test(src) || !/retrieved November 18, 2026/.test(src)) fail(url, 'source link or retrieval date missing');
+    if (!/Data retrieved November 18, 2026/.test(html)) fail(url, 'retrieval date missing in the head line');
+    for (const m of html.matchAll(/data-csv-for="[^"]+" data-file="[^"]+" data-source="([^"]*)"/g)) if (!/^https:\/\/\S+ .*retrieved 2026-11-18$/.test(decode(m[1]))) fail(url, 'CSV source line incomplete');
   }
   if (/\b1-8\d\d-|\(\d{3}\)\s?\d{3}-\d{4}|\+\d{1,3}[\s-]\d{2,4}[\s-]\d{3,}/.test(text(html))) fail(url, 'looks like a phone number');
 }
@@ -134,10 +149,17 @@ for (const u of sitemap) if (!pages.find((p) => p.url === u)) fail('sitemap', 'u
 if (!fs.existsSync(path.join(DOCS, 'assets/fonts/OFL-SchibstedGrotesk.txt')) || !fs.existsSync(path.join(DOCS, 'assets/fonts/OFL-JetBrainsMono.txt'))) fail('fonts', 'OFL license file missing');
 
 // page weight: html + css + js + preloaded/used fonts
-const assetBytes = ['assets/css/site.css', 'assets/js/consent.js', 'assets/js/core.js', 'assets/js/site.js', 'assets/js/diagnose.js'].reduce((a, f) => a + fs.statSync(path.join(DOCS, f)).size, 0)
-  + walk(path.join(DOCS, 'assets/fonts')).filter((f) => f.endsWith('.woff2')).reduce((a, f) => a + fs.statSync(f).size, 0);
+// (the scripts and the style sheet a page really references; lookup.json is fetched only when a lookup is started)
+const fontBytes = walk(path.join(DOCS, 'assets/fonts')).filter((f) => f.endsWith('.woff2')).reduce((a, f) => a + fs.statSync(f).size, 0);
 let heaviest = 0;
-for (const p of pages) { const total = Buffer.byteLength(p.html) + assetBytes; heaviest = Math.max(heaviest, total); if (total > 300 * 1024) fail(p.url, `page weight ${Math.round(total / 1024)} KB`); }
+for (const p of pages) {
+  const refs = [...p.html.matchAll(/(?:src|href)="(\/assets\/(?:js|css)\/[^"?]+)/g)].map((m) => m[1]);
+  const total = Buffer.byteLength(p.html) + fontBytes + [...new Set(refs)].reduce((a, f) => a + fs.statSync(path.join(DOCS, f)).size, 0);
+  heaviest = Math.max(heaviest, total);
+  if (total > 300 * 1024) fail(p.url, `page weight ${Math.round(total / 1024)} KB`);
+}
+const lookupBytes = fs.statSync(path.join(DOCS, 'assets/data/lookup.json')).size;
+if (lookupBytes > 200 * 1024) fail('lookup.json', `too large: ${Math.round(lookupBytes / 1024)} KB`);
 
 for (const r of report) console.log(`  ${String(r.prose).padStart(5)} words prose · ${r.ads} ad boxes · ${r.url}`);
 console.log(`checked ${pages.length} HTML files, ${sitemap.length} sitemap URLs, heaviest page incl. all assets ${Math.round(heaviest / 1024)} KB`);

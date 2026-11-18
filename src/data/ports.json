@@ -1,0 +1,378 @@
+[
+ {
+  "port": 21,
+  "service": "ftp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "File Transfer Protocol [Control]",
+  "ref": "RFC 959"
+ },
+ {
+  "port": 22,
+  "service": "ssh",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "The Secure Shell (SSH) Protocol",
+  "ref": "RFC 4251"
+ },
+ {
+  "port": 23,
+  "service": "telnet",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Telnet",
+  "ref": "RFC 854"
+ },
+ {
+  "port": 25,
+  "service": "smtp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Simple Mail Transfer",
+  "ref": "RFC-ietf-emailcore-rfc5321bis-43"
+ },
+ {
+  "port": 53,
+  "service": "domain",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Domain Name Server",
+  "ref": ""
+ },
+ {
+  "port": 67,
+  "service": "bootps",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Bootstrap Protocol Server",
+  "ref": "RFC 951"
+ },
+ {
+  "port": 68,
+  "service": "bootpc",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Bootstrap Protocol Client",
+  "ref": ""
+ },
+ {
+  "port": 80,
+  "service": "http",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "World Wide Web HTTP",
+  "ref": "RFC 9110"
+ },
+ {
+  "port": 110,
+  "service": "pop3",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Post Office Protocol - Version 3",
+  "ref": ""
+ },
+ {
+  "port": 123,
+  "service": "ntp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Network Time Protocol",
+  "ref": "RFC 5905"
+ },
+ {
+  "port": 137,
+  "service": "netbios-ns",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "NETBIOS Name Service",
+  "ref": ""
+ },
+ {
+  "port": 138,
+  "service": "netbios-dgm",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "NETBIOS Datagram Service",
+  "ref": ""
+ },
+ {
+  "port": 139,
+  "service": "netbios-ssn",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "NETBIOS Session Service",
+  "ref": ""
+ },
+ {
+  "port": 143,
+  "service": "imap",
+  "transport": [
+   "tcp"
+  ],
+  "desc": "Internet Message Access Protocol",
+  "ref": "RFC 3501; RFC 9051"
+ },
+ {
+  "port": 161,
+  "service": "snmp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "SNMP",
+  "ref": ""
+ },
+ {
+  "port": 443,
+  "service": "https",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "http protocol over TLS/SSL",
+  "ref": "RFC 9110"
+ },
+ {
+  "port": 445,
+  "service": "microsoft-ds",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Microsoft-DS",
+  "ref": ""
+ },
+ {
+  "port": 465,
+  "service": "submissions",
+  "transport": [
+   "tcp"
+  ],
+  "desc": "Message Submission over TLS protocol",
+  "ref": "RFC 8314"
+ },
+ {
+  "port": 500,
+  "service": "isakmp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "isakmp",
+  "ref": ""
+ },
+ {
+  "port": 515,
+  "service": "printer",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "spooler",
+  "ref": ""
+ },
+ {
+  "port": 546,
+  "service": "dhcpv6-client",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "DHCPv6 Client",
+  "ref": "RFC 9915"
+ },
+ {
+  "port": 547,
+  "service": "dhcpv6-server",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "DHCPv6 Server",
+  "ref": "RFC 5460"
+ },
+ {
+  "port": 587,
+  "service": "submission",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Message Submission",
+  "ref": "RFC 6409"
+ },
+ {
+  "port": 631,
+  "service": "ipp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "IPP (Internet Printing Protocol)",
+  "ref": "RFC 8011"
+ },
+ {
+  "port": 631,
+  "service": "ipps",
+  "transport": [
+   "tcp"
+  ],
+  "desc": "Internet Printing Protocol over HTTPS",
+  "ref": "RFC 8011"
+ },
+ {
+  "port": 853,
+  "service": "domain-s",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "DNS query-response protocol run over TLS",
+  "ref": "RFC 7858"
+ },
+ {
+  "port": 993,
+  "service": "imaps",
+  "transport": [
+   "tcp"
+  ],
+  "desc": "IMAP over TLS protocol",
+  "ref": "RFC 3501; RFC 8314; RFC 9051"
+ },
+ {
+  "port": 995,
+  "service": "pop3s",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "POP3 over TLS protocol",
+  "ref": "RFC 8314"
+ },
+ {
+  "port": 1194,
+  "service": "openvpn",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "OpenVPN",
+  "ref": ""
+ },
+ {
+  "port": 1900,
+  "service": "ssdp",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "SSDP",
+  "ref": ""
+ },
+ {
+  "port": 3389,
+  "service": "ms-wbt-server",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "MS WBT Server",
+  "ref": ""
+ },
+ {
+  "port": 3478,
+  "service": "stun",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Session Traversal Utilities for NAT (STUN) port",
+  "ref": "RFC 8489"
+ },
+ {
+  "port": 3702,
+  "service": "ws-discovery",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Web Service Discovery",
+  "ref": ""
+ },
+ {
+  "port": 4500,
+  "service": "ipsec-nat-t",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "IPsec NAT-Traversal",
+  "ref": "RFC 9329"
+ },
+ {
+  "port": 5353,
+  "service": "mdns",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Multicast DNS",
+  "ref": "RFC 6762"
+ },
+ {
+  "port": 5355,
+  "service": "llmnr",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "LLMNR",
+  "ref": ""
+ },
+ {
+  "port": 8080,
+  "service": "http-alt",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "HTTP Alternate (see port 80)",
+  "ref": ""
+ },
+ {
+  "port": 9100,
+  "service": "pdl-datastream",
+  "transport": [
+   "tcp",
+   "udp"
+  ],
+  "desc": "Printer PDL Data Stream",
+  "ref": ""
+ }
+]

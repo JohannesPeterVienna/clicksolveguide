@@ -8,6 +8,7 @@
     { "id": "printer", "label": "Printer" }
   ],
   "start": "q_listed",
+  "examples": [{"label": "The queue says it is paused", "answers": [0, 0, 0]}, {"label": "Printer missing from the list and joined to another network", "answers": [1, 1, 1]}],
   "steps": {
     "m_list": {
       "title": "Open Printers & Scanners",

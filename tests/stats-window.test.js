@@ -409,13 +409,13 @@ test('GA events: no gtag(\'event\') call anywhere without the ga-disable check',
     }
   }
 });
-test('privacy policy: interim statistics section with anchor, linked from the analytics section, date November 5, 2026', () => {
+test('privacy policy: interim statistics section with anchor, linked from the analytics section, date of the last change', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'docs', 'privacy', 'index.html'), 'utf8');
   assert.match(html, /<h2 id="interim-statistics">Interim statistics window<\/h2>/);
   const ga = html.slice(html.indexOf('<h2 id="analytics">'), html.indexOf('<h2 id="interim-statistics">'));
   assert.match(ga, /href="#interim-statistics"/);
   for (const s of ['csg-stats', '12 months', 'Art. 6(1)(a) GDPR', '§ 165(3)', 'Global Privacy Control', 'priority', 'Visitors from the U.S.']) assert.ok(html.includes(s), s);
-  assert.match(html, /Last updated: November 5, 2026/);
+  assert.match(html, /Last updated: November 18, 2026/); // share links and lookup added to the policy
 });
 test('pages without ads: "Google’s ad and U.S. privacy choices" loads only Google’s consent script, never adsbygoogle.js; CMP decides, GA stays off', () => {
   const p = page({ ads: false, stored: rec('granted') });

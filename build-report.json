@@ -2,121 +2,121 @@
  {
   "path": "/diagnose/wifi-connected-no-internet/",
   "kind": "tool",
-  "words": 2003,
+  "words": 2200,
   "midAd": 3
  },
  {
   "path": "/diagnose/site-cant-be-reached/",
   "kind": "tool",
-  "words": 1643,
+  "words": 1841,
   "midAd": 3
  },
  {
   "path": "/diagnose/one-website-wont-load/",
   "kind": "tool",
-  "words": 1657,
+  "words": 1861,
   "midAd": 3
  },
  {
   "path": "/diagnose/printer-offline-windows-11/",
   "kind": "tool",
-  "words": 1600,
+  "words": 1790,
   "midAd": 3
  },
  {
   "path": "/diagnose/mac-printer-not-printing/",
   "kind": "tool",
-  "words": 1355,
+  "words": 1540,
   "midAd": 3
  },
  {
   "path": "/diagnose/laptop-wont-connect-wifi/",
   "kind": "tool",
-  "words": 1638,
+  "words": 1822,
   "midAd": 3
  },
  {
   "path": "/guides/iphone-wont-connect-wifi/",
   "kind": "guide",
-  "words": 1447,
+  "words": 1542,
   "midAd": 3
  },
  {
   "path": "/guides/android-connected-no-internet/",
   "kind": "guide",
-  "words": 1416,
+  "words": 1508,
   "midAd": 3
  },
  {
   "path": "/guides/dns-server-not-responding/",
   "kind": "guide",
-  "words": 1463,
+  "words": 1553,
   "midAd": 2
  },
  {
   "path": "/guides/windows-update-stuck/",
   "kind": "guide",
-  "words": 1819,
+  "words": 1917,
   "midAd": 3
  },
  {
   "path": "/guides/mac-running-slow/",
   "kind": "guide",
-  "words": 1349,
+  "words": 1414,
   "midAd": 3
  },
  {
   "path": "/guides/bluetooth-not-working-windows-11/",
   "kind": "guide",
-  "words": 1297,
+  "words": 1358,
   "midAd": 3
  },
  {
   "path": "/guides/restart-router-right-way/",
   "kind": "guide",
-  "words": 1296,
+  "words": 1399,
   "midAd": 3
  },
  {
   "path": "/guides/which-windows-macos-version/",
   "kind": "guide",
-  "words": 1309,
+  "words": 1394,
   "midAd": 2
  },
  {
   "path": "/guides/tech-support-scams/",
   "kind": "guide",
-  "words": 1470,
+  "words": 1574,
   "midAd": 2
  },
  {
   "path": "/",
   "kind": "home",
-  "words": 1105,
+  "words": 1481,
   "midAd": null
  },
  {
   "path": "/diagnose/",
   "kind": "hub",
-  "words": 1044,
+  "words": 1135,
   "midAd": null
  },
  {
   "path": "/guides/",
   "kind": "hub",
-  "words": 998,
+  "words": 1027,
   "midAd": null
  },
  {
   "path": "/about/",
   "kind": "about",
-  "words": 771,
+  "words": 880,
   "midAd": null
  },
  {
   "path": "/how-we-check/",
   "kind": "about",
-  "words": 943,
+  "words": 1070,
   "midAd": null
  },
  {
@@ -134,7 +134,55 @@
  {
   "path": "/privacy/",
   "kind": "legal",
-  "words": 1914,
+  "words": 2121,
+  "midAd": null
+ },
+ {
+  "path": "/reference/",
+  "kind": "hub",
+  "words": 551,
+  "midAd": null
+ },
+ {
+  "path": "/reference/chrome-error-codes/",
+  "kind": "reference",
+  "words": 7206,
+  "midAd": null
+ },
+ {
+  "path": "/reference/http-status-codes/",
+  "kind": "reference",
+  "words": 2553,
+  "midAd": null
+ },
+ {
+  "path": "/reference/ip-address-check/",
+  "kind": "reference",
+  "words": 1453,
+  "midAd": null
+ },
+ {
+  "path": "/reference/network-ports/",
+  "kind": "reference",
+  "words": 1287,
+  "midAd": null
+ },
+ {
+  "path": "/reference/windows-update-error-codes/",
+  "kind": "reference",
+  "words": 5864,
+  "midAd": null
+ },
+ {
+  "path": "/reference/windows-macos-versions/",
+  "kind": "reference",
+  "words": 1157,
+  "midAd": null
+ },
+ {
+  "path": "/reference/troubleshooting-shortcuts/",
+  "kind": "reference",
+  "words": 1067,
   "midAd": null
  }
 ]

@@ -1,0 +1,94 @@
+[
+ {
+  "name": "macOS 27 Golden Gate",
+  "latest": "27.2.1"
+ },
+ {
+  "name": "macOS Tahoe 26",
+  "latest": "26.7.3"
+ },
+ {
+  "name": "macOS Sequoia 15",
+  "latest": "15.8.3"
+ },
+ {
+  "name": "macOS Sonoma 14",
+  "latest": "14.8.9"
+ },
+ {
+  "name": "macOS Ventura 13",
+  "latest": "13.7.8"
+ },
+ {
+  "name": "macOS Monterey 12",
+  "latest": "12.7.6"
+ },
+ {
+  "name": "macOS Big Sur 11",
+  "latest": "11.7.11"
+ },
+ {
+  "name": "macOS Catalina 10.15",
+  "latest": "10.15.8"
+ },
+ {
+  "name": "macOS Mojave 10.14",
+  "latest": "10.14.6"
+ },
+ {
+  "name": "macOS High Sierra 10.13",
+  "latest": "10.13.6"
+ },
+ {
+  "name": "macOS Sierra 10.12",
+  "latest": "10.12.6"
+ },
+ {
+  "name": "OS X El Capitan 10.11",
+  "latest": "10.11.6"
+ },
+ {
+  "name": "OS X Yosemite 10.10",
+  "latest": "10.10.5"
+ },
+ {
+  "name": "OS X Mavericks 10.9",
+  "latest": "10.9.5"
+ },
+ {
+  "name": "OS X Mountain Lion 10.8",
+  "latest": "10.8.5"
+ },
+ {
+  "name": "OS X Lion 10.7",
+  "latest": "10.7.5"
+ },
+ {
+  "name": "Mac OS X Snow Leopard 10.6",
+  "latest": "10.6.8"
+ },
+ {
+  "name": "Mac OS X Leopard 10.5",
+  "latest": "10.5.8"
+ },
+ {
+  "name": "Mac OS X Tiger 10.4",
+  "latest": "10.4.11"
+ },
+ {
+  "name": "Mac OS X Panther 10.3",
+  "latest": "10.3.9"
+ },
+ {
+  "name": "Mac OS X Jaguar 10.2",
+  "latest": "10.2.8"
+ },
+ {
+  "name": "Mac OS X Puma 10.1",
+  "latest": "10.1.5"
+ },
+ {
+  "name": "Mac OS X Cheetah 10",
+  "latest": "10.0.4"
+ }
+]

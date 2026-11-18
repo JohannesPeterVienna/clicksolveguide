@@ -24,6 +24,7 @@
     }
   ],
   "start": "q_scope",
+  "examples": [{"label": "Phone has internet on the same Wi-Fi, the laptop shows an address starting with 169.254", "answers": [0, 1, 0, 1, 0, 1]}, {"label": "Every device is offline, the router light is red and the provider reports an outage", "answers": [0, 1, 1, 1, 1, 1, 0]}, {"label": "Hotel Wi-Fi that wants a sign-in first", "answers": [0, 0, 0]}],
   "steps": {
     "s_other": {
       "title": "Test with a second device on the same Wi-Fi",

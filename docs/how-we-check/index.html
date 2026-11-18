@@ -20,22 +20,22 @@
 <meta property="og:image" content="https://clicksolveguide.com/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=20261105d">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261118a">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clicksolveguide.com/"},{"@type":"ListItem","position":2,"name":"How we check","item":"https://clicksolveguide.com/how-we-check/"}]}</script>
-<script src="/assets/js/consent.js?v=20261105d" defer></script>
-<script src="/assets/js/core.js?v=20261105d" defer></script>
-<script src="/assets/js/site.js?v=20261105d" defer></script>
+<script src="/assets/js/consent.js?v=20261118a" defer></script>
+<script src="/assets/js/core.js?v=20261118a" defer></script>
+<script src="/assets/js/site.js?v=20261118a" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="6" fill="#0b7a55"/><rect x="7" y="7" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="12.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="18" width="18" height="3" rx="1.5" fill="#fff"/><rect x="7" y="23.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><path d="M5 25 27 5" stroke="#102033" stroke-width="2.4" stroke-linecap="round"/></svg><span>ClickSolve Guide<small>find the layer · then fix it</small></span></a>
-<nav aria-label="Main"><ul class="nav"><li><a href="/diagnose/">Diagnoses</a></li><li><a href="/guides/">Guides</a></li><li><a href="/guides/tech-support-scams/">Scam check</a></li><li><a href="/how-we-check/" aria-current="page">How we check</a></li><li><a href="/about/">About</a></li></ul></nav>
+<nav aria-label="Main"><ul class="nav"><li><a href="/diagnose/">Diagnoses</a></li><li><a href="/guides/">Guides</a></li><li><a href="/reference/">Reference</a></li><li><a href="/guides/tech-support-scams/">Scam check</a></li><li><a href="/how-we-check/" aria-current="page">How we check</a></li><li><a href="/about/">About</a></li></ul></nav>
 </div></header>
 <main id="main" class="wrap">
 <nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><span aria-current="page">How we check</span></li></ol></nav><article class="prose"><span class="kicker">Method</span><h1>How we check our guides</h1>
 <p class="lede">A troubleshooting guide is only useful if its menu paths exist on your screen and its steps don't make things worse. This page explains how ClickSolve Guide is put together, which sources each page is based on, and where the limits are.</p>
-<p class="trust"><span><b>Reviewed November 4, 2026</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
+<p class="trust"><span><b>Reviewed November 18, 2026</b></span><span>Applies to: every diagnosis and guide on this site</span></p>
 <h2 id="layers">The layer model</h2>
 <p>Every diagnosis on this site uses the same idea: a request from your screen passes through layers, and a fault sits in one of them. For internet problems the layers are your <b>device</b>, the <b>Wi-Fi</b> link, the <b>router</b>, your internet <b>provider (ISP)</b> and the <b>service</b> – the website or app at the other end. Printer problems use a shorter chain: computer and print queue, connection, router, printer.</p>
 <p>A good check rules out a whole layer without changing anything. “Does another device on the same Wi-Fi work?” clears router and provider in one go. “Does the site open on mobile data?” clears the website. We order the checks so that the cheapest, safest and most informative ones come first, and we only show fixes once the layer is narrowed down.</p>
@@ -59,6 +59,9 @@
 <h2 id="sources">Which sources each page is based on</h2>
 <p>Steps and menu paths follow the official documentation of the company that makes the product: Microsoft Support and Microsoft Learn for Windows and its commands, Apple Support and the macOS, iPhone and iPad user guides, Google's Chrome and Android help, and the printer makers' own support sites. Security advice follows consumer-protection agencies such as the U.S. Federal Trade Commission. Each page lists its sources at the bottom and shows the date it was last reviewed.</p>
 <p>We do not claim lab testing on hardware we don't have. The source line at the top of each page names the documentation a page is based on – it does not mean someone reproduced every fault on every device. Menus can change with updates; tell us when one differs.</p>
+<h2 id="reference">How the reference tables are made</h2>
+<p>The tables under <a href="/reference/">Reference</a> are not written by hand. A script reads the primary source – Chromium’s source code, the IANA registries, Microsoft Learn, Apple Support – and copies names, numbers, dates and descriptions unchanged into the table; the page states the source and the day it was retrieved. What we add sits in columns marked “our reading” or “our note”: which layer an entry points to and which check comes next. These notes are derived from the definitions. Nobody provoked each error on a test device.</p>
+<p>The lookup that searches these tables runs in your browser. Automated tests check its parsing of codes and addresses, and that a typed value can never become markup or a spreadsheet formula in a downloaded file.</p>
 <h2 id="review">How a page is written and reviewed</h2>
 <p>Pages are written with the help of AI tools from the official documentation listed under each page. Before publication, a separate review pass checks the statements, menu paths and commands against those sources, and anything that cannot be confirmed is rewritten more generally or removed. That review consists of independent AI review passes and the automated tests described above; there is no team of human editors behind the site. AdStern, the publisher, decides what goes online and is responsible for it.</p>
 <h2 id="risk">Risk labels</h2>
@@ -72,12 +75,12 @@
 <p>A decision tree can only follow the answers it gets. If a check is misread – a router light that looks normal but isn't – the result can point to the wrong layer. That's why every result says why it was reached, and why “Back one step” is always available. Company-managed computers may have menus locked or changed by IT; in that case your IT department is the right first contact. For hardware faults, the device maker's support is the place to go.</p>
 <h2 id="corrections">Corrections and review</h2>
 <p>When an operating system update changes a menu, or a reader reports a path that doesn't match, the page is corrected and its review date changes. You can report errors through the <a href="/contact/">contact page</a>. Pages are reviewed again after major Windows, macOS, iOS and Android releases.</p>
-<p class="changelog">Last updated: November 4, 2026</p></article>
+<p class="changelog">Last updated: November 18, 2026</p></article>
 </main>
 <footer class="foot"><div class="wrap">
 <div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>
 <div><h2>Diagnoses</h2><ul><li><a href="/diagnose/wifi-connected-no-internet/">Wi-Fi but no internet</a></li><li><a href="/diagnose/site-cant-be-reached/">This site can’t be reached</a></li><li><a href="/diagnose/one-website-wont-load/">One website won’t load</a></li><li><a href="/diagnose/printer-offline-windows-11/">Printer offline (Windows 11)</a></li><li><a href="/diagnose/mac-printer-not-printing/">Mac printer not printing</a></li><li><a href="/diagnose/laptop-wont-connect-wifi/">Laptop won’t connect to Wi-Fi</a></li></ul></div>
-<div><h2>Site</h2><ul><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
+<div><h2>Site</h2><ul><li><a href="/reference/">Error code lookup and reference tables</a></li><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
 </div></footer>
 </body>
 </html>

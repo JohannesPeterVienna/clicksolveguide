@@ -24,6 +24,7 @@
     }
   ],
   "start": "q_code",
+  "examples": [{"label": "ERR_NAME_NOT_RESOLVED: other sites open, mobile data opens it, nslookup times out", "answers": [0, 1, 0, 0, 1, 1]}, {"label": "ERR_CONNECTION_TIMED_OUT: fails on mobile data too and the status page confirms it", "answers": [2, 0, 1, 0]}],
   "steps": {
     "c_code": {
       "title": "Read the code under the message",

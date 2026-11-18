@@ -20,6 +20,7 @@
     }
   ],
   "start": "q_printer",
+  "examples": [{"label": "Wi-Fi printer: a phone can print, the PC queue is stuck", "answers": [0, 1, 0, 0, 0]}, {"label": "Nothing can print and restarting everything doesn’t help", "answers": [0, 1, 0, 1, 1]}],
   "steps": {
     "p_panel": {
       "title": "Look at the printer itself",

@@ -9,6 +9,7 @@
     { "id": "service", "label": "Website" }
   ],
   "start": "q_what",
+  "examples": [{"label": "Error page in the normal window, but the site works in a private window", "answers": [1, 0, 0, 0]}, {"label": "A certificate warning appears", "answers": [0]}],
   "steps": {
     "o_read": {
       "title": "Read the page before you click anything",

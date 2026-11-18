@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en-US" data-ads="yes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>window.CSG_NO_GOOGLE=(function(l){var h=l.hostname,t=false;try{if(/[?&]stats_test=1(&|$)/.test(l.search))sessionStorage.setItem('csg-stats-test','1');t=sessionStorage.getItem('csg-stats-test')==='1';}catch(e){t=/[?&]stats_test=1(&|$)/.test(l.search);}return t||l.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='::1'||h==='[::1]';})(location);</script>
+<title>Network Ports for Home Troubleshooting (IANA Names)</title>
+<meta name="description" content="The 37 port numbers you meet in router, firewall, printer and mail settings, with their registered IANA service name and where each matters.">
+<link rel="canonical" href="https://clicksolveguide.com/reference/network-ports/">
+<meta name="google-adsense-account" content="ca-pub-7811071715414905">
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',false);window['ga-disable-G-T00HRG2YVF']=true;</script>
+<script data-ads-loader>if(!window.CSG_NO_GOOGLE){(function(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7811071715414905';s.crossOrigin='anonymous';document.head.appendChild(s);})();}</script>
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ClickSolve Guide">
+<meta property="og:title" content="Port numbers you meet while troubleshooting">
+<meta property="og:description" content="The 37 port numbers you meet in router, firewall, printer and mail settings, with their registered IANA service name and where each matters.">
+<meta property="og:url" content="https://clicksolveguide.com/reference/network-ports/">
+<meta property="og:image" content="https://clicksolveguide.com/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css?v=20261118a">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Port numbers you meet while troubleshooting","url":"https://clicksolveguide.com/reference/network-ports/","description":"The 37 port numbers you meet in router, firewall, printer and mail settings, with their registered IANA service name and where each matters.","inLanguage":"en-US","datePublished":"2026-11-18","dateModified":"2026-11-18","publisher":{"@type":"Organization","name":"AdStern – Agentur für digitales Marketing","url":"https://clicksolveguide.com/about/","address":{"@type":"PostalAddress","streetAddress":"Seilerstätte 8/8","postalCode":"1010","addressLocality":"Vienna","addressCountry":"AT"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clicksolveguide.com/"},{"@type":"ListItem","position":2,"name":"Reference","item":"https://clicksolveguide.com/reference/"},{"@type":"ListItem","position":3,"name":"Network ports","item":"https://clicksolveguide.com/reference/network-ports/"}]}</script>
+<script src="/assets/js/consent.js?v=20261118a" defer></script>
+<script src="/assets/js/core.js?v=20261118a" defer></script>
+<script src="/assets/js/site.js?v=20261118a" defer></script>
+<script src="/assets/js/refcore.js?v=20261118a" defer></script>
+<script src="/assets/js/lookup.js?v=20261118a" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="6" fill="#0b7a55"/><rect x="7" y="7" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="12.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><rect x="7" y="18" width="18" height="3" rx="1.5" fill="#fff"/><rect x="7" y="23.5" width="18" height="3" rx="1.5" fill="#fff" opacity=".55"/><path d="M5 25 27 5" stroke="#102033" stroke-width="2.4" stroke-linecap="round"/></svg><span>ClickSolve Guide<small>find the layer · then fix it</small></span></a>
+<nav aria-label="Main"><ul class="nav"><li><a href="/diagnose/">Diagnoses</a></li><li><a href="/guides/">Guides</a></li><li><a href="/reference/" aria-current="true">Reference</a></li><li><a href="/guides/tech-support-scams/">Scam check</a></li><li><a href="/how-we-check/">How we check</a></li><li><a href="/about/">About</a></li></ul></nav>
+</div></header>
+<main id="main" class="wrap">
+<nav aria-label="Breadcrumb"><ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/reference/">Reference</a></li><li><span aria-current="page">Network ports</span></li></ol></nav><article class="refpage"><span class="kicker">Reference · routers, firewalls, printers, mail apps</span><h1>Port numbers you meet while troubleshooting</h1>
+<p class="lede">Router pages, firewall prompts, printer setups and mail apps talk in port numbers: 53, 443, 631, 9100. The official registry has thousands of entries; this page is a selection of the ones behind everyday faults – DNS, address assignment, printing, mail, VPN, device discovery – each with its registered name and the place where it turns up in a diagnosis.</p>
+<p class="trust"><span><b>Data retrieved November 18, 2026</b></span><span>Publisher: AdStern, Vienna</span></p>
+<section class="lookup" id="lookup" data-src="/assets/data/lookup.json?v=20261118a" data-share-path="/reference/" aria-labelledby="lookup-h">
+<h2 id="lookup-h">Look one up</h2>
+<form id="lookup-form" class="lookup-form"><label for="lookup-q">Port number (0–65535)</label>
+<div class="lookup-row"><input id="lookup-q" name="q" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="80" placeholder="e.g. 631"><button type="submit" class="btn">Look up</button></div></form>
+<p class="lookup-ex"><span class="ex-label">Try an example:</span> <button type="button" class="example" data-q="631">631</button> <button type="button" class="example" data-q="9100">9100</button> <button type="button" class="example" data-q="5353">5353</button> <button type="button" class="example" data-q="53">53</button></p>
+<div id="lookup-out" class="lookup-out" aria-live="polite"></div>
+<p class="small lookup-note">The lookup runs in your browser against a data file from this site; what you type is not sent anywhere. Without JavaScript, use the tables below.</p>
+</section>
+
+<section class="prose" id="read"><h2>How ports fit the layer map</h2>
+<p>An IP address finds the device; the port number finds the service on it. A printer can be switched on, joined to the Wi-Fi and reachable by ping and still not print, because the one port the computer uses for printing is not answering or is filtered between two networks. That is why “the printer is on the guest Wi-Fi” and “the PC is on a VPN” are questions in the <a href="/diagnose/printer-offline-windows-11/">printer diagnoses</a>.</p>
+<p>Service names, transport protocols and descriptions are the registry’s. The column “Where you meet it” is this site’s note. The selection is ours: it covers what the diagnoses and guides on this site touch, not every port in use.</p></section>
+<section class="prose" id="all"><h2>The selection</h2>
+<div class="tfilter"><label for="t-ports-f">Filter by number, name or word (try “print” or “mail”)</label><input id="t-ports-f" type="search" data-filter-for="t-ports" data-count="t-ports-n" autocomplete="off" spellcheck="false" maxlength="60"><span class="tcount" id="t-ports-n" aria-live="polite">38 rows</span><button type="button" class="tcsv" data-csv-for="t-ports" data-file="network-ports-selection.csv" data-source="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml – retrieved 2026-11-18">Download CSV</button></div>
+<div class="tablewrap reftable"><table id="t-ports"><caption>Selected registered ports</caption><thead><tr><th scope="col">Port</th><th scope="col">Service name</th><th scope="col">Transport</th><th scope="col">Registry description</th><th scope="col">Reference</th><th scope="col">Where you meet it (our note)</th></tr></thead><tbody>
+<tr><th scope="row">21</th><td><code>ftp</code></td><td>TCP, UDP</td><td>File Transfer Protocol [Control]</td><td>RFC 959</td><td>File transfer without encryption. Rare at home today.</td></tr>
+<tr><th scope="row">22</th><td><code>ssh</code></td><td>TCP, UDP</td><td>The Secure Shell (SSH) Protocol</td><td>RFC 4251</td><td>Encrypted remote command line. Should not be opened to the internet in a router’s port forwarding without need.</td></tr>
+<tr><th scope="row">23</th><td><code>telnet</code></td><td>TCP, UDP</td><td>Telnet</td><td>RFC 854</td><td>Unencrypted remote command line. A router or printer that offers it to the internet is a risk.</td></tr>
+<tr><th scope="row">25</th><td><code>smtp</code></td><td>TCP, UDP</td><td>Simple Mail Transfer</td><td>RFC-ietf-emailcore-rfc5321bis-43</td><td>Mail transfer between mail servers. Mail apps send through 587 or 465 instead.</td></tr>
+<tr><th scope="row">53</th><td><code>domain</code></td><td>TCP, UDP</td><td>Domain Name Server</td><td>–</td><td>DNS lookups. If a filter or firewall blocks it, websites fail by name while a ping to a numeric address still gets replies.</td></tr>
+<tr><th scope="row">67</th><td><code>bootps</code></td><td>TCP, UDP</td><td>Bootstrap Protocol Server</td><td>RFC 951</td><td>How a device gets its address from the router (the router listens on 67, the device on 68). An address starting with 169.254 means this exchange failed.</td></tr>
+<tr><th scope="row">68</th><td><code>bootpc</code></td><td>TCP, UDP</td><td>Bootstrap Protocol Client</td><td>–</td><td>The device’s side of the address assignment (see port 67).</td></tr>
+<tr><th scope="row">80</th><td><code>http</code></td><td>TCP, UDP</td><td>World Wide Web HTTP</td><td>RFC 9110</td><td>Web pages without encryption (HTTP).</td></tr>
+<tr><th scope="row">110</th><td><code>pop3</code></td><td>TCP, UDP</td><td>Post Office Protocol - Version 3</td><td>–</td><td>Fetching mail without encryption (POP3); 995 is the encrypted form.</td></tr>
+<tr><th scope="row">123</th><td><code>ntp</code></td><td>TCP, UDP</td><td>Network Time Protocol</td><td>RFC 5905</td><td>Clock synchronisation. A device with a wrong clock shows certificate warnings on correct websites.</td></tr>
+<tr><th scope="row">137</th><td><code>netbios-ns</code></td><td>TCP, UDP</td><td>NETBIOS Name Service</td><td>–</td><td>Name lookup of older Windows file and printer sharing in the local network.</td></tr>
+<tr><th scope="row">138</th><td><code>netbios-dgm</code></td><td>TCP, UDP</td><td>NETBIOS Datagram Service</td><td>–</td><td>Part of older Windows file and printer sharing in the local network.</td></tr>
+<tr><th scope="row">139</th><td><code>netbios-ssn</code></td><td>TCP, UDP</td><td>NETBIOS Session Service</td><td>–</td><td>Older Windows file and printer sharing in the local network.</td></tr>
+<tr><th scope="row">143</th><td><code>imap</code></td><td>TCP</td><td>Internet Message Access Protocol</td><td>RFC 3501; RFC 9051</td><td>Reading mail (IMAP); 993 is the encrypted form mail apps normally use.</td></tr>
+<tr><th scope="row">161</th><td><code>snmp</code></td><td>TCP, UDP</td><td>SNMP</td><td>–</td><td>Network management. Many network printers report their status over it.</td></tr>
+<tr><th scope="row">443</th><td><code>https</code></td><td>TCP, UDP</td><td>http protocol over TLS/SSL</td><td>RFC 9110</td><td>Encrypted web pages (HTTPS) – almost every website. If 443 works and a site still fails, the fault is not a blocked port.</td></tr>
+<tr><th scope="row">445</th><td><code>microsoft-ds</code></td><td>TCP, UDP</td><td>Microsoft-DS</td><td>–</td><td>Windows file and printer sharing (SMB) in the local network. Should never be forwarded from the internet to a PC.</td></tr>
+<tr><th scope="row">465</th><td><code>submissions</code></td><td>TCP</td><td>Message Submission over TLS protocol</td><td>RFC 8314</td><td>Sending mail with encryption from the start – one of the two numbers a mail app asks for under “outgoing server”.</td></tr>
+<tr><th scope="row">500</th><td><code>isakmp</code></td><td>TCP, UDP</td><td>isakmp</td><td>–</td><td>Key exchange for IPsec VPNs. If a hotel or guest network blocks it, such a VPN cannot connect.</td></tr>
+<tr><th scope="row">515</th><td><code>printer</code></td><td>TCP, UDP</td><td>spooler</td><td>–</td><td>The older LPD way of sending print jobs to a network printer.</td></tr>
+<tr><th scope="row">546</th><td><code>dhcpv6-client</code></td><td>TCP, UDP</td><td>DHCPv6 Client</td><td>RFC 9915</td><td>The device’s side of IPv6 address assignment (DHCPv6).</td></tr>
+<tr><th scope="row">547</th><td><code>dhcpv6-server</code></td><td>TCP, UDP</td><td>DHCPv6 Server</td><td>RFC 5460</td><td>The router’s side of IPv6 address assignment (DHCPv6).</td></tr>
+<tr><th scope="row">587</th><td><code>submission</code></td><td>TCP, UDP</td><td>Message Submission</td><td>RFC 6409</td><td>Sending mail from a mail app (“outgoing server”, with STARTTLS).</td></tr>
+<tr><th scope="row">631</th><td><code>ipp</code></td><td>TCP, UDP</td><td>IPP (Internet Printing Protocol)</td><td>RFC 8011</td><td>Internet Printing Protocol – the way current operating systems talk to network printers, including driverless printing. If the printer sits in another network, for example the guest Wi-Fi, the computer cannot reach it on this port.</td></tr>
+<tr><th scope="row">631</th><td><code>ipps</code></td><td>TCP</td><td>Internet Printing Protocol over HTTPS</td><td>RFC 8011</td><td>Internet Printing Protocol – the way current operating systems talk to network printers, including driverless printing. If the printer sits in another network, for example the guest Wi-Fi, the computer cannot reach it on this port.</td></tr>
+<tr><th scope="row">853</th><td><code>domain-s</code></td><td>TCP, UDP</td><td>DNS query-response protocol run over TLS</td><td>RFC 7858</td><td>Encrypted DNS (DNS over TLS). Networks that block it break a fixed “Private DNS” provider on a phone.</td></tr>
+<tr><th scope="row">993</th><td><code>imaps</code></td><td>TCP</td><td>IMAP over TLS protocol</td><td>RFC 3501; RFC 8314; RFC 9051</td><td>Reading mail with encryption (IMAP) – the “incoming server” port in most mail apps.</td></tr>
+<tr><th scope="row">995</th><td><code>pop3s</code></td><td>TCP, UDP</td><td>POP3 over TLS protocol</td><td>RFC 8314</td><td>Fetching mail with encryption (POP3).</td></tr>
+<tr><th scope="row">1194</th><td><code>openvpn</code></td><td>TCP, UDP</td><td>OpenVPN</td><td>–</td><td>OpenVPN’s registered port.</td></tr>
+<tr><th scope="row">1900</th><td><code>ssdp</code></td><td>TCP, UDP</td><td>SSDP</td><td>–</td><td>Device discovery in the local network (UPnP). Lets PCs find routers, TVs and some printers.</td></tr>
+<tr><th scope="row">3389</th><td><code>ms-wbt-server</code></td><td>TCP, UDP</td><td>MS WBT Server</td><td>–</td><td>Remote Desktop. A caller who asks you to turn on remote access or to forward this port is not support.</td></tr>
+<tr><th scope="row">3478</th><td><code>stun</code></td><td>TCP, UDP</td><td>Session Traversal Utilities for NAT (STUN) port</td><td>RFC 8489</td><td>Helps voice and video calls find a path through the router (STUN).</td></tr>
+<tr><th scope="row">3702</th><td><code>ws-discovery</code></td><td>TCP, UDP</td><td>Web Service Discovery</td><td>–</td><td>Windows’ discovery of network printers and scanners (WSD).</td></tr>
+<tr><th scope="row">4500</th><td><code>ipsec-nat-t</code></td><td>TCP, UDP</td><td>IPsec NAT-Traversal</td><td>RFC 9329</td><td>IPsec VPN traffic through a router (NAT traversal).</td></tr>
+<tr><th scope="row">5353</th><td><code>mdns</code></td><td>TCP, UDP</td><td>Multicast DNS</td><td>RFC 6762</td><td>Multicast DNS: how devices find printers and each other by name in the local network without any setup. On a network that keeps devices apart from each other (guest Wi-Fi, “client isolation”), these messages do not get through and printers are not found automatically.</td></tr>
+<tr><th scope="row">5355</th><td><code>llmnr</code></td><td>TCP, UDP</td><td>LLMNR</td><td>–</td><td>Windows’ name lookup for devices in the local network when no DNS server knows them.</td></tr>
+<tr><th scope="row">8080</th><td><code>http-alt</code></td><td>TCP, UDP</td><td>HTTP Alternate (see port 80)</td><td>–</td><td>A common second port for web pages, for example a device’s settings page.</td></tr>
+<tr><th scope="row">9100</th><td><code>pdl-datastream</code></td><td>TCP, UDP</td><td>Printer PDL Data Stream</td><td>–</td><td>Raw print data straight to the printer. Windows’ “Standard TCP/IP Port” for printers uses it by default.</td></tr>
+</tbody></table></div></section>
+<section id="sources" class="prose sources"><h2>Sources and how this page was made</h2><p>Port numbers, service names, transport protocols, descriptions and RFC references were taken unchanged from the registry’s CSV file; only TCP and UDP rows were used, and alias names for the same port were left out. The selection and the “Where you meet it” column are ClickSolve Guide’s own.</p><ul><li><a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml" rel="noopener">IANA – Service Name and Transport Protocol Port Number Registry</a> – retrieved November 18, 2026.</li></ul>
+<p>Found a difference to the source? <a href="/contact/">Tell us</a> – the table is rebuilt from the source and the retrieval date changes.</p></section>
+<section class="prose" aria-labelledby="rel-h"><h2 id="rel-h">Use it in a check</h2><ul class="related"><li><a href="/diagnose/printer-offline-windows-11/"><span>Diagnosis</span>printer offline in Windows 11</a></li><li><a href="/diagnose/mac-printer-not-printing/"><span>Diagnosis</span>Mac printer not printing</a></li><li><a href="/guides/dns-server-not-responding/"><span>Guide</span>DNS server not responding</a></li><li><a href="/guides/tech-support-scams/"><span>Guide</span>tech support scams</a></li></ul></section>
+<p class="changelog prose"><b>Change log:</b> November 18, 2026 – first published.</p></article>
+</main>
+<footer class="foot"><div class="wrap">
+<div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>
+<div><h2>Diagnoses</h2><ul><li><a href="/diagnose/wifi-connected-no-internet/">Wi-Fi but no internet</a></li><li><a href="/diagnose/site-cant-be-reached/">This site can’t be reached</a></li><li><a href="/diagnose/one-website-wont-load/">One website won’t load</a></li><li><a href="/diagnose/printer-offline-windows-11/">Printer offline (Windows 11)</a></li><li><a href="/diagnose/mac-printer-not-printing/">Mac printer not printing</a></li><li><a href="/diagnose/laptop-wont-connect-wifi/">Laptop won’t connect to Wi-Fi</a></li></ul></div>
+<div><h2>Site</h2><ul><li><a href="/reference/">Error code lookup and reference tables</a></li><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
+</div></footer>
+</body>
+</html>
