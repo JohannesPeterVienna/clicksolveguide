@@ -2,13 +2,13 @@
  {
   "path": "/diagnose/wifi-connected-no-internet/",
   "kind": "tool",
-  "words": 2200,
+  "words": 2202,
   "midAd": 3
  },
  {
   "path": "/diagnose/site-cant-be-reached/",
   "kind": "tool",
-  "words": 1841,
+  "words": 1838,
   "midAd": 3
  },
  {
@@ -56,19 +56,19 @@
  {
   "path": "/guides/windows-update-stuck/",
   "kind": "guide",
-  "words": 1917,
+  "words": 1935,
   "midAd": 3
  },
  {
   "path": "/guides/mac-running-slow/",
   "kind": "guide",
-  "words": 1414,
+  "words": 1413,
   "midAd": 3
  },
  {
   "path": "/guides/bluetooth-not-working-windows-11/",
   "kind": "guide",
-  "words": 1358,
+  "words": 1361,
   "midAd": 3
  },
  {
@@ -92,7 +92,7 @@
  {
   "path": "/",
   "kind": "home",
-  "words": 1481,
+  "words": 1497,
   "midAd": null
  },
  {
@@ -110,13 +110,13 @@
  {
   "path": "/about/",
   "kind": "about",
-  "words": 880,
+  "words": 882,
   "midAd": null
  },
  {
   "path": "/how-we-check/",
   "kind": "about",
-  "words": 1070,
+  "words": 1079,
   "midAd": null
  },
  {
@@ -140,49 +140,56 @@
  {
   "path": "/reference/",
   "kind": "hub",
-  "words": 551,
+  "words": 572,
   "midAd": null
  },
  {
   "path": "/reference/chrome-error-codes/",
   "kind": "reference",
-  "words": 7206,
-  "midAd": null
+  "words": 2268,
+  "midAd": null,
+  "fromSourceWords": 78
  },
  {
   "path": "/reference/http-status-codes/",
   "kind": "reference",
-  "words": 2553,
-  "midAd": null
+  "words": 2100,
+  "midAd": null,
+  "fromSourceWords": 419
  },
  {
   "path": "/reference/ip-address-check/",
   "kind": "reference",
   "words": 1453,
-  "midAd": null
+  "midAd": null,
+  "fromSourceWords": 317
  },
  {
   "path": "/reference/network-ports/",
   "kind": "reference",
-  "words": 1287,
-  "midAd": null
+  "words": 1288,
+  "midAd": null,
+  "fromSourceWords": 313
  },
  {
   "path": "/reference/windows-update-error-codes/",
   "kind": "reference",
-  "words": 5864,
-  "midAd": null
+  "words": 2284,
+  "midAd": null,
+  "fromSourceWords": 72
  },
  {
   "path": "/reference/windows-macos-versions/",
   "kind": "reference",
-  "words": 1157,
-  "midAd": null
+  "words": 1156,
+  "midAd": null,
+  "fromSourceWords": 357
  },
  {
   "path": "/reference/troubleshooting-shortcuts/",
   "kind": "reference",
-  "words": 1067,
-  "midAd": null
+  "words": 968,
+  "midAd": null,
+  "fromSourceWords": 42
  }
 ]

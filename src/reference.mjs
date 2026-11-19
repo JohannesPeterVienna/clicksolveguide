@@ -1,7 +1,8 @@
-// Reference section of clicksolveguide.com: lookup box, tables built from the primary sources in
-// src/data/ (see src/data/extract.py) and this site's own reading of what each entry means for the
-// layer diagnosis. Facts (names, numbers, dates, descriptions) come from the data files unchanged;
-// the "what it tells you" texts below are ours and are labeled as such on the pages.
+// Reference section of clicksolveguide.com: lookup box and tables. From the primary sources (src/data/,
+// see src/data/extract.py) come only identifiers and facts: code names and numbers, registry entries,
+// version names, dates, key combinations. Every explanation – what an entry means, where it points on
+// the layer map, the next safe step – is written by ClickSolve Guide in this file. No code comments and
+// no description texts of Microsoft, Apple or Chromium are reproduced.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -88,21 +89,42 @@ const ADVICE = {
     DNS_PROBE_NOT_RUN: { meaning: 'Chrome did not run its DNS test, so the code says nothing about the cause.', next: D_SITE }
   },
   http: {
-    301: { meaning: 'The address has moved permanently; browsers follow it automatically. You only see it in tools, not as an error.' },
-    302: { meaning: 'A temporary redirect; browsers follow it automatically. Seen as an “error” only when redirects loop.' },
-    304: { meaning: 'Not an error: the server says your stored copy is still current.' },
+    100: { meaning: 'An interim answer: the server has seen the start of the request and the browser may send the rest. You never see it as an error.' },
+    101: { meaning: 'The server agrees to switch to another protocol on this connection, for example for a live chat channel. Not an error.' },
+    200: { meaning: 'The request worked and the page was delivered. If it still looks broken, the cause is in the page itself or in the browser (extensions, stored data), not in the transfer.' },
+    204: { meaning: 'The request worked and the server has nothing to show for it. Normal after saving something in a web app.' },
+    206: { meaning: 'The server delivered a requested part of a file – normal when a download is resumed or a video is skipped forward.' },
+    301: { meaning: 'The address has moved for good; browsers follow automatically. You only notice it when redirects run in a circle.' },
+    302: { meaning: 'A temporary redirect; browsers follow automatically. You only notice it when redirects run in a circle.' },
+    303: { meaning: 'After a form was sent, the server points the browser to a result page. Normal behaviour.' },
+    304: { meaning: 'Not an error: the server confirms that the copy your browser already stored is still current.' },
+    307: { meaning: 'A temporary redirect that keeps the kind of request unchanged. Browsers follow automatically.' },
+    308: { meaning: 'A permanent redirect that keeps the kind of request unchanged. Browsers follow automatically.' },
     400: { meaning: 'The server rejected the request as malformed. From a browser, data stored for that site (cookies) can be the cause: test a private window, then clear that one site’s data.', next: D_ONE },
     401: { meaning: 'The server wants a valid sign-in for this address. Sign in again; if the page belongs to a company or school, the account needs access.' },
-    403: { meaning: 'The server understood the request and refuses it. Your connection works. The site decides this – by account, by country or network, or by the address you come from, for example when you use a VPN.', next: D_ONE },
+    403: { meaning: 'The server understood the request and refuses it. Your connection works. The site decides this – by account, by country or by the address you come from, for example when you use a VPN.', next: D_ONE },
     404: { meaning: 'The server is up but has nothing at this exact address. Check the spelling after the domain name; an old link or bookmark is the usual reason. Nothing on your device needs fixing.' },
+    405: { meaning: 'The page exists but does not accept this kind of request – for example a form sent to an address that only shows pages. A fault in the website or in an outdated bookmark to a form step.' },
+    407: { meaning: 'The exception among the 4xx codes: this answer comes from a proxy between you and the website, not from the website. The proxy wants a sign-in. On a company or school network ask IT; on a private device check whether a proxy or a VPN app is set that should not be.', next: D_WIFI },
     408: { meaning: 'The server gave up waiting for the browser’s request. Reload once; if it repeats on a slow or unstable connection, look at the Wi-Fi link.', next: D_WIFI },
+    409: { meaning: 'The request collides with the current state on the server – typically two people or two tabs changed the same thing. Reload the page and repeat the change.' },
     410: { meaning: 'The page was removed on purpose and is not coming back at this address.' },
+    413: { meaning: 'What you tried to send is larger than the server accepts – usually an upload. Make the file smaller; nothing is wrong with your connection.' },
+    414: { meaning: 'The address itself is too long for the server. This happens with links that carry a lot of data after the question mark; open the site from its start page instead.' },
+    415: { meaning: 'The server does not accept the format of what was sent – for example an upload in a file type the site does not support.' },
+    421: { meaning: 'The request reached a server that is not responsible for this address. A fault in the website’s setup or in a connection the browser reused; closing and reopening the browser makes it connect afresh.', next: D_ONE },
+    426: { meaning: 'The server insists on a newer protocol than the one used. Seen with very old browsers or apps: update the browser.' },
+    428: { meaning: 'The server only accepts the change with a safeguard against overwriting someone else’s edit. A matter for the web app; reload and try again.' },
     429: { meaning: 'Too many requests from your address or account in a short time. Wait – every reload adds another request. On a shared network or VPN, the limit is shared with others.' },
+    431: { meaning: 'The browser sent more header data than the server accepts – for example too many or too large cookies for that site. Test a private window, then clear that one site’s cookies.', next: D_ONE },
     451: { meaning: 'The site withholds the page for legal reasons, typically depending on the country you connect from. Nothing is broken on your side.' },
     500: { meaning: 'The website’s server ran into an error of its own. Only the site can fix it; try again later or check its status page.', next: D_ONE },
+    501: { meaning: 'The server does not support what the request asked it to do. A fault in the website or app, not on your device.' },
     502: { meaning: 'A server in front of the website (gateway or proxy) got an invalid answer from the server behind it. A problem inside the website’s infrastructure – wait and retry.', next: D_ONE },
     503: { meaning: 'The server is temporarily overloaded or down for maintenance. Wait and retry; a status page often confirms it.', next: D_ONE },
-    504: { meaning: 'A gateway in front of the website waited too long for the server behind it. As with 502, the website’s side.', next: D_ONE }
+    504: { meaning: 'A gateway in front of the website waited too long for the server behind it. As with 502, the website’s side.', next: D_ONE },
+    505: { meaning: 'The server does not support the HTTP version the request used. A server or app fault; a current browser does not cause it.' },
+    511: { meaning: 'The second exception: this answer comes from the network you are on, not from the website. The network wants you to sign in first – the sign-in page of a hotel, café, train or guest Wi-Fi. Open a plain address in a new tab to get the sign-in page; until then nothing else will load.', next: D_WIFI }
   },
   httpClass: {
     1: { meaning: 'Informational: an interim answer while the request continues. Not an error.' },
@@ -130,13 +152,76 @@ const ADVICE = {
     publicV6: { meaning: 'A public (global) IPv6 address. Unlike IPv4, it is normal for every device at home to have one: IPv6 does not need private addresses and address translation.' }
   },
   wu: {
-    listed: 'Microsoft’s list names the error and the Windows Update component that reported it. It is written for IT administrators and gives no fix; the name still narrows it down – “PT” codes come from talking to the update server, “DM” from downloading, “UH” from installing, “DS” from the local update database.',
-    common: 'Microsoft’s troubleshooting article covers this code with a cause and a mitigation written for administrators. Read the mitigation there; for a home PC, start with the safe steps in our guide before using any command.',
-    missing: 'This code is not in Microsoft’s two lists as retrieved (Windows Update error codes by component; Common Windows Update errors). Many 0x8007… codes are general Windows errors passed through by Windows Update. Search the exact code on Microsoft’s own support site only.',
-    commonUrl: SRC.wucommon.url
+    listed: 'Microsoft lists this code under the name shown. This site has no explanation of its own for it; Microsoft’s wording is on the linked page. For a home PC the order of safe steps is the same for most update errors and is in our guide.',
+    missing: 'This code is not in the Microsoft lists this lookup uses (Windows Update error codes by component, Common Windows Update errors, Windows upgrade resolution procedures). That says nothing about how serious it is. Search the exact code on Microsoft’s own support site.'
   }
 };
 for (const e of ipSpecial.v4.concat(ipSpecial.v6)) if (/^Documentation/.test(e.name)) ADVICE.ip[e.block] = ADVICE.ip.Documentation;
+
+// Windows Update: our selection of codes a home PC shows, with our own explanation and next safe step.
+// [code, what it means, next safe step]. Official name and source link come from the data.
+const G_WU = { href: '/guides/windows-update-stuck/', label: 'Guide: Windows Update stuck' };
+const STORE = 'Windows’ own store of system files is damaged, so the update cannot be put together.';
+const STORE_NEXT = 'Restart and try once more. If it returns, Microsoft’s remedy is Windows’ built-in repair (DISM with RestoreHealth, then SFC) from an administrator command prompt – the exact commands are on the linked Microsoft page. Nothing has to be downloaded for it.';
+const NET_NEXT = 'Open a website to check the connection. Pause a VPN or proxy and try again; if you can, try another network. If only updates fail for hours, wait – nothing on the PC needs changing.';
+const WUSEL = [
+  ['0x80070422', 'The Windows Update service is switched off or not running, so nothing can be searched or installed.', 'Restart the PC. If the code returns, open the Services app, look for “Windows Update” and check that it is not set to Disabled (needs an administrator). On a work PC this is set by IT.'],
+  ['0x80072EE2', 'The PC got no answer from the update server in time.', NET_NEXT],
+  ['0x80072EFD', 'The connection to the update server could not be set up or timed out. Microsoft names firewalls and proxies that block its download addresses.', NET_NEXT],
+  ['0x80072EFE', 'The connection to the update server was cut during the transfer.', NET_NEXT],
+  ['0x80072F8F', 'The PC could not read what the update server sent; Microsoft traces this to the encryption setup (TLS 1.2) on older systems.', 'Install all other pending updates first and restart. Microsoft’s page names the update that fixes it on old systems; do not change security settings by hand.'],
+  ['0x8007000D', 'A downloaded update file is damaged or incomplete.', 'Restart and let Windows download it again. If the same update fails again, the last step of our guide – resetting the update cache – makes Windows fetch it fresh.'],
+  ['0x80070005', 'Windows was refused access to a file or setting it needs for the update.', 'Restart, sign in with an administrator account and retry. If it stays, the cause has to be read from Windows’ update log as Microsoft describes – a job for someone experienced, not for trial and error.'],
+  ['0x80070003', 'A folder or file the update expects is not where it should be.', 'Restart and retry. If the same update fails again, reset the update cache as described at the end of our guide.'],
+  ['0x80070020', 'Another program is holding a file the update needs. Microsoft names security software and similar background programs as the usual cause.', 'Restart and start the update before opening anything else. If it repeats, follow Microsoft’s clean-start instructions on the linked page.'],
+  ['0x80070570', STORE, STORE_NEXT],
+  ['0x80073701', STORE + ' A part of an earlier update was left half installed.', STORE_NEXT],
+  ['0x800F081F', STORE + ' Files needed for the update are missing.', STORE_NEXT],
+  ['0x800F0831', STORE, STORE_NEXT],
+  ['0x800F0821', 'The installation step took longer than Windows allows and was stopped by its own watchdog.', 'Give the PC time: close other programs, keep it plugged in and try the update again.'],
+  ['0x80070BC9', 'An earlier installation still needs a restart, or a setting keeps Windows’ installer service from starting.', 'Restart the PC (Restart, not Shut down) and try again. On a managed PC the installer setting comes from IT.'],
+  ['0x80240020', 'The update needs someone signed in to finish, and nobody was.', 'Sign in, start the update again and let the PC restart when it asks.'],
+  ['0x80240022', 'Every update in the batch failed. Microsoft’s most common finding is security software blocking Windows’ update folders.', 'Restart and retry. If you use third-party antivirus, check whether it reports blocking Windows Update; then run Windows’ own troubleshooter as in our guide.'],
+  ['0x80242014', 'An update is waiting for its restart and blocks the next one until then.', 'Restart the PC (Restart, not Shut down), then check for updates again.'],
+  ['0x80242006', 'The description data of an update is unusable.', 'Microsoft’s remedy is to make Windows download everything fresh by renaming the update cache folders – the last step in our guide, with the undo.'],
+  ['0x8024000B', 'The update run was cancelled – by you, by a shutdown or by the update service itself.', 'Start “Check for updates” again and leave the PC on until it finishes.'],
+  ['0x8024401B', 'A proxy server between the PC and Microsoft demands a sign-in the update service cannot give.', 'On a home PC, check whether a proxy is set in the network settings or by a VPN or filter app, and switch it off for a test. On a work PC, ask IT.'],
+  ['0x80244022', 'The update server answered that it is overloaded or unavailable (the web’s status 503).', 'Wait an hour and try again. Nothing on the PC needs fixing. On a work PC the update server belongs to the company – ask IT.'],
+  ['0x80200053', 'A download did not arrive as it was sent. Microsoft points to firewalls or filters that alter downloads.', 'Pause a VPN, web filter or third-party firewall for a test and retry, or try another network.'],
+  ['0x8024A10A', 'The update service shut down in the middle – Microsoft describes this after long idle periods.', 'Keep the PC awake and plugged in, start the update again and stay until the download and installation finish.'],
+  ['0x80240016', 'Another installation is still running, or the PC is waiting for a restart.', 'Wait a few minutes or restart the PC, then try again.'],
+  ['0x8024001E', 'The update service or Windows was shutting down while the update was at work.', 'Start the PC normally and check for updates again; do not switch off during an update.'],
+  ['0x80240034', 'An update could not be downloaded.', 'Check the connection and free disk space, then retry. If the same update keeps failing, reset the update cache as described at the end of our guide.'],
+  ['0x8024200D', 'The downloaded update was unusable and has to be fetched again.', 'Check for updates again – Windows repeats the download by itself. Only if it loops, reset the update cache as in our guide.'],
+  ['0x80244019', 'The update server did not find the requested file (the web’s status 404).', 'Wait and retry later; the fault is at the server or with an outdated update list. Only if it lasts for days, reset the update cache as in our guide.'],
+  ['0x8024402C', 'The name of the update server or of a proxy could not be looked up – a DNS or proxy problem, not an update problem.', 'Test whether websites open. If names fail in general, follow the DNS guide; if a proxy is set, switch it off for a test.'],
+  ['0x80240017', 'Windows found that the update does not apply to this PC.', 'Nothing to repair. If you downloaded the update by hand, check the Windows version first.'],
+  ['0x8024200B', 'The installer of an update reported a failure. The code says only that, not why.', 'Restart and retry, then run Windows’ troubleshooter as in our guide. Note the KB number of the failing update for any search on Microsoft’s site.'],
+  ['0x80246008', 'The update service could not reach Windows’ background download service (BITS).', 'Restart the PC, which restarts that service, and try again. The Windows troubleshooter in our guide checks these services.'],
+  ['0xC1900101', 'A version upgrade was started and rolled back. Microsoft calls this a generic rollback code that usually points to a device driver that does not work with the new version; the second code after the dash on screen names the phase in which it happened.', 'Unplug everything except mouse, keyboard and screen, install current drivers from the PC maker and pending normal updates, free up space and try again.'],
+  ['0xC1900200', 'The PC does not meet the minimum requirements of the Windows version it was offered.', 'Compare the PC with Microsoft’s published requirements. If it falls short, this upgrade is not for this PC – no setting changes that.'],
+  ['0xC1900107', 'Leftovers of an earlier upgrade attempt still wait to be cleaned up.', 'Restart and start the upgrade again. If it repeats, Microsoft’s page describes removing temporary and system files with Windows’ own Disk Cleanup.'],
+  ['0xC1900209', 'An installed program is not compatible with the new Windows version and blocks the upgrade.', 'Update or uninstall the incompatible program, then start the upgrade again. Microsoft’s page explains how to identify it.'],
+  ['0xC190020E', 'There is not enough free disk space for the upgrade.', 'Free up space with Windows’ own storage settings and try again; Microsoft’s page states how much the upgrade needs.'],
+  ['0x80070070', 'The disk is full: there is not enough free space to install the update or upgrade.', 'Free up space with Windows’ own storage settings and try again.']
+];
+const WU_ANCHOR = { '0xC1900101': '0xc1900101' };
+// one entry per code: official name (when the source gives an identifier) and the most specific Microsoft page
+const wuIndex = (() => {
+  const rank = { wucommon: 0, upgrade: 1, wu: 2 }, m = new Map();
+  for (const x of wu) {
+    const e = m.get(x.code) || { code: x.code, name: '', src: null, anchor: '' };
+    if (!e.name && x.name) e.name = x.name;
+    if (e.src === null || rank[x.src] < rank[e.src]) { e.src = x.src; e.anchor = WU_ANCHOR[x.code] || x.anchor || ''; }
+    m.set(x.code, e);
+  }
+  return [...m.values()].map((e) => ({ ...e, url: SRC[e.src].url + (e.anchor ? '#' + e.anchor : '') }));
+})();
+const wuSel = WUSEL.map(([code, meaning, next]) => {
+  const e = wuIndex.find((x) => x.code === code);
+  if (!e) throw new Error('Windows Update selection: ' + code + ' is not in the Microsoft sources');
+  return { ...e, meaning, next };
+});
 
 // where a port shows up in a diagnosis (ours); name, transport and description are IANA's
 const WHERE = {
@@ -190,14 +275,24 @@ const ip = {
 const winGA = win.map((w) => ({ product: w.product, version: w.version, build: w.build, rows: w.rows.filter((r) => /General Availability/.test(r.servicing)), ltsc: w.rows.some((r) => /LTSC/.test(r.servicing)) }));
 const srcLine = (k) => `${SRC[k].name}, retrieved ${RETRIEVED_ISO}`;
 export function lookupData() {
+  const sel = Object.fromEntries(wuSel.map((x) => [x.code, { meaning: x.meaning, next: x.next }]));
   return {
     retrieved: RETRIEVED_ISO,
-    sources: { chrome: srcLine('chrome'), wu: `${SRC.wu.name}; ${SRC.wucommon.name}; retrieved ${RETRIEVED_ISO}`, http: srcLine('http'), ports: srcLine('ports'), ipv4: srcLine('ipv4'), ipv6: srcLine('ipv6'), win: `${SRC.win11.name}; ${SRC.win10.name}; retrieved ${RETRIEVED_ISO}` },
-    chrome: chrome.map(({ name, code, range, desc }) => ({ name, code, range, desc })),
-    probe, http, ports, ip, wu, win: winGA,
+    sources: { chrome: srcLine('chrome'), chromeUrl: SRC.chrome.url, probeUrl: SRC.probe.url, wu: `Microsoft Learn, retrieved ${RETRIEVED_ISO}`, http: srcLine('http'), ports: srcLine('ports'), ipv4: srcLine('ipv4'), ipv6: srcLine('ipv6'), win: `${SRC.win11.name}; ${SRC.win10.name}; retrieved ${RETRIEVED_ISO}` },
+    chrome, probe, http, ports, ip,
+    wu: wuIndex.map((e) => ({ code: e.code, name: e.name, url: e.url, ...(sel[e.code] || {}) })),
+    win: winGA,
     advice: ADVICE
   };
 }
+
+/** Major version from Apple's name: the first number in it ("macOS 27 Golden Gate" -> 27, "macOS Catalina 10.15" -> 10.15). */
+export function macMajor(name) {
+  const m = /(\d+(?:\.\d+)?)/.exec(name);
+  return m ? parseFloat(m[1]) : NaN;
+}
+export const macColumn = (name) => macMajor(name) >= 13 ? 'macOS 13 Ventura or later (System Settings)' : 'macOS 12 Monterey or earlier (System Preferences)';
+export const macVersions = mac;
 
 // ---------- page pieces ----------
 const EXAMPLES = {
@@ -205,7 +300,7 @@ const EXAMPLES = {
   chrome: ['ERR_CONNECTION_REFUSED', 'DNS_PROBE_FINISHED_NXDOMAIN', 'ERR_CERT_DATE_INVALID', '-105'],
   http: ['404', '403', '429', '502'],
   ip: ['169.254.12.7', '192.168.1.20', '100.72.3.9', 'fe80::1c2b:3aff:fe4d:5e6f'],
-  wu: ['0x80070422', '0x8024402F', '0x80240022'],
+  wu: ['0x80070422', '0xC1900101', '0x80240022', '0x8024402F'],
   port: ['631', '9100', '5353', '53'],
   win: ['26100.4946', '22631', '19045']
 };
@@ -226,15 +321,15 @@ function refTable(id, caption, head, rows, { file, source, filterLabel = 'Filter
 ${rows.map((r) => `<tr>${r.map((c, i) => i === 0 ? `<th scope="row">${c}</th>` : `<td>${c}</td>`).join('')}</tr>`).join('\n')}
 </tbody></table></div>`;
 }
-const srcList = (keys, notes = {}) => `<ul>${keys.map((k) => `<li><a href="${SRC[k].url}" rel="noopener">${esc(SRC[k].name)}</a> – retrieved ${RETRIEVED}${SRC[k].updated ? `; the page states its own last update as ${esc(SRC[k].updated)}` : ''}${SRC[k].license ? `; ${esc(SRC[k].license)}` : ''}.${notes[k] ? ' ' + notes[k] : ''}</li>`).join('')}</ul>`;
+const srcList = (keys, notes = {}) => `<ul>${keys.map((k) => `<li><a href="${SRC[k].url}" rel="noopener">${esc(SRC[k].name)}</a> – retrieved ${RETRIEVED}${SRC[k].updated ? `; the page states its own last update as ${esc(SRC[k].updated)}` : ''}${SRC[k].license ? `; ${esc(SRC[k].license)} (<a href="${SRC[k].licenseUrl}" rel="noopener">license text</a>)` : ''}.${notes[k] ? ' ' + notes[k] : ''}</li>`).join('')}</ul>`;
 
 export function referencePages({ crumbsHtml, crumbsLd, ORIGIN, ORG, V }) {
   const pages = [];
-  const page = ({ slug, short, kicker, title, description, h1, lede, kind, label, body, sources, sourceNotes, made, related, figureHtml = '' }) => {
+  const page = ({ slug, short, kicker, title, description, h1, lede, kind, label, body, sources, sourceNotes, made, related, figureHtml = '', fromSource = [] }) => {
     const p = `/reference/${slug}/`;
     const crumbs = [['Home', '/'], ['Reference', '/reference/'], [short, p]];
     pages.push({
-      path: p, kind: 'reference', loader: true, lookup: true, title, description, h1, short, refCard: { kicker, text: description },
+      path: p, kind: 'reference', loader: true, lookup: true, fromSourceWords: fromSource.join(' ').split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length, title, description, h1, short, refCard: { kicker, text: description },
       jsonld: [{ '@context': 'https://schema.org', '@type': 'WebPage', name: h1, url: ORIGIN + p, description, inLanguage: 'en-US', datePublished: REF_ISO, dateModified: REF_ISO, publisher: ORG }, crumbsLd(crumbs)],
       body: `${crumbsHtml(crumbs)}<article class="refpage"><span class="kicker">${kicker}</span><h1>${esc(h1)}</h1>
 <p class="lede">${lede}</p>
@@ -250,7 +345,6 @@ ${body}
   };
 
   // ----- Chrome -----
-  const advFor = (e) => ADVICE.chrome[e.name] || ADVICE.chromeRange[e.range] || {};
   const own = chrome.filter((e) => ADVICE.chrome[e.name]);
   const layerSvg = (() => {
     const cols = [['Device / browser', ['BLOCKED_BY_CLIENT', 'NETWORK_ACCESS_DENIED', 'PROXY_CONNECTION_FAILED']], ['Wi-Fi / router', ['INTERNET_DISCONNECTED', 'NETWORK_CHANGED', 'ADDRESS_UNREACHABLE']], ['DNS', ['NAME_NOT_RESOLVED', 'DNS_TIMED_OUT', 'DNS_PROBE_…']], ['Website', ['CONNECTION_REFUSED', 'TOO_MANY_REDIRECTS', 'CERT_…']]];
@@ -264,65 +358,71 @@ ${body}
     s += '<text class="d-s" x="10" y="176">Timeouts and resets are not on the map on purpose: they need the comparison checks.</text>';
     return figure('chrome-fig', 'Examples of Chrome error codes sorted by the layer they point to first', s, 'A code narrows the search, it does not finish it. CONNECTION_TIMED_OUT, for example, can be the website or a filter in your own network – only a comparison with mobile data tells.', '0 0 720 190');
   })();
+  const ranges = [...new Set(chrome.map((e) => e.range))].map((r) => { const list = chrome.filter((e) => e.range === r); const nums = list.map((e) => -e.code); return [r, list.length, Math.min(...nums), Math.max(...nums)]; });
   page({
     slug: 'chrome-error-codes', short: 'Chrome error codes', kicker: 'Reference · Chrome, Edge and other Chromium browsers',
-    title: 'Chrome Error Codes: All ERR_ Network Errors, Explained',
-    description: `All ${chrome.length} network error codes from Chromium’s source with their official description, plus what the common ones say about device, network, DNS or website.`,
+    title: 'Chrome Error Codes Explained: Which Layer Each Points To',
+    description: `${own.length} Chrome network errors and the ${probe.length} DNS_PROBE codes in plain words: what each means, whether it points to device, network, DNS or website, and the next check.`,
     h1: 'Chrome network error codes (ERR_…)', kind: 'chrome', label: 'Chrome error code – name (ERR_…, DNS_PROBE_…) or number (-105)',
-    lede: `The small grey code on a Chrome error page – ERR_NAME_NOT_RESOLVED, ERR_CONNECTION_RESET – comes from one list in Chromium’s source code. This page shows that complete list, ${chrome.length} codes with Chromium’s own one-line description, and adds for the ${own.length} codes people actually meet which layer each one points to and which check comes next.`,
+    lede: `The small grey code on a Chrome error page – ERR_NAME_NOT_RESOLVED, ERR_CONNECTION_RESET – is the most precise thing the browser tells you. This page explains the ${own.length} codes that say something about where the fault sits, and the ${probe.length} results of Chrome’s own DNS test, each with the layer it points to and the check that comes next. The lookup recognises all ${chrome.length} names in Chromium’s list.`,
     figureHtml: layerSvg,
+    fromSource: own.map((e) => e.name + ' ' + e.code).concat(probe.map((e) => e.name), ranges.map((r) => r[0])),
     body: `<section class="prose" id="read"><h2>How to read a Chrome code</h2>
-<p>Chromium, the open-source project behind Chrome, Edge, Brave, Opera and Vivaldi, numbers its network errors in ranges. The range already says a lot: codes from -100 to -199 are connection errors, -200 to -299 certificate errors, -300 to -399 HTTP errors, -800 to -899 errors of the built-in DNS client. The name shown on the error page is the list’s name with “ERR_” in front; the number appears on some pages and in logs.</p>
-<p>Chromium’s descriptions are written for programmers and say what happened inside the browser, not what to do. The column “What it tells you” is this site’s reading for the codes where one layer is clearly indicated; where a code alone cannot decide between the website and your own network, it says so and names the comparison check that can. Codes without an entry in that column get the note for their range.</p></section>
-<section class="prose" id="probe"><h2>The DNS_PROBE codes are a separate list</h2>
-<p>When a name lookup fails, Chrome runs its own short DNS test and replaces the code on the page with the result. These statuses are defined in a different source file, and Chromium’s comment says the status name is what is “presented to the user as part of the DNS error page”.</p>
-${refTable('t-probe', 'Chrome DNS probe statuses', ['Code on the error page', 'Chromium’s description', 'What it tells you (our reading)', 'Next check'],
-    probe.map((e) => [`<code>${e.name}</code>`, esc(e.desc), esc(ADVICE.probe[e.name].meaning), a(ADVICE.probe[e.name].next)]),
-    { file: 'chrome-dns-probe-statuses.csv', source: `${SRC.probe.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter the DNS probe codes' })}</section>
-<section class="prose" id="common"><h2>Codes with a clear pointer</h2>
-<p>These ${own.length} codes are the ones where the layer can be named from the code. Chromium’s description is quoted unchanged.</p>
-${refTable('t-own', 'Chrome network errors that point to a layer', ['Code', 'No.', 'Chromium’s description', 'What it tells you (our reading)', 'Next check'],
-    own.map((e) => [`<code>${e.name}</code>`, e.code, esc(e.desc), esc(advFor(e).meaning), a(advFor(e).next)]),
+<p>Chromium, the open-source project behind Chrome, Edge, Brave, Opera and Vivaldi, keeps its network errors in one numbered list. The name on the error page is the list’s name with “ERR_” in front; the number appears on some pages and in logs. The list is sorted into numbered ranges, and the range already says a lot:</p>
+${refTable('t-ranges', 'Ranges of Chromium’s network error list', ['Range', 'Numbers in use', 'Codes', 'What a code from this range tells you'],
+    ranges.map(([r, n, lo, hi]) => [esc(r), `-${lo} to -${hi}`, n, esc(ADVICE.chromeRange[r].meaning)]),
+    { file: 'chrome-error-ranges.csv', source: `${SRC.chrome.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter the ranges' })}
+<p>Most of the ${chrome.length} codes never reach an error page; they are used inside the browser. For a code that is not explained below, the lookup gives its number and range and links to Chromium’s source file, where each code carries a short comment for programmers.</p></section>
+<section class="prose" id="common"><h2>${own.length} codes that point to a layer</h2>
+<p>Names and numbers are Chromium’s. The explanations are ours: what the code means in plain words and where it points on the layer map. Where a code alone cannot decide between the website and your own network, the text says so and names the comparison check that can.</p>
+${refTable('t-own', 'Chrome network errors that point to a layer', ['Code', 'No.', 'What it means and where it points', 'Next check'],
+    own.map((e) => [`<code>${e.name}</code>`, e.code, esc(ADVICE.chrome[e.name].meaning), a(ADVICE.chrome[e.name].next)]),
     { file: 'chrome-error-codes-explained.csv', source: `${SRC.chrome.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter these codes' })}</section>
-<section class="prose" id="all"><h2>The complete list</h2>
-<p>All ${chrome.length} entries of <code>net_error_list.h</code> in the order of the file. Where Chromium’s comment has several paragraphs, the first one is shown. Many of these never reach an error page – they are used inside the browser.</p>
-${refTable('t-chrome', `All ${chrome.length} Chromium network error codes`, ['Code', 'No.', 'Range', 'Chromium’s description'],
-    chrome.map((e) => [`<code>${e.name}</code>`, e.code, e.range, esc(e.desc) + (e.more ? ' <span class="small">(first paragraph)</span>' : '')]),
-    { file: 'chromium-net-error-list.csv', source: `${SRC.chrome.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter all codes (name, number or word)' })}</section>`,
+<section class="prose" id="probe"><h2>The DNS_PROBE codes</h2>
+<p>When a name lookup fails, Chrome runs a short DNS test of its own and replaces the code on the page with the result. These ${probe.length} statuses are defined in a second source file; while the test runs, the page can briefly show one of the “not finished” statuses.</p>
+${refTable('t-probe', 'Chrome DNS probe statuses', ['Code on the error page', 'What it means and where it points', 'Next check'],
+    probe.map((e) => [`<code>${e.name}</code>`, esc(ADVICE.probe[e.name].meaning), a(ADVICE.probe[e.name].next)]),
+    { file: 'chrome-dns-probe-statuses.csv', source: `${SRC.probe.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter the DNS probe codes' })}</section>`,
     sources: ['chrome', 'probe'],
-    made: `The names, numbers and descriptions were extracted by a script from the two Chromium source files below, as they stood on the main branch on the retrieval date; nothing was reworded. Chromium’s code is published under a BSD-style license (Copyright The Chromium Authors). The columns marked “our reading” and the choice of the ${own.length} explained codes are ClickSolve Guide’s own work; they were not tested by provoking each error on purpose.`,
+    made: `Only the code names, their numbers and the range boundaries were taken from the two Chromium source files below, as they stood on the main branch on the retrieval date. Chromium’s comments on the codes are not reproduced here. Every explanation on this page was written by ClickSolve Guide from the meaning of the code; the errors were not provoked one by one on test devices.`,
     related: [D_SITE, D_ONE, G_DNS, { href: '/reference/http-status-codes/', label: 'Reference: HTTP status codes' }]
   });
 
   // ----- HTTP -----
-  const httpAdv = (h) => ADVICE.http[h.code] || ADVICE.httpClass[Math.floor(h.code / 100)];
   const classSvg = (() => {
     const cls = [['1xx', 'Informational', 'interim answer', 'd-box'], ['2xx', 'Successful', 'it worked', 'd-box-g'], ['3xx', 'Redirection', 'go elsewhere', 'd-box'], ['4xx', 'Client error', 'request refused', 'd-box-a'], ['5xx', 'Server error', 'server failed', 'd-box-r']];
-    let s = '<text class="d-s" x="10" y="20">EVERY STATUS CODE MEANS: THE SERVER ANSWERED</text>';
+    let s = '<text class="d-s" x="10" y="20">A STATUS CODE MEANS: SOMETHING ANSWERED IN HTTP</text>';
     cls.forEach(([n, name, what, c], i) => {
       const x = 10 + i * 142;
       s += `<rect class="${c}" x="${x}" y="34" width="132" height="76" rx="6"/><text class="d-t" x="${x + 66}" y="62" text-anchor="middle">${n}</text><text class="d-s" x="${x + 66}" y="82" text-anchor="middle">${name}</text><text class="d-s" x="${x + 66}" y="100" text-anchor="middle">${what}</text>`;
     });
-    s += '<text class="d-s" x="10" y="138">So device, Wi-Fi, router, provider and DNS all worked far enough to reach it.</text>';
-    return figure('http-fig', 'The five classes of HTTP status codes', s, 'The first digit is the class (RFC 9110, section 15). On the layer map, any status code rules out everything before the website.', '0 0 720 150');
+    s += '<text class="d-s" x="10" y="138">Normally the website – except 407 (a proxy) and 511 (the network’s sign-in page).</text>';
+    return figure('http-fig', 'The five classes of HTTP status codes', s, 'The first digit is the class (RFC 9110, section 15). With the two exceptions named, any status code rules out everything before the website.', '0 0 720 150');
   })();
+  const withNote = http.filter((h) => ADVICE.http[h.code]);
   page({
     slug: 'http-status-codes', short: 'HTTP status codes', kicker: 'Reference · every browser',
     title: 'HTTP Status Codes: Full IANA List and Who Has to Fix It',
-    description: `All ${http.length} registered HTTP status codes from the IANA registry with the defining RFC, and for the ones you see in a browser: who can fix it – you or the site.`,
+    description: `All ${http.length} registered HTTP status codes from the IANA registry with the defining RFC, and for ${withNote.length} of them: who can fix it – you, your network or the site.`,
     h1: 'HTTP status codes: who has to fix what', kind: 'http', label: 'HTTP status code (three digits, e.g. 403)',
-    lede: `“404”, “403 Forbidden”, “502 Bad Gateway”: a three-digit status code is the web server’s own answer. That is the most useful thing about it – a page that shows one has proved that your device, Wi-Fi, router, provider and DNS work. This page lists all ${http.length} codes in the official IANA registry and says, for the ones a browser shows, on which side the fix is.`,
+    lede: `“404”, “403 Forbidden”, “502 Bad Gateway”: a three-digit status code is an answer in the web’s own protocol. That is the most useful thing about it – with two exceptions, a page that shows one has proved that your device, Wi-Fi, router, provider and DNS work. This page lists all ${http.length} codes in the official IANA registry and says, for the ${withNote.length} a browser user can meet, on which side the fix is.`,
     figureHtml: classSvg,
+    fromSource: http.map((h) => h.code + ' ' + h.desc + ' ' + h.ref),
     body: `<section class="prose" id="read"><h2>Reading a status code as a diagnosis</h2>
-<p>A status code can only appear when a connection to the server exists. If you see a browser-made page instead – “This site can’t be reached”, “Server not found” – there was no answer at all, and the <a href="/reference/chrome-error-codes/">browser’s own error code</a> is the thing to read.</p>
-<p>The registry gives each code a name and the document that defines it. The column “What it tells you” is this site’s summary of that definition from the visitor’s point of view; codes without their own note get the note for their class. Whether a 403 or 429 is “your fault” is often unknowable from outside – the note says what you can try.</p></section>
+<p>A status code can only appear when something answered the browser in HTTP. Normally that is the website’s server, and then every layer before it is ruled out in one go. Two codes are sent by something in between: <b>407</b> comes from a proxy that wants a sign-in, and <b>511</b> from the network itself – the sign-in page of a hotel or guest Wi-Fi. With those two, the website was never reached.</p>
+<p>If you see a browser-made page instead – “This site can’t be reached”, “Server not found” – there was no answer at all, and the <a href="/reference/chrome-error-codes/">browser’s own error code</a> is the thing to read.</p>
+${refTable('t-class', 'The five classes of status codes', ['Class', 'Name', 'What it tells you'],
+    [1, 2, 3, 4, 5].map((c) => [c + 'xx', { 1: 'Informational', 2: 'Successful', 3: 'Redirection', 4: 'Client error', 5: 'Server error' }[c], esc(ADVICE.httpClass[c].meaning)]),
+    { file: 'http-status-classes.csv', source: 'https://www.rfc-editor.org/rfc/rfc9110#section-15 – retrieved ' + RETRIEVED_ISO, filterLabel: 'Filter the classes' })}
+<p>Whether a 403 or 429 is “your fault” is often unknowable from outside – the note says what you can try.</p></section>
 <section class="prose" id="all"><h2>All registered codes</h2>
-${refTable('t-http', `HTTP status codes in the IANA registry (${http.length} assigned)`, ['Code', 'Registered name', 'Defined in', 'What it tells you (our reading)', 'Next check'],
-    http.map((h) => [h.code, esc(h.desc), esc(h.ref), esc(httpAdv(h).meaning), a(httpAdv(h).next)]),
+<p>Number, name and defining document are the registry’s. The fourth column is ours and is filled for the ${withNote.length} codes with something specific to say to a person in front of a browser; for the others the class note above applies.</p>
+${refTable('t-http', `HTTP status codes in the IANA registry (${http.length} assigned)`, ['Code', 'Registered name', 'Defined in', 'What it tells you', 'Next check'],
+    http.map((h) => { const n = ADVICE.http[h.code]; return [h.code, esc(h.desc), esc(h.ref), n ? esc(n.meaning) : '<span class="small">see class ' + Math.floor(h.code / 100) + 'xx</span>', n ? a(n.next) : '']; }),
     { file: 'http-status-codes.csv', source: `${SRC.http.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter by number or word' })}</section>`,
     sources: ['http'],
-    made: `Code numbers, names and references were taken unchanged from the registry’s CSV file; unassigned ranges were left out. The class names follow RFC 9110, section 15. The “our reading” column is ClickSolve Guide’s own summary of the definitions in the referenced RFCs.`,
-    related: [D_ONE, D_SITE, { href: '/reference/chrome-error-codes/', label: 'Reference: Chrome error codes' }]
+    made: `Code numbers, registered names and references were taken from the registry’s CSV file; unassigned ranges were left out. The class names follow RFC 9110, section 15. All notes are ClickSolve Guide’s own wording, written from the definitions in RFC 9110 (section 15) and RFC 6585; they describe what the code means for a visitor, not every technical case.`,
+    related: [D_ONE, D_SITE, D_WIFI, { href: '/reference/chrome-error-codes/', label: 'Reference: Chrome error codes' }]
   });
 
   // ----- IP -----
@@ -331,22 +431,23 @@ ${refTable('t-http', `HTTP status codes in the IANA registry (${http.length} ass
     slug: 'ip-address-check', short: 'IP address check', kicker: 'Reference · Windows, macOS, iPhone, Android, routers',
     title: 'IP Address Check: What 169.254, 192.168 or 100.64 Means',
     description: 'Type the IP address your device or router shows and see which range it belongs to, what that says about the connection and which check comes next.',
+    fromSource: ip.v4.concat(ip.v6).map((e) => e.block + ' ' + e.name + ' ' + e.rfc),
     h1: 'What does this IP address tell me?', kind: 'ip', label: 'IP address shown by your device or router (IPv4 or IPv6)',
-    lede: 'The address a device shows in its Wi-Fi details is a test result. 169.254.x.x means the router never answered. 192.168.x.x means it did. 100.64.x.x on a router means the provider shares one public address among customers. Type the address and get the range, its official definition and what follows for the diagnosis.',
+    lede: 'The address a device shows in its Wi-Fi details is a test result. 169.254.x.x means the router never answered. 192.168.x.x means it did. 100.64.x.x on a router means the provider shares one public address among customers. Type the address and get the range, the document that defines it and what follows for the diagnosis.',
     body: `<section class="prose" id="read"><h2>Why the address is a check that changes nothing</h2>
 <p>Reading an address needs no command and no setting: every system shows it in the details of the connected network. The <a href="/diagnose/wifi-connected-no-internet/">Wi-Fi diagnosis</a> asks for it at exactly one point – after other devices have been found working – because the answer splits the remaining causes in two: no address from the router, or an address but no traffic.</p>
 <p>The check compares the address with the two IANA registries of special-purpose ranges. An address in none of them is a public address. The check never looks anything up online and does not find out “whose” address it is.</p>
 <p class="small">The example buttons use made-up addresses.</p></section>
 <section class="prose" id="v4"><h2>IPv4 special-purpose ranges</h2>
-${refTable('t-ip4', 'IPv4 special-purpose address ranges', ['Range', 'Name in the registry', 'Defined in', 'Reachable from the internet', 'What it tells you (our reading)'], ipRows(ip.v4),
+${refTable('t-ip4', 'IPv4 special-purpose address ranges', ['Range', 'Name in the registry', 'Defined in', 'Reachable from the internet', 'What it tells you'], ipRows(ip.v4),
     { file: 'ipv4-special-purpose-ranges.csv', source: `${SRC.ipv4.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter IPv4 ranges' })}
 <p class="small">* 224.0.0.0/4 (multicast) is not part of the special-purpose registry; it was added from RFC 5771 so that the check does not call a multicast address public.</p></section>
 <section class="prose" id="v6"><h2>IPv6 special-purpose ranges</h2>
-${refTable('t-ip6', 'IPv6 special-purpose address ranges', ['Range', 'Name in the registry', 'Defined in', 'Reachable from the internet', 'What it tells you (our reading)'], ipRows(ip.v6),
+${refTable('t-ip6', 'IPv6 special-purpose address ranges', ['Range', 'Name in the registry', 'Defined in', 'Reachable from the internet', 'What it tells you'], ipRows(ip.v6),
     { file: 'ipv6-special-purpose-ranges.csv', source: `${SRC.ipv6.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter IPv6 ranges' })}
 <p class="small">* ff00::/8 (multicast) is not part of the special-purpose registry; it was added from RFC 4291.</p></section>`,
     sources: ['ipv4', 'ipv6'],
-    made: 'Ranges, names, RFC references and the “globally reachable” value were taken unchanged from the registries’ CSV files (footnote markers removed). The two multicast ranges marked with * were added from their RFCs. The “our reading” column is ClickSolve Guide’s own explanation of the definitions in RFC 1918, RFC 3927, RFC 6598, RFC 1122 and RFC 4291.',
+    made: 'Ranges, registry names, RFC references and the “globally reachable” value were taken from the registries’ CSV files (footnote markers removed). The two multicast ranges marked with * were added from their RFCs. The column “What it tells you” is ClickSolve Guide’s own explanation of the definitions in RFC 1918, RFC 3927, RFC 6598, RFC 1122 and RFC 4291.',
     related: [D_WIFI, D_LAPTOP, G_DNS, { href: '/reference/network-ports/', label: 'Reference: network ports' }]
   });
 
@@ -355,43 +456,45 @@ ${refTable('t-ip6', 'IPv6 special-purpose address ranges', ['Range', 'Name in th
     slug: 'network-ports', short: 'Network ports', kicker: 'Reference · routers, firewalls, printers, mail apps',
     title: 'Network Ports for Home Troubleshooting (IANA Names)',
     description: `The ${new Set(ports.map((p) => p.port)).size} port numbers you meet in router, firewall, printer and mail settings, with their registered IANA service name and where each matters.`,
+    fromSource: ports.map((p) => p.port + ' ' + p.service + ' ' + p.transport.join(' ') + ' ' + p.desc + ' ' + p.ref),
     h1: 'Port numbers you meet while troubleshooting', kind: 'port', label: 'Port number (0–65535)',
     lede: 'Router pages, firewall prompts, printer setups and mail apps talk in port numbers: 53, 443, 631, 9100. The official registry has thousands of entries; this page is a selection of the ones behind everyday faults – DNS, address assignment, printing, mail, VPN, device discovery – each with its registered name and the place where it turns up in a diagnosis.',
     body: `<section class="prose" id="read"><h2>How ports fit the layer map</h2>
 <p>An IP address finds the device; the port number finds the service on it. A printer can be switched on, joined to the Wi-Fi and reachable by ping and still not print, because the one port the computer uses for printing is not answering or is filtered between two networks. That is why “the printer is on the guest Wi-Fi” and “the PC is on a VPN” are questions in the <a href="/diagnose/printer-offline-windows-11/">printer diagnoses</a>.</p>
 <p>Service names, transport protocols and descriptions are the registry’s. The column “Where you meet it” is this site’s note. The selection is ours: it covers what the diagnoses and guides on this site touch, not every port in use.</p></section>
 <section class="prose" id="all"><h2>The selection</h2>
-${refTable('t-ports', 'Selected registered ports', ['Port', 'Service name', 'Transport', 'Registry description', 'Reference', 'Where you meet it (our note)'],
+${refTable('t-ports', 'Selected registered ports', ['Port', 'Service name', 'Transport', 'Registry description', 'Reference', 'Where you meet it'],
     ports.map((p) => [p.port, `<code>${esc(p.service)}</code>`, p.transport.join(', ').toUpperCase(), esc(p.desc), esc(p.ref || '–'), esc(p.where)]),
     { file: 'network-ports-selection.csv', source: `${SRC.ports.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter by number, name or word (try “print” or “mail”)' })}</section>`,
     sources: ['ports'],
-    made: 'Port numbers, service names, transport protocols, descriptions and RFC references were taken unchanged from the registry’s CSV file; only TCP and UDP rows were used, and alias names for the same port were left out. The selection and the “Where you meet it” column are ClickSolve Guide’s own.',
+    made: 'Port numbers, service names, transport protocols, the registry’s short descriptions and RFC references were taken from the registry’s CSV file; only TCP and UDP rows were used, and alias names for the same port were left out. The selection and the column “Where you meet it” are ClickSolve Guide’s own wording.',
     related: [{ href: '/diagnose/printer-offline-windows-11/', label: 'Diagnosis: printer offline in Windows 11' }, { href: '/diagnose/mac-printer-not-printing/', label: 'Diagnosis: Mac printer not printing' }, G_DNS, G_SCAM]
   });
 
   // ----- Windows Update -----
-  const comps = [...new Set(wu.map((x) => x.component))];
   page({
     slug: 'windows-update-error-codes', short: 'Windows Update error codes', kicker: 'Reference · Windows 11, Windows 10',
-    title: 'Windows Update Error Codes: Lookup of Microsoft’s List',
-    description: `Look up a Windows Update error code such as 0x80070422: ${wu.length} entries from Microsoft’s own two lists with the official name, description and component.`,
-    h1: 'Windows Update error codes (0x8024…)', kind: 'wu', label: 'Windows Update error code (0x followed by eight characters)',
-    lede: `Windows Update reports failures as codes like 0x80240022. Microsoft documents them in two places written for administrators: a list of the update client’s own codes by component and a troubleshooting article for common errors. This page joins both – ${wu.length} entries – into one searchable table, so the code on your screen becomes a name and a sentence.`,
+    title: 'Windows Update Error Codes: What They Mean, Next Safe Step',
+    description: `${wuSel.length} Windows Update and upgrade error codes a home PC shows – 0x80070422, 0xC1900101 and more – in plain words, with the next safe step and Microsoft’s page.`,
+    h1: 'Windows Update error codes: meaning and next safe step', kind: 'wu', label: 'Windows Update error code (0x followed by eight characters)',
+    lede: `Windows Update reports failures as codes like 0x80070422. Microsoft documents several hundred of them for administrators. This page picks ${wuSel.length} that turn up on home PCs, says in plain words what each one means and names the next step that is safe to take – with a link to Microsoft’s own page for every code. The lookup also recognises the other ${wuIndex.length - wuSel.length} codes in Microsoft’s lists and sends you to the right Microsoft page.`,
+    fromSource: wuSel.map((x) => x.code + ' ' + x.name),
     body: `<section class="prose" id="read"><h2>What a code can and cannot tell you</h2>
-<p>A Windows Update code names the part of the update client that gave up and why: it could not reach the server, a download was damaged, an installer failed, a service is disabled. It does not name the fix. Microsoft’s list by component contains no remedies at all; the troubleshooting article has a “mitigation” for each of its codes, aimed at company administrators with tools a home PC rarely needs.</p>
-<p>For a home PC the order of safe steps is the same for most codes – wait, restart, free space, run the built-in troubleshooter, and only then reset the update cache. That order, with the undo for each step, is in the guide <a href="/guides/windows-update-stuck/">Windows Update stuck</a>. Use the code to check whether the cause is the network (names with PT, HTTP or TIME_OUT), the download (DM) or the installation (UH, CBS), and to describe the fault precisely if you ask for help.</p>
-<p>Where the same code appears in both sources, both rows are shown. The lookup links to Microsoft’s mitigation when the troubleshooting article covers the code.</p></section>
-<section class="prose" id="all"><h2>All entries</h2>
-${refTable('t-wu', `Windows Update error codes from Microsoft’s documentation (${wu.length} entries in ${comps.length} groups)`, ['Code', 'Name', 'Microsoft’s description', 'Group in the source'],
-    wu.map((x) => [`<code>${x.code}</code>`, `<span class="wrapany">${esc(x.message)}</span>`, esc(x.desc), esc(x.component) + (x.anchor ? ` – <a href="${SRC.wucommon.url}#${esc(x.anchor)}" rel="noopener">mitigation at Microsoft</a>` : '')]),
-    { file: 'windows-update-error-codes.csv', source: `${SRC.wu.url} and ${SRC.wucommon.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter by code, name or word (try “proxy” or “download”)' })}</section>`,
-    sources: ['wu', 'wucommon'],
-    made: 'Codes, names and descriptions were extracted by a script from the tables of the two Microsoft Learn pages below and are quoted unchanged (codes written in upper case). Microsoft Learn documentation is licensed under CC BY 4.0. Microsoft’s mitigation texts are not copied here; the table links to them. The introduction and the reading of the name parts (PT, DM, UH) are ClickSolve Guide’s own, based on the group headings of Microsoft’s list.',
-    related: [{ href: '/guides/windows-update-stuck/', label: 'Guide: Windows Update stuck' }, { href: '/reference/windows-macos-versions/', label: 'Reference: Windows builds and macOS versions' }, { href: '/guides/which-windows-macos-version/', label: 'Guide: which Windows or macOS version' }]
+<p>A Windows Update code names what gave up: the connection to the update server, a download, the installation, Windows’ own store of system files, or – for the codes starting with 0xC19 – the upgrade to a new Windows version. That is enough to choose the right first step and to describe the fault precisely if you ask for help. It rarely names the one cause.</p>
+<p>The steps below never go beyond what Windows itself offers. They follow the order of our guide <a href="/guides/windows-update-stuck/">Windows Update stuck</a> – wait, restart, free space, Windows’ own troubleshooter, and only at the end the reset of the update cache, with its undo. Where Microsoft’s remedy is a command for administrators, the row says so and links to Microsoft instead of repeating it.</p>
+<p>On a PC managed by a company or school, update settings and servers belong to IT; report the code there.</p></section>
+<section class="prose" id="all"><h2>The ${wuSel.length} codes</h2>
+<p>Code and official name are Microsoft’s; a dash means Microsoft gives no name. Meaning and next step are our own wording, based on the Microsoft page linked in the last column.</p>
+${refTable('t-wu', `${wuSel.length} Windows Update and upgrade error codes for home PCs`, ['Code', 'Official name', 'What it means', 'Next safe step', 'Microsoft’s page'],
+    wuSel.map((x) => [`<code>${x.code}</code>`, x.name ? `<span class="wrapany">${esc(x.name)}</span>` : '–', esc(x.meaning), esc(x.next), `<a href="${esc(x.url)}" rel="noopener">${{ wucommon: 'Common errors', upgrade: 'Upgrade errors', wu: 'Code list' }[x.src]}</a>`]),
+    { file: 'windows-update-error-codes.csv', source: `${SRC.wucommon.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter by code or word (try “proxy”, “space” or “restart”)' })}</section>`,
+    sources: ['wucommon', 'wu', 'upgrade'],
+    made: `The selection of ${wuSel.length} codes is ours. A build script checks that every selected code is documented on one of the three Microsoft pages below and takes from them only the code and its official name. Microsoft’s descriptions and mitigation texts are not reproduced; “What it means” and “Next safe step” were written by ClickSolve Guide after reading them, and limited to steps a home user can take without extra tools. The steps were not tried by provoking each error on a test PC.`,
+    related: [G_WU, { href: '/reference/windows-macos-versions/', label: 'Reference: Windows builds and macOS versions' }, { href: '/guides/which-windows-macos-version/', label: 'Guide: which Windows or macOS version' }, G_DNS]
   });
 
   // ----- versions -----
-  const winRows = winGA.map((w) => {
+  const winRows = [...winGA].sort((x, y) => y.build - x.build).map((w) => {
     const r = w.rows[0];
     return [`<b>${w.build}</b>`, `${esc(w.product)} ${esc(w.version)}`, r ? r.available : '–', r ? esc(r.endHome) : (w.ltsc ? 'LTSC editions only' : 'not listed as serviced'), r ? esc(r.endEnt) : (w.ltsc ? 'LTSC editions only' : 'not listed as serviced'), r ? `${r.latestBuild} (${r.latestDate})` : '–'];
   });
@@ -400,6 +503,7 @@ ${refTable('t-wu', `Windows Update error codes from Microsoft’s documentation 
     slug: 'windows-macos-versions', short: 'Windows builds and macOS versions', kicker: 'Reference · Windows 11, Windows 10, macOS',
     title: 'Windows Build Numbers and macOS Versions: Lookup Table',
     description: 'Turn a Windows build number from winver into its version and end-of-updates date, and a macOS number into its name – from Microsoft’s and Apple’s own pages.',
+    fromSource: winRows.map((r) => r.join(' ').replace(/<[^>]+>/g, '')).concat(mac.map((m) => m.name + ' ' + m.latest)),
     h1: 'Windows build numbers and macOS versions', kind: 'win', label: 'Windows build number from winver (e.g. 26100.4946 or 22631)',
     lede: 'Support articles say “Windows 11, version 24H2”; your PC says “OS Build 26100.4946”. A Mac says “15.6”; the article says “Sequoia”. This page translates between the two, using the release tables Microsoft and Apple publish, and tells you whether Microsoft still lists your Windows version for updates.',
     body: `<section class="prose" id="read"><h2>Reading the build number</h2>
@@ -413,59 +517,62 @@ ${refTable('t-win', 'Windows 11 and Windows 10 versions by OS build number', ['O
 <section class="prose" id="mac"><h2>macOS versions and names</h2>
 <p>On a Mac, choose Apple menu > About This Mac. The first number is the major version; Apple’s table gives the name and the latest release of each.</p>
 ${refTable('t-mac', 'macOS versions and their latest release according to Apple', ['macOS', 'Latest version', 'Menu paths on this site'],
-    mac.map((m) => { const major = parseFloat((m.name.match(/(\d+(?:\.\d+)?)\s*$/) || [0, 0])[1]); return [esc(m.name), m.latest, major >= 13 ? 'macOS 13 Ventura or later (System Settings)' : 'macOS 12 Monterey or earlier (System Preferences)']; }),
+    mac.map((m) => { const major = macMajor(m.name); if (Number.isNaN(major)) throw new Error('macOS row without a version number: ' + m.name); return [esc(m.name), m.latest, macColumn(m.name)]; }),
     { file: 'macos-versions.csv', source: `${SRC.macos.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter by name or number' })}
 <p class="small">The third column is ours: it says which entry of this site’s version switcher fits. System Preferences became System Settings with macOS 13 Ventura.</p></section>`,
     sources: ['win11', 'win10', 'macos'],
-    made: 'Version names, build numbers and dates were extracted by a script from the tables and headings of the Microsoft and Apple pages below and are shown unchanged. The split into “Windows 11” and “Windows 10” menu paths and the third column of the macOS table are ClickSolve Guide’s own.',
+    made: 'Version names, build numbers and dates – facts, no prose – were extracted by a script from the tables and headings of the Microsoft and Apple pages below. The split into “Windows 11” and “Windows 10” menu paths and the third column of the macOS table are ClickSolve Guide’s own.',
     related: [{ href: '/guides/which-windows-macos-version/', label: 'Guide: which Windows or macOS version' }, { href: '/guides/windows-update-stuck/', label: 'Guide: Windows Update stuck' }, { href: '/reference/windows-update-error-codes/', label: 'Reference: Windows Update error codes' }]
   });
 
   // ----- shortcuts -----
-  const WHEN = {
-    'Ctrl+Shift+Esc': 'An app is frozen or the PC is slow: see what uses the processor and memory, and end a hung app.',
-    'Windows key+I': 'The starting point of almost every Windows menu path on this site (“Settings > …”).',
-    'Windows key+X': 'Fast way to Device Manager, Terminal and other system tools when the Start menu is slow.',
-    'Windows key+R': 'Runs short commands from the guides, such as winver for the version.',
-    'Windows key+Pause': 'Shows the Windows edition and version without typing anything.',
-    'Windows key+A': 'The panel with the Wi-Fi, Bluetooth and Airplane mode buttons – the first look in every Wi-Fi diagnosis.',
-    'Windows key+Ctrl+Shift+B': 'Black or blank screen while the PC is clearly running: try this before holding the power button.',
-    'Windows key+L': 'Before you hand the device to someone or walk away during a long repair step.',
-    'Windows key+Shift+S': 'Capture the exact error message for your fix log instead of retyping it.',
-    'Windows key+PrtScn': 'Saves the whole screen as a file – useful when an error disappears quickly.',
-    'Windows key+K': 'Wireless display or speaker does not appear: this opens the list directly.',
-    'Windows key+P': 'A second screen or projector stays dark: check whether the mode is “PC screen only”.',
-    'Windows key+E': 'Opens File Explorer when the taskbar does not react.',
-    'Alt+F4': 'Closes a window that has no reachable close button, such as a full-screen scam pop-up.',
-    F5: 'Reloads a page or window after a fix, to see whether it worked.',
-    'Option-Command-Esc': 'An app shows the spinning wheel: force quit that one app instead of restarting the Mac.',
-    'Command–Space bar': 'Opens Terminal, Activity Monitor or System Settings by typing the name.',
-    'Command-Q': 'Really quits an app – closing the window leaves most Mac apps running. Also closes a browser stuck on a scam page.',
-    'Command-Comma (,)': 'Opens the settings of the app in front, for example the browser’s.',
-    'Shift-Command-5': 'Capture the exact error message for your fix log.',
-    'Control-Command-Q': 'Before you walk away during a long repair step.',
-    'Shift-Command-Q': 'Logging out and in again restarts your login items without restarting the Mac.',
-    'Control–Command–Power button': 'Last resort when nothing reacts: unsaved work is lost. Macs with Touch ID are handled differently – see Apple’s page.',
-    'Control–Power button': 'Opens the restart, sleep and shut down dialog from the keyboard.',
-    'Shift-Command-U': 'The folder that holds Terminal, Activity Monitor and Disk Utility.',
-    'Command-Tab': 'Check which apps are open when one is hidden behind a full-screen window.',
-    'Command-P': 'Opens the print dialog – the starting point of the Mac printer diagnosis.'
+  // [what it does, when it helps] – both in our own words; the key combinations are checked against the makers' pages
+  const KEYS = {
+    'Ctrl+Shift+Esc': ['Opens Task Manager directly.', 'An app is frozen or the PC is slow: see what uses the processor and memory, and end a hung app.'],
+    'Windows key+I': ['Opens the Settings app.', 'The starting point of almost every Windows menu path on this site (“Settings > …”).'],
+    'Windows key+X': ['Opens the menu you also get by right-clicking the Start button.', 'Fast way to Device Manager, Terminal and other system tools when the Start menu is slow.'],
+    'Windows key+R': ['Opens the Run box for typing a command.', 'Runs short commands from the guides, such as winver for the version.'],
+    'Windows key+Pause': ['Opens Settings on the System > About page.', 'Shows the Windows edition and version without typing anything.'],
+    'Windows key+A': ['Opens the quick settings panel at the right end of the taskbar.', 'The panel with the Wi-Fi, Bluetooth and Airplane mode buttons – the first look in every Wi-Fi diagnosis.'],
+    'Windows key+Ctrl+Shift+B': ['Wakes the display when the screen is blank or black.', 'Black screen while the PC is clearly running: try this before holding the power button.'],
+    'Windows key+L': ['Locks the PC.', 'Before you hand the device to someone or walk away during a long repair step.'],
+    'Windows key+Shift+S': ['Lets you mark an area of the screen and copies it as a picture.', 'Capture the exact error message for your fix log instead of retyping it.'],
+    'Windows key+PrtScn': ['Saves a picture of the whole screen as a file in Pictures > Screenshots.', 'Useful when an error disappears quickly.'],
+    'Windows key+K': ['Opens the Cast panel for wireless displays.', 'A wireless display does not appear: this opens the list directly.'],
+    'Windows key+P': ['Opens the choice of display mode for a second screen.', 'A second screen or projector stays dark: check whether the mode is “PC screen only”.'],
+    'Windows key+E': ['Opens File Explorer.', 'Reaches your files when the taskbar does not react.'],
+    'Alt+F4': ['Closes the window in front.', 'Closes a window that has no reachable close button, such as a full-screen scam pop-up.'],
+    F5: ['Reloads the window in front.', 'After a fix, to see whether a page or folder now loads.'],
+    'Option-Command-Esc': ['Opens the Force Quit window.', 'An app shows the spinning wheel: force quit that one app instead of restarting the Mac.'],
+    'Command–Space bar': ['Opens Spotlight search.', 'Opens Terminal, Activity Monitor or System Settings by typing the name.'],
+    'Command-Q': ['Quits the app in front completely.', 'Closing the window leaves most Mac apps running; this ends them. Also closes a browser stuck on a scam page.'],
+    'Command-Comma (,)': ['Opens the settings of the app in front.', 'Quick way into the browser’s or mail app’s settings during a check.'],
+    'Shift-Command-5': ['Opens the screenshot and screen recording tool.', 'Capture the exact error message for your fix log.'],
+    'Control-Command-Q': ['Locks the screen.', 'Before you walk away during a long repair step.'],
+    'Shift-Command-Q': ['Logs you out of your user account, after asking.', 'Logging out and in again restarts your login items without restarting the Mac.'],
+    'Control–Command–Power button': ['Forces a restart without the chance to save – on keyboards without Touch ID.', 'Last resort when nothing reacts: unsaved work is lost. Macs with Touch ID are handled differently – see Apple’s page.'],
+    'Control–Power button': ['Shows the dialog for restart, sleep or shut down – on keyboards without Touch ID.', 'Restart from the keyboard when the pointer is stuck.'],
+    'Shift-Command-U': ['Opens the Utilities folder in the Finder.', 'The folder that holds Terminal, Activity Monitor and Disk Utility.'],
+    'Command-Tab': ['Switches to the app you used before.', 'Check which apps are open when one is hidden behind a full-screen window.'],
+    'Command-P': ['Opens the print dialog.', 'The starting point of the Mac printer diagnosis.']
   };
+  for (const k of keys) if (!KEYS[k.keys]) throw new Error('shortcut without text: ' + k.keys);
   page({
     slug: 'troubleshooting-shortcuts', short: 'Troubleshooting shortcuts', kicker: 'Reference · Windows 11, macOS',
     title: 'Keyboard Shortcuts for Troubleshooting: Windows and Mac',
-    description: `The ${keys.length} Windows 11 and Mac keyboard shortcuts that matter when something is stuck, quoted from Microsoft and Apple, with the situation each one is for.`,
+    description: `The ${keys.length} Windows 11 and Mac keyboard shortcuts that matter when something is stuck: what each one does and the situation in a diagnosis it is for.`,
     h1: 'Keyboard shortcuts for when something is stuck', kind: null,
-    lede: `Microsoft’s and Apple’s shortcut lists run to several hundred entries. When an app hangs, the screen stays black or a pop-up will not close, about two dozen of them matter. This page picks those ${keys.length}, quotes what the maker says each one does and adds the situation in a diagnosis where it saves time.`,
+    lede: `Microsoft’s and Apple’s shortcut lists run to several hundred entries. When an app hangs, the screen stays black or a pop-up will not close, about two dozen of them matter. This page picks those ${keys.length} and says for each what it does and where in a diagnosis it saves time.`,
+    fromSource: keys.map((k) => k.keys),
     body: `<section class="prose" id="read"><h2>Why shortcuts belong in a diagnosis</h2>
 <p>A frozen app, a missing taskbar or a full-screen fake warning takes away the mouse’s targets. The keyboard still works in most of these cases, and the shortcuts below open exactly the system tools the diagnoses and guides on this site send you to: Task Manager, Settings, the Run box, Force Quit, the screenshot tools for the fix log.</p>
-<p>The key combinations and the descriptions are quoted from the makers’ pages. The Windows rows come from the Windows 11 section of Microsoft’s page. The column “When it helps” is this site’s own.</p></section>
+<p>The key combinations are the makers’ – a build script checks that each one is listed on Microsoft’s page (Windows 11 section) or Apple’s page. Both text columns are written by ClickSolve Guide; the makers’ full lists are linked under Sources.</p></section>
 <section class="prose" id="all"><h2>The shortcuts</h2>
-${refTable('t-keys', 'Troubleshooting shortcuts for Windows 11 and macOS', ['System', 'Keys', 'What the maker says it does', 'When it helps (our note)'],
-    keys.map((k) => [k.os, `<kbd>${esc(k.keys)}</kbd>`, esc(k.desc), esc(WHEN[k.keys] || '')]),
+${refTable('t-keys', 'Troubleshooting shortcuts for Windows 11 and macOS', ['System', 'Keys', 'What it does', 'When it helps'],
+    keys.map((k) => [k.os, `<kbd>${esc(k.keys)}</kbd>`, esc(KEYS[k.keys][0]), esc(KEYS[k.keys][1])]),
     { file: 'troubleshooting-shortcuts.csv', source: `${SRC.winkeys.url} and ${SRC.mackeys.url} – retrieved ${RETRIEVED_ISO}`, filterLabel: 'Filter (try “screenshot”, “macOS” or “frozen”)' })}</section>`,
     sources: ['winkeys', 'mackeys'],
-    made: 'The shortcuts were selected by hand; their key combinations and descriptions were then extracted by a script from the two pages below and are quoted unchanged (for long Apple entries, the first sentence). The “When it helps” column is ClickSolve Guide’s own. The shortcuts were not tried on physical devices for this page.',
+    made: 'The selection and all texts are ClickSolve Guide’s own. From the two pages below only the key combinations were taken; the makers’ descriptions are not reproduced. The shortcuts were not tried on physical devices for this page.',
     related: [{ href: '/guides/mac-running-slow/', label: 'Guide: Mac running slow' }, G_SCAM, { href: '/guides/which-windows-macos-version/', label: 'Guide: which Windows or macOS version' }]
   });
 
@@ -474,17 +581,17 @@ ${refTable('t-keys', 'Troubleshooting shortcuts for Windows 11 and macOS', ['Sys
   const hub = {
     path: '/reference/', kind: 'hub', loader: true, lookup: true,
     title: 'Error Code Lookup and Reference Tables – ClickSolve Guide',
-    description: 'Paste a Chrome error, Windows Update code, HTTP status, IP address, port or Windows build and see what it means for the diagnosis. Seven sourced tables.',
+    description: 'Paste a Chrome error, Windows Update code, HTTP status, IP address, port or Windows build and see what it means for the diagnosis. Seven reference pages.',
     h1: 'Look up what the screen says',
     jsonld: [crumbsLd(hubCrumbs)],
     body: `${crumbsHtml(hubCrumbs)}<span class="kicker">Reference · from the makers’ own documentation</span><h1>Look up what the screen says</h1>
-<div class="prose"><p class="lede">An error code is the one precise thing a failing device tells you. Paste it here: the lookup recognises Chrome network errors, Windows Update codes, HTTP status codes, IP addresses, port numbers and Windows build numbers, shows the official definition and says which layer it points to.</p></div>
+<div class="prose"><p class="lede">An error code is the one precise thing a failing device tells you. Paste it here: the lookup recognises Chrome network errors, Windows Update codes, HTTP status codes, IP addresses, port numbers and Windows build numbers, names it, says in plain words what it means and which layer it points to.</p></div>
 ${lookupBox(V)}
 <section aria-labelledby="tables-h"><h2 id="tables-h">The tables behind the lookup</h2>
 <ul class="cards">${pages.map((p) => `<li><a class="card" href="${p.path}"><span class="k">${esc(p.refCard.kicker)}</span><h3>${esc(p.h1)}</h3><p>${esc(p.refCard.text)}</p></a></li>`).join('')}</ul></section>
 <section class="prose" aria-labelledby="how-h"><h2 id="how-h">Where the data comes from</h2>
-<p>Every table on these pages was extracted by a script from a primary source: Chromium’s source code for the Chrome codes, the IANA registries for HTTP status codes, IP ranges and ports, Microsoft Learn for Windows Update codes and Windows releases, Apple Support for macOS versions, and the two makers’ own shortcut lists. Names, numbers, dates and descriptions are shown unchanged. Each page links its source and states the day the data was retrieved – ${RETRIEVED} for this edition.</p>
-<p>What ClickSolve Guide adds is clearly marked as “our reading” or “our note”: which layer of the diagnosis a code points to, and which check comes next. Those notes are derived from the definitions; nobody provoked each of the several hundred errors on a test device, and the pages do not claim so.</p>
+<p>The facts in these tables – code names and numbers, registry entries, version names, dates, key combinations – are taken by a script from primary sources: Chromium’s source code for the Chrome codes, the IANA registries for HTTP status codes, IP ranges and ports, Microsoft Learn for Windows Update codes and Windows releases, Apple Support for macOS versions. Each page links its source and states the day the data was retrieved – ${RETRIEVED} for this edition.</p>
+<p>The explanations are ours. What a code means, which layer of the diagnosis it points to and which step comes next is written by ClickSolve Guide and not copied from the makers’ documentation; where a maker’s page says more, the table links to it. The notes are derived from the definitions – nobody provoked each error on a test device, and the pages do not claim so.</p>
 <p>Every table can be filtered and downloaded as a CSV file with its source line. A result can be shared as a link – except IP addresses, which are never put into a link.</p></section>`
   };
   return [hub, ...pages];

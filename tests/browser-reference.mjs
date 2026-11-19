@@ -46,7 +46,7 @@ for (const width of [390, 1366]) {
   // ----- lookup on the home page and the hub -----
   for (const u of ['/', '/reference/']) {
     await page.goto(base + u); await page.waitForSelector('#lookup.ready');
-    const cases = [['ERR_NAME_NOT_RESOLVED', /host name could not be resolved/], ['dns_probe_finished_nxdomain', /domain must not exist/], ['-105', /ERR_NAME_NOT_RESOLVED/], ['0x80070422', /ERROR_SERVICE_DISABLED/], ['503', /Service Unavailable/], ['169.254.12.7', /Link Local/], ['fe80::1c2b:3aff:fe4d:5e6f', /link-local/], ['631', /Internet Printing Protocol/], ['26100.1', /Windows 11, version 24H2/]];
+    const cases = [['ERR_NAME_NOT_RESOLVED', /name lookup \(DNS\) failed/], ['dns_probe_finished_nxdomain', /name does not exist/], ['ERR_CACHE_MISS', /Chromium source/], ['0xC1900101', /driver/], ['0x80243FFF', /WU_E_AUCLIENT_UNEXPECTED/], ['511', /network you are on/], ['-105', /ERR_NAME_NOT_RESOLVED/], ['0x80070422', /ERROR_SERVICE_DISABLED/], ['503', /Service Unavailable/], ['169.254.12.7', /Link Local/], ['fe80::1c2b:3aff:fe4d:5e6f', /link-local/], ['631', /Internet Printing Protocol/], ['26100.1', /Windows 11, version 24H2/]];
     let good = 0;
     for (const [q, re] of cases) { const r = await lookup(page, q); if (r.found >= 1 && re.test(r.text)) good++; else console.log('   miss: ' + q + ' -> ' + r.text.slice(0, 120)); }
     ok(good === cases.length, `${width}px ${u}: ${good}/${cases.length} lookups give the expected result`);
@@ -72,7 +72,7 @@ for (const width of [390, 1366]) {
   ok(await page.inputValue('#lookup-q') === 'ERR_CONNECTION_RESET' && !(await page.evaluate(() => location.hash)), `${width}px shared link runs the lookup and the fragment is removed`);
   for (const h of ['#q=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E', '#q=192.168.1.20', '#q=%E0%A4%A', '#q=' + 'A'.repeat(500)]) {
     await page.goto(base + '/about/'); await page.goto(base + '/reference/' + h); await page.waitForSelector('#lookup.ready');
-    ok(await page.locator('.lk-card').count() === 0 && await page.inputValue('#lookup-q') === '', `${width}px hostile or private fragment ignored: ${h.slice(0, 40)}`);
+    ok(await page.locator('.lk-card').count() === 0 && await page.inputValue('#lookup-q') === '' && !(await page.evaluate(() => location.hash)), `${width}px hostile or private fragment ignored and removed from the address bar: ${h.slice(0, 40)}`);
   }
 
   // ----- reference tables: filter + CSV -----
@@ -96,10 +96,11 @@ for (const width of [390, 1366]) {
     const [dl] = await Promise.all([page.waitForEvent('download'), page.locator('button[data-csv-for]').first().click()]);
     const csv = fs.readFileSync(await dl.path(), 'utf8');
     const lines = csv.trim().split('\r\n');
-    const bad = lines.filter((l) => l.split('","').some((c) => /^"?[=+\-@]/.test(c.replace(/^"/, '"').replace(/^"/, ''))));
+    // a cell may start with = + - @ only when it is a plain number (e.g. -105)
+    const bad = lines.filter((l) => l.replace(/^"|"$/g, '').split('","').some((c) => /^[=+\-@]/.test(c) && !/^-?\d+(\.\d+)?$/.test(c)));
     ok(lines.length > 5 && /^"Source","https:\/\//.test(lines[lines.length - 1]) && bad.length === 0, `${width}px /reference/${r}/: CSV ${dl.suggestedFilename()} has ${lines.length} lines, a source line and no cell starting with = + - @`);
     ok(await overflow(page) <= 1, `${width}px /reference/${r}/: no horizontal overflow`);
-    if (r === 'chrome-error-codes') ok(/"'-105"/.test(fs.readFileSync(await (await Promise.all([page.waitForEvent('download'), page.locator('button[data-csv-for="t-chrome"]').click()]))[0].path(), 'utf8')), `${width}px negative code numbers are defused in the CSV ('-105)`);
+    if (r === 'chrome-error-codes') ok(/"ERR_NAME_NOT_RESOLVED","-105",/.test(fs.readFileSync(await (await Promise.all([page.waitForEvent('download'), page.locator('button[data-csv-for="t-own"]').click()]))[0].path(), 'utf8')), `${width}px code numbers stay plain numbers in the CSV (-105)`);
     await page.screenshot({ path: path.join(SHOTS, `ref-${r}-${width}.png`) });
   }
 

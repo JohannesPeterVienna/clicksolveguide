@@ -2,1744 +2,1246 @@
  {
   "name": "ERR_IO_PENDING",
   "code": -1,
-  "range": "System",
-  "desc": "An asynchronous IO operation is not yet complete. This usually does not indicate a fatal error. Typically this error will be generated as a notification to wait for some external notification that the IO operation finally completed.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FAILED",
   "code": -2,
-  "range": "System",
-  "desc": "A generic failure occurred.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_ABORTED",
   "code": -3,
-  "range": "System",
-  "desc": "An operation was aborted (due to user action).",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_INVALID_ARGUMENT",
   "code": -4,
-  "range": "System",
-  "desc": "An argument to the function is incorrect.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_INVALID_HANDLE",
   "code": -5,
-  "range": "System",
-  "desc": "The handle or file descriptor is invalid.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_NOT_FOUND",
   "code": -6,
-  "range": "System",
-  "desc": "The file or directory cannot be found.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_TIMED_OUT",
   "code": -7,
-  "range": "System",
-  "desc": "An operation timed out.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_TOO_BIG",
   "code": -8,
-  "range": "System",
-  "desc": "The file is too large.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_UNEXPECTED",
   "code": -9,
-  "range": "System",
-  "desc": "An unexpected error. This may be caused by a programming mistake or an invalid assumption.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_ACCESS_DENIED",
   "code": -10,
-  "range": "System",
-  "desc": "Permission to access a resource, other than the network, was denied.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_NOT_IMPLEMENTED",
   "code": -11,
-  "range": "System",
-  "desc": "The operation failed because of unimplemented functionality.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_INSUFFICIENT_RESOURCES",
   "code": -12,
-  "range": "System",
-  "desc": "There were not enough resources to complete the operation.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_OUT_OF_MEMORY",
   "code": -13,
-  "range": "System",
-  "desc": "Memory allocation failed.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_UPLOAD_FILE_CHANGED",
   "code": -14,
-  "range": "System",
-  "desc": "The file upload failed because the file's modification time was different from the expectation.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_SOCKET_NOT_CONNECTED",
   "code": -15,
-  "range": "System",
-  "desc": "The socket is not connected.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_EXISTS",
   "code": -16,
-  "range": "System",
-  "desc": "The file already exists.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_PATH_TOO_LONG",
   "code": -17,
-  "range": "System",
-  "desc": "The path or file name is too long.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_NO_SPACE",
   "code": -18,
-  "range": "System",
-  "desc": "Not enough room left on the disk.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_FILE_VIRUS_INFECTED",
   "code": -19,
-  "range": "System",
-  "desc": "The file has a virus.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_CLIENT",
   "code": -20,
-  "range": "System",
-  "desc": "The client chose to block the request.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_NETWORK_CHANGED",
   "code": -21,
-  "range": "System",
-  "desc": "The network changed.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_ADMINISTRATOR",
   "code": -22,
-  "range": "System",
-  "desc": "The request was blocked by the URL block list configured by the domain administrator.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_SOCKET_IS_CONNECTED",
   "code": -23,
-  "range": "System",
-  "desc": "The socket is already connected.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_UPLOAD_STREAM_REWIND_NOT_SUPPORTED",
   "code": -25,
-  "range": "System",
-  "desc": "The upload failed because the upload stream needed to be re-read, due to a retry or a redirect, but the upload stream doesn't support that operation.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_CONTEXT_SHUT_DOWN",
   "code": -26,
-  "range": "System",
-  "desc": "The request failed because the URLRequestContext is shutting down, or has been shut down.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_RESPONSE",
   "code": -27,
-  "range": "System",
-  "desc": "The request failed because the response was delivered along with requirements which are not met ('X-Frame-Options' and 'Content-Security-Policy' ancestor checks and 'Cross-Origin-Resource-Policy' for instance).",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_CLEARTEXT_NOT_PERMITTED",
   "code": -29,
-  "range": "System",
-  "desc": "The request was blocked by system policy disallowing some or all cleartext requests. Used for NetworkSecurityPolicy on Android.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_CSP",
   "code": -30,
-  "range": "System",
-  "desc": "The request was blocked by a Content Security Policy",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_ORB",
   "code": -32,
-  "range": "System",
-  "desc": "The request was blocked by CORB or ORB.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_NETWORK_ACCESS_REVOKED",
   "code": -33,
-  "range": "System",
-  "desc": "The request was blocked because it originated from a frame that has disabled network access.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_BY_FINGERPRINTING_PROTECTION",
   "code": -34,
-  "range": "System",
-  "desc": "The request was blocked by fingerprinting protections.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_BLOCKED_IN_INCOGNITO_BY_ADMINISTRATOR",
   "code": -35,
-  "range": "System",
-  "desc": "The request was blocked by the Incognito Mode URL block list configured by the domain administrator.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_LOCAL_NETWORK_PERMISSION_MISSING",
   "code": -36,
-  "range": "System",
-  "desc": "The request was blocked because the local network permission is missing. Note that this is different from BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS which is specifically for a CORS error code.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_STRICT_ECH_REQUIRED",
   "code": -37,
-  "range": "System",
-  "desc": "The request was blocked because ECH is strictly required, but: - The client could not obtain a valid ECH configuration. - The server rejected the ECH, and the client failed to establish a new ECH connection after retrying with retry_configs.",
-  "more": false
+  "range": "System"
  },
  {
   "name": "ERR_CONNECTION_CLOSED",
   "code": -100,
-  "range": "Connection",
-  "desc": "A connection was closed (corresponding to a TCP FIN).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONNECTION_RESET",
   "code": -101,
-  "range": "Connection",
-  "desc": "A connection was reset (corresponding to a TCP RST).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONNECTION_REFUSED",
   "code": -102,
-  "range": "Connection",
-  "desc": "A connection attempt was refused.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONNECTION_ABORTED",
   "code": -103,
-  "range": "Connection",
-  "desc": "A connection timed out as a result of not receiving an ACK for data sent. This can include a FIN packet that did not get ACK'd.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONNECTION_FAILED",
   "code": -104,
-  "range": "Connection",
-  "desc": "A connection attempt failed.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_NAME_NOT_RESOLVED",
   "code": -105,
-  "range": "Connection",
-  "desc": "The host name could not be resolved.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_INTERNET_DISCONNECTED",
   "code": -106,
-  "range": "Connection",
-  "desc": "The Internet connection has been lost.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_PROTOCOL_ERROR",
   "code": -107,
-  "range": "Connection",
-  "desc": "An SSL protocol error occurred.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ADDRESS_INVALID",
   "code": -108,
-  "range": "Connection",
-  "desc": "The IP address or port number is invalid (e.g., cannot connect to the IP address 0 or the port 0).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ADDRESS_UNREACHABLE",
   "code": -109,
-  "range": "Connection",
-  "desc": "The IP address is unreachable. This usually means that there is no route to the specified host or network.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_CERT_NEEDED",
   "code": -110,
-  "range": "Connection",
-  "desc": "The server requested a client certificate for SSL client authentication.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_TUNNEL_CONNECTION_FAILED",
   "code": -111,
-  "range": "Connection",
-  "desc": "A tunnel connection through the proxy could not be established. For more info see the comment on PROXY_UNABLE_TO_CONNECT_TO_DESTINATION.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH",
   "code": -113,
-  "range": "Connection",
-  "desc": "The client and server don't support a common SSL protocol version or cipher suite.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_RENEGOTIATION_REQUESTED",
   "code": -114,
-  "range": "Connection",
-  "desc": "The server requested a renegotiation (rehandshake).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_AUTH_UNSUPPORTED",
   "code": -115,
-  "range": "Connection",
-  "desc": "The proxy requested authentication (for tunnel establishment) with an unsupported method.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_BAD_SSL_CLIENT_AUTH_CERT",
   "code": -117,
-  "range": "Connection",
-  "desc": "The SSL handshake failed because of a bad or missing client certificate.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONNECTION_TIMED_OUT",
   "code": -118,
-  "range": "Connection",
-  "desc": "A connection attempt timed out.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_HOST_RESOLVER_QUEUE_TOO_LARGE",
   "code": -119,
-  "range": "Connection",
-  "desc": "There are too many pending DNS resolves, so a request in the queue was aborted.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKS_CONNECTION_FAILED",
   "code": -120,
-  "range": "Connection",
-  "desc": "Failed establishing a connection to the SOCKS proxy server for a target host.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKS_CONNECTION_HOST_UNREACHABLE",
   "code": -121,
-  "range": "Connection",
-  "desc": "The SOCKS proxy server failed establishing connection to the target host because that host is unreachable.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ALPN_NEGOTIATION_FAILED",
   "code": -122,
-  "range": "Connection",
-  "desc": "The request to negotiate an alternate protocol failed.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_NO_RENEGOTIATION",
   "code": -123,
-  "range": "Connection",
-  "desc": "The peer sent an SSL no_renegotiation alert message.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_WINSOCK_UNEXPECTED_WRITTEN_BYTES",
   "code": -124,
-  "range": "Connection",
-  "desc": "Winsock sometimes reports more data written than passed. This is probably due to a broken LSP.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_DECOMPRESSION_FAILURE_ALERT",
   "code": -125,
-  "range": "Connection",
-  "desc": "An SSL peer sent us a fatal decompression_failure alert. This typically occurs when a peer selects DEFLATE compression in the mistaken belief that it supports it.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_BAD_RECORD_MAC_ALERT",
   "code": -126,
-  "range": "Connection",
-  "desc": "An SSL peer sent us a fatal bad_record_mac alert. This has been observed from servers with buggy DEFLATE support.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_AUTH_REQUESTED",
   "code": -127,
-  "range": "Connection",
-  "desc": "The proxy requested authentication (for tunnel establishment).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_CONNECTION_FAILED",
   "code": -130,
-  "range": "Connection",
-  "desc": "Could not create a connection to the proxy server. An error occurred either in resolving its name, or in connecting a socket to it. Note that this does NOT include failures during the actual \"CONNECT\" method of an HTTP proxy.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_MANDATORY_PROXY_CONFIGURATION_FAILED",
   "code": -131,
-  "range": "Connection",
-  "desc": "A mandatory proxy configuration could not be used. Currently this means that a mandatory PAC script could not be fetched, parsed or executed.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PRECONNECT_MAX_SOCKET_LIMIT",
   "code": -133,
-  "range": "Connection",
-  "desc": "We've hit the max socket limit for the socket pool while preconnecting. We don't bother trying to preconnect more sockets.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_PRIVATE_KEY_ACCESS_DENIED",
   "code": -134,
-  "range": "Connection",
-  "desc": "The permission to use the SSL client certificate's private key was denied.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_CERT_NO_PRIVATE_KEY",
   "code": -135,
-  "range": "Connection",
-  "desc": "The SSL client certificate has no private key.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_CERTIFICATE_INVALID",
   "code": -136,
-  "range": "Connection",
-  "desc": "The certificate presented by the HTTPS Proxy was invalid.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_NAME_RESOLUTION_FAILED",
   "code": -137,
-  "range": "Connection",
-  "desc": "An error occurred when trying to do a name resolution (DNS).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_NETWORK_ACCESS_DENIED",
   "code": -138,
-  "range": "Connection",
-  "desc": "Permission to access the network was denied. This is used to distinguish errors that were most likely caused by a firewall from other access denied errors. See also ERR_ACCESS_DENIED.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_TEMPORARILY_THROTTLED",
   "code": -139,
-  "range": "Connection",
-  "desc": "The request throttler module cancelled this request to avoid DDOS.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED",
   "code": -141,
-  "range": "Connection",
-  "desc": "We were unable to sign the CertificateVerify data of an SSL client auth handshake with the client certificate's private key.",
-  "more": true
+  "range": "Connection"
  },
  {
   "name": "ERR_MSG_TOO_BIG",
   "code": -142,
-  "range": "Connection",
-  "desc": "The message was too large for the transport. (for example a UDP message which exceeds size threshold).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_WS_PROTOCOL_ERROR",
   "code": -145,
-  "range": "Connection",
-  "desc": "Websocket protocol error. Indicates that we are terminating the connection due to a malformed frame or other protocol violation.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ADDRESS_IN_USE",
   "code": -147,
-  "range": "Connection",
-  "desc": "Returned when attempting to bind an address that is already in use.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN",
   "code": -150,
-  "range": "Connection",
-  "desc": "The certificate didn't match the built-in public key pins for the host name. The pins are set in net/http/transport_security_state.cc and require that one of a set of public keys exist on the path from the leaf to the root.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CLIENT_AUTH_CERT_TYPE_UNSUPPORTED",
   "code": -151,
-  "range": "Connection",
-  "desc": "Server request for client certificate did not contain any types we support.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_DECRYPT_ERROR_ALERT",
   "code": -153,
-  "range": "Connection",
-  "desc": "An SSL peer sent us a fatal decrypt_error alert. This typically occurs when a peer could not correctly verify a signature (in CertificateVerify or ServerKeyExchange) or validate a Finished message.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_WS_THROTTLE_QUEUE_TOO_LARGE",
   "code": -154,
-  "range": "Connection",
-  "desc": "There are too many pending WebSocketJob instances, so the new job was not pushed to the queue.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_SERVER_CERT_CHANGED",
   "code": -156,
-  "range": "Connection",
-  "desc": "The SSL server certificate changed in a renegotiation.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_UNRECOGNIZED_NAME_ALERT",
   "code": -159,
-  "range": "Connection",
-  "desc": "The SSL server sent us a fatal unrecognized_name alert.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKET_SET_RECEIVE_BUFFER_SIZE_ERROR",
   "code": -160,
-  "range": "Connection",
-  "desc": "Failed to set the socket's receive buffer size as requested.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKET_SET_SEND_BUFFER_SIZE_ERROR",
   "code": -161,
-  "range": "Connection",
-  "desc": "Failed to set the socket's send buffer size as requested.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKET_RECEIVE_BUFFER_SIZE_UNCHANGEABLE",
   "code": -162,
-  "range": "Connection",
-  "desc": "Failed to set the socket's receive buffer size as requested, despite success return code from setsockopt.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SOCKET_SEND_BUFFER_SIZE_UNCHANGEABLE",
   "code": -163,
-  "range": "Connection",
-  "desc": "Failed to set the socket's send buffer size as requested, despite success return code from setsockopt.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_CERT_BAD_FORMAT",
   "code": -164,
-  "range": "Connection",
-  "desc": "Failed to import a client certificate from the platform store into the SSL library.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ICANN_NAME_COLLISION",
   "code": -166,
-  "range": "Connection",
-  "desc": "Resolving a hostname to an IP address list included the IPv4 address \"127.0.53.53\". This is a special IP address which ICANN has recommended to indicate there was a name collision, and alert admins to a potential problem.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_SERVER_CERT_BAD_FORMAT",
   "code": -167,
-  "range": "Connection",
-  "desc": "The SSL server presented a certificate which could not be decoded. This is not a certificate error code as no X509Certificate object is available. This error is fatal.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CT_STH_PARSING_FAILED",
   "code": -168,
-  "range": "Connection",
-  "desc": "Certificate Transparency: Received a signed tree head that failed to parse.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CT_STH_INCOMPLETE",
   "code": -169,
-  "range": "Connection",
-  "desc": "Certificate Transparency: Received a signed tree head whose JSON parsing was OK but was missing some of the fields.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_UNABLE_TO_REUSE_CONNECTION_FOR_PROXY_AUTH",
   "code": -170,
-  "range": "Connection",
-  "desc": "The attempt to reuse a connection to send proxy auth credentials failed before the AuthController was used to generate credentials. The caller should reuse the controller with a new connection. This error is only used internally by the network stack.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CT_CONSISTENCY_PROOF_PARSING_FAILED",
   "code": -171,
-  "range": "Connection",
-  "desc": "Certificate Transparency: Failed to parse the received consistency proof.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_OBSOLETE_CIPHER",
   "code": -172,
-  "range": "Connection",
-  "desc": "The SSL server required an unsupported cipher suite that has since been removed. This error will temporarily be signaled on a fallback for one or two releases immediately following a cipher suite's removal, after which the fallback will be removed.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_WS_UPGRADE",
   "code": -173,
-  "range": "Connection",
-  "desc": "When a WebSocket handshake is done successfully and the connection has been upgraded, the URLRequest is cancelled with this error code.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_READ_IF_READY_NOT_IMPLEMENTED",
   "code": -174,
-  "range": "Connection",
-  "desc": "Socket ReadIfReady support is not implemented. This error should not be user visible, because the normal Read() method is used as a fallback.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_NO_BUFFER_SPACE",
   "code": -176,
-  "range": "Connection",
-  "desc": "No socket buffer space is available.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS",
   "code": -177,
-  "range": "Connection",
-  "desc": "There were no common signature algorithms between our client certificate private key and the server's preferences.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_EARLY_DATA_REJECTED",
   "code": -178,
-  "range": "Connection",
-  "desc": "TLS 1.3 early data was rejected by the server. This will be received before any data is returned from the socket. The request should be retried with early data disabled.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_WRONG_VERSION_ON_EARLY_DATA",
   "code": -179,
-  "range": "Connection",
-  "desc": "TLS 1.3 early data was offered, but the server responded with TLS 1.2 or earlier. This is an internal error code to account for a backwards-compatibility issue with early data and TLS 1.2. It will be received before any data is returned from the socket. The request should be retried with early data disabled.",
-  "more": true
+  "range": "Connection"
  },
  {
   "name": "ERR_TLS13_DOWNGRADE_DETECTED",
   "code": -180,
-  "range": "Connection",
-  "desc": "TLS 1.3 was enabled, but a lower version was negotiated and the server returned a value indicating it supported TLS 1.3. This is part of a security check in TLS 1.3, but it may also indicate the user is behind a buggy TLS-terminating proxy which implemented TLS 1.2 incorrectly. (See https://crbug.com/boringssl/226.)",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_SSL_KEY_USAGE_INCOMPATIBLE",
   "code": -181,
-  "range": "Connection",
-  "desc": "The server's certificate has a keyUsage extension incompatible with the negotiated TLS key exchange method.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_INVALID_ECH_CONFIG_LIST",
   "code": -182,
-  "range": "Connection",
-  "desc": "The ECHConfigList fetched over DNS cannot be parsed.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ECH_NOT_NEGOTIATED",
   "code": -183,
-  "range": "Connection",
-  "desc": "ECH was enabled, but the server was unable to decrypt the encrypted ClientHello.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_ECH_FALLBACK_CERTIFICATE_INVALID",
   "code": -184,
-  "range": "Connection",
-  "desc": "ECH was enabled, the server was unable to decrypt the encrypted ClientHello, and additionally did not present a certificate valid for the public name.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_UNABLE_TO_CONNECT_TO_DESTINATION",
   "code": -186,
-  "range": "Connection",
-  "desc": "An attempt to proxy a request failed because the proxy wasn't able to successfully connect to the destination. This likely indicates an issue with the request itself (for instance, the hostname failed to resolve to an IP address or the destination server refused the connection). This error code is used to indicate that the error is outside the control of the proxy server and thus the proxy chain should not be marked as bad. This is in contrast to ERR_TUNNEL_CONNECTION_FAILED which is used for general purpose errors connecting to the proxy and by the proxy request response handling when a proxy delegate doesn't indicate via a different error code whether the failure was specific to the destination. By default, neither error code causes the proxy chain to be marked as bad, though a ProxyDelegate may override fallback behavior via CanFalloverToNextProxyOverride().",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_DELEGATE_CANCELED_CONNECT_REQUEST",
   "code": -187,
-  "range": "Connection",
-  "desc": "Some implementations of ProxyDelegate query a separate entity to know whether it should cancel tunnel prior to: - The HTTP CONNECT requests being sent out - The HTTP CONNECT response being parsed by //net An example is CronetProxyDelegate: Cronet allows developers to decide whether the tunnel being established should be canceled.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_PROXY_DELEGATE_CANCELED_CONNECT_RESPONSE",
   "code": -188,
-  "range": "Connection",
-  "desc": "",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CONTROL_MSG_TOO_BIG",
   "code": -189,
-  "range": "Connection",
-  "desc": "The control message was too large for the transport. (for example a UDP message control data exceeds size threshold).",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_MULTICAST_NOT_ALLOWED",
   "code": -190,
-  "range": "Connection",
-  "desc": "Direct Sockets attempted to connect to or send a packet to a multicast address without 'direct-sockets-multicast' permissions policy.",
-  "more": false
+  "range": "Connection"
  },
  {
   "name": "ERR_CERT_COMMON_NAME_INVALID",
   "code": -200,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate whose common name did not match the host name. This could mean:",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_DATE_INVALID",
   "code": -201,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that, by our clock, appears to either not yet be valid or to have expired. This could mean:",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_AUTHORITY_INVALID",
   "code": -202,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that is signed by an authority we don't trust. The could mean:",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_CONTAINS_ERRORS",
   "code": -203,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that contains errors. This error is not recoverable.",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_NO_REVOCATION_MECHANISM",
   "code": -204,
-  "range": "Certificate",
-  "desc": "The certificate has no mechanism for determining if it is revoked. In effect, this certificate cannot be revoked.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_UNABLE_TO_CHECK_REVOCATION",
   "code": -205,
-  "range": "Certificate",
-  "desc": "Revocation information for the security certificate for this site is not available. This could mean:",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_REVOKED",
   "code": -206,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate has been revoked. We have the capability to ignore this error, but it is probably not the thing to do.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_INVALID",
   "code": -207,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that is invalid. This error is not recoverable.",
-  "more": true
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_WEAK_SIGNATURE_ALGORITHM",
   "code": -208,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that is signed using a weak signature algorithm.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_NON_UNIQUE_NAME",
   "code": -210,
-  "range": "Certificate",
-  "desc": "The host name specified in the certificate is not unique.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_WEAK_KEY",
   "code": -211,
-  "range": "Certificate",
-  "desc": "The server responded with a certificate that contains a weak key (e.g. a too-small RSA key).",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_NAME_CONSTRAINT_VIOLATION",
   "code": -212,
-  "range": "Certificate",
-  "desc": "The certificate claimed DNS names that are in violation of name constraints.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_VALIDITY_TOO_LONG",
   "code": -213,
-  "range": "Certificate",
-  "desc": "The certificate's validity period is too long.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERTIFICATE_TRANSPARENCY_REQUIRED",
   "code": -214,
-  "range": "Certificate",
-  "desc": "Certificate Transparency was required for this connection, but the server did not provide CT information that complied with the policy.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_KNOWN_INTERCEPTION_BLOCKED",
   "code": -217,
-  "range": "Certificate",
-  "desc": "The certificate is known to be used for interception by an entity other the device owner.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_SELF_SIGNED_LOCAL_NETWORK",
   "code": -219,
-  "range": "Certificate",
-  "desc": "The certificate is self signed and it's being used for either an RFC1918 IP literal URL, or a url ending in .local.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_CERT_END",
   "code": -220,
-  "range": "Certificate",
-  "desc": "The value immediately past the last certificate error code.",
-  "more": false
+  "range": "Certificate"
  },
  {
   "name": "ERR_INVALID_URL",
   "code": -300,
-  "range": "HTTP",
-  "desc": "The URL is invalid.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_DISALLOWED_URL_SCHEME",
   "code": -301,
-  "range": "HTTP",
-  "desc": "The scheme of the URL is disallowed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNKNOWN_URL_SCHEME",
   "code": -302,
-  "range": "HTTP",
-  "desc": "The scheme of the URL is unknown.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INVALID_REDIRECT",
   "code": -303,
-  "range": "HTTP",
-  "desc": "Attempting to load an URL resulted in a redirect to an invalid URL.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_TOO_MANY_REDIRECTS",
   "code": -310,
-  "range": "HTTP",
-  "desc": "Attempting to load an URL resulted in too many redirects.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNSAFE_REDIRECT",
   "code": -311,
-  "range": "HTTP",
-  "desc": "Attempting to load an URL resulted in an unsafe redirect (e.g., a redirect to file:// is considered unsafe).",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNSAFE_PORT",
   "code": -312,
-  "range": "HTTP",
-  "desc": "Attempting to load an URL with an unsafe port number. These are port numbers that correspond to services, which are not robust to spurious input that may be constructed as a result of an allowed web construct (e.g., HTTP looks a lot like SMTP, so form submission to port 25 is denied).",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INVALID_RESPONSE",
   "code": -320,
-  "range": "HTTP",
-  "desc": "The server's response was invalid.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INVALID_CHUNKED_ENCODING",
   "code": -321,
-  "range": "HTTP",
-  "desc": "Error in chunked transfer encoding.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_METHOD_NOT_SUPPORTED",
   "code": -322,
-  "range": "HTTP",
-  "desc": "The server did not support the request method.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNEXPECTED_PROXY_AUTH",
   "code": -323,
-  "range": "HTTP",
-  "desc": "The response was 407 (Proxy Authentication Required), yet we did not send the request to a proxy.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_EMPTY_RESPONSE",
   "code": -324,
-  "range": "HTTP",
-  "desc": "The server closed the connection without sending any data.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_HEADERS_TOO_BIG",
   "code": -325,
-  "range": "HTTP",
-  "desc": "The headers section of the response is too large.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_PAC_SCRIPT_FAILED",
   "code": -327,
-  "range": "HTTP",
-  "desc": "The evaluation of the PAC script failed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_REQUEST_RANGE_NOT_SATISFIABLE",
   "code": -328,
-  "range": "HTTP",
-  "desc": "The response was 416 (Requested range not satisfiable) and the server cannot satisfy the range requested.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_MALFORMED_IDENTITY",
   "code": -329,
-  "range": "HTTP",
-  "desc": "The identity used for authentication is invalid.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_CONTENT_DECODING_FAILED",
   "code": -330,
-  "range": "HTTP",
-  "desc": "Content decoding of the response body failed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_NETWORK_IO_SUSPENDED",
   "code": -331,
-  "range": "HTTP",
-  "desc": "An operation could not be completed because all network IO is suspended.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_NO_SUPPORTED_PROXIES",
   "code": -336,
-  "range": "HTTP",
-  "desc": "There are no supported proxies in the provided list.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_PROTOCOL_ERROR",
   "code": -337,
-  "range": "HTTP",
-  "desc": "There is an HTTP/2 protocol error.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INVALID_AUTH_CREDENTIALS",
   "code": -338,
-  "range": "HTTP",
-  "desc": "Credentials could not be established during HTTP Authentication.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNSUPPORTED_AUTH_SCHEME",
   "code": -339,
-  "range": "HTTP",
-  "desc": "An HTTP Authentication scheme was tried which is not supported on this machine.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_ENCODING_DETECTION_FAILED",
   "code": -340,
-  "range": "HTTP",
-  "desc": "Detecting the encoding of the response failed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_MISSING_AUTH_CREDENTIALS",
   "code": -341,
-  "range": "HTTP",
-  "desc": "(GSSAPI) No Kerberos credentials were available during HTTP Authentication.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNEXPECTED_SECURITY_LIBRARY_STATUS",
   "code": -342,
-  "range": "HTTP",
-  "desc": "An unexpected, but documented, SSPI or GSSAPI status code was returned.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_MISCONFIGURED_AUTH_ENVIRONMENT",
   "code": -343,
-  "range": "HTTP",
-  "desc": "The environment was not set up correctly for authentication (for example, no KDC could be found or the principal is unknown.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNDOCUMENTED_SECURITY_LIBRARY_STATUS",
   "code": -344,
-  "range": "HTTP",
-  "desc": "An undocumented SSPI or GSSAPI status code was returned.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_BODY_TOO_BIG_TO_DRAIN",
   "code": -345,
-  "range": "HTTP",
-  "desc": "The HTTP response was too big to drain.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_HEADERS_MULTIPLE_CONTENT_LENGTH",
   "code": -346,
-  "range": "HTTP",
-  "desc": "The HTTP response contained multiple distinct Content-Length headers.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INCOMPLETE_HTTP2_HEADERS",
   "code": -347,
-  "range": "HTTP",
-  "desc": "HTTP/2 headers have been received, but not all of them - status or version headers are missing, so we're expecting additional frames to complete them.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_PAC_NOT_IN_DHCP",
   "code": -348,
-  "range": "HTTP",
-  "desc": "No PAC URL configuration could be retrieved from DHCP. This can indicate either a failure to retrieve the DHCP configuration, or that there was no PAC URL configured in DHCP.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_HEADERS_MULTIPLE_CONTENT_DISPOSITION",
   "code": -349,
-  "range": "HTTP",
-  "desc": "The HTTP response contained multiple Content-Disposition headers.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_HEADERS_MULTIPLE_LOCATION",
   "code": -350,
-  "range": "HTTP",
-  "desc": "The HTTP response contained multiple Location headers.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_SERVER_REFUSED_STREAM",
   "code": -351,
-  "range": "HTTP",
-  "desc": "HTTP/2 server refused the request without processing, and sent either a GOAWAY frame with error code NO_ERROR and Last-Stream-ID lower than the stream id corresponding to the request indicating that this request has not been processed yet, or a RST_STREAM frame with error code REFUSED_STREAM. Client MAY retry (on a different connection). See RFC7540 Section 8.1.4.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_PING_FAILED",
   "code": -352,
-  "range": "HTTP",
-  "desc": "HTTP/2 server didn't respond to the PING message.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_CONTENT_LENGTH_MISMATCH",
   "code": -354,
-  "range": "HTTP",
-  "desc": "The HTTP response body transferred fewer bytes than were advertised by the Content-Length header when the connection is closed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INCOMPLETE_CHUNKED_ENCODING",
   "code": -355,
-  "range": "HTTP",
-  "desc": "The HTTP response body is transferred with Chunked-Encoding, but the terminating zero-length chunk was never sent when the connection is closed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_QUIC_PROTOCOL_ERROR",
   "code": -356,
-  "range": "HTTP",
-  "desc": "There is a QUIC protocol error.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_RESPONSE_HEADERS_TRUNCATED",
   "code": -357,
-  "range": "HTTP",
-  "desc": "The HTTP headers were truncated by an EOF.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_QUIC_HANDSHAKE_FAILED",
   "code": -358,
-  "range": "HTTP",
-  "desc": "The QUIC crypto handshake failed. This means that the server was unable to read any requests sent, so they may be resent.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_INADEQUATE_TRANSPORT_SECURITY",
   "code": -360,
-  "range": "HTTP",
-  "desc": "Transport security is inadequate for the HTTP/2 version.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_FLOW_CONTROL_ERROR",
   "code": -361,
-  "range": "HTTP",
-  "desc": "The peer violated HTTP/2 flow control.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_FRAME_SIZE_ERROR",
   "code": -362,
-  "range": "HTTP",
-  "desc": "The peer sent an improperly sized HTTP/2 frame.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_COMPRESSION_ERROR",
   "code": -363,
-  "range": "HTTP",
-  "desc": "Decoding or encoding of compressed HTTP/2 headers failed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_PROXY_AUTH_REQUESTED_WITH_NO_CONNECTION",
   "code": -364,
-  "range": "HTTP",
-  "desc": "Proxy Auth Requested without a valid Client Socket Handle.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP_1_1_REQUIRED",
   "code": -365,
-  "range": "HTTP",
-  "desc": "HTTP_1_1_REQUIRED error code received on HTTP/2 session.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_PROXY_HTTP_1_1_REQUIRED",
   "code": -366,
-  "range": "HTTP",
-  "desc": "HTTP_1_1_REQUIRED error code received on HTTP/2 session to proxy.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_PAC_SCRIPT_TERMINATED",
   "code": -367,
-  "range": "HTTP",
-  "desc": "The PAC script terminated fatally and must be reloaded.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INVALID_HTTP_RESPONSE",
   "code": -370,
-  "range": "HTTP",
-  "desc": "The server was expected to return an HTTP/1.x response, but did not. Rather than treat it as HTTP/0.9, this error is returned.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_CONTENT_DECODING_INIT_FAILED",
   "code": -371,
-  "range": "HTTP",
-  "desc": "Initializing content decoding failed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_RST_STREAM_NO_ERROR_RECEIVED",
   "code": -372,
-  "range": "HTTP",
-  "desc": "Received HTTP/2 RST_STREAM frame with NO_ERROR error code. This error should be handled internally by HTTP/2 code, and should not make it above the SpdyStream layer.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_TOO_MANY_RETRIES",
   "code": -375,
-  "range": "HTTP",
-  "desc": "An HTTP transaction was retried too many times due for authentication or invalid certificates. This may be due to a bug in the net stack that would otherwise infinite loop, or if the server or proxy continually requests fresh credentials or presents a fresh invalid certificate.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP2_STREAM_CLOSED",
   "code": -376,
-  "range": "HTTP",
-  "desc": "Received an HTTP/2 frame on a closed stream.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_HTTP_RESPONSE_CODE_FAILURE",
   "code": -379,
-  "range": "HTTP",
-  "desc": "The server returned a non-2xx HTTP response code.",
-  "more": true
+  "range": "HTTP"
  },
  {
   "name": "ERR_QUIC_CERT_ROOT_NOT_KNOWN",
   "code": -380,
-  "range": "HTTP",
-  "desc": "The certificate presented on a QUIC connection does not chain to a known root and the origin connected to is not on a list of domains where unknown roots are allowed.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_QUIC_GOAWAY_REQUEST_CAN_BE_RETRIED",
   "code": -381,
-  "range": "HTTP",
-  "desc": "A GOAWAY frame has been received indicating that the request has not been processed and is therefore safe to retry on a different connection.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_TOO_MANY_ACCEPT_CH_RESTARTS",
   "code": -382,
-  "range": "HTTP",
-  "desc": "The ACCEPT_CH restart has been triggered too many times",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_INCONSISTENT_IP_ADDRESS_SPACE",
   "code": -383,
-  "range": "HTTP",
-  "desc": "The IP address space of the remote endpoint differed from the previous observed value during the same request. Any cache entry for the affected request should be invalidated.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_CACHED_IP_ADDRESS_SPACE_BLOCKED_BY_LOCAL_NETWORK_ACCESS_POLICY",
   "code": -384,
-  "range": "HTTP",
-  "desc": "The IP address space of the cached remote endpoint is blocked by private network access check.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS",
   "code": -385,
-  "range": "HTTP",
-  "desc": "The connection is blocked by private network access checks.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_ZSTD_WINDOW_SIZE_TOO_BIG",
   "code": -386,
-  "range": "HTTP",
-  "desc": "Content decoding failed due to the zstd window size being too big (over 8MB).",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_DICTIONARY_LOAD_FAILED",
   "code": -387,
-  "range": "HTTP",
-  "desc": "The compression dictionary cannot be loaded.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_UNEXPECTED_CONTENT_DICTIONARY_HEADER",
   "code": -388,
-  "range": "HTTP",
-  "desc": "The header of dictionary compressed stream does not match the expected value.",
-  "more": false
+  "range": "HTTP"
  },
  {
   "name": "ERR_CACHE_MISS",
   "code": -400,
-  "range": "Cache",
-  "desc": "The cache does not have the requested entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_READ_FAILURE",
   "code": -401,
-  "range": "Cache",
-  "desc": "Unable to read from the disk cache.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_WRITE_FAILURE",
   "code": -402,
-  "range": "Cache",
-  "desc": "Unable to write to the disk cache.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_OPERATION_NOT_SUPPORTED",
   "code": -403,
-  "range": "Cache",
-  "desc": "The operation is not supported for this entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_OPEN_FAILURE",
   "code": -404,
-  "range": "Cache",
-  "desc": "The disk cache is unable to open this entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_CREATE_FAILURE",
   "code": -405,
-  "range": "Cache",
-  "desc": "The disk cache is unable to create this entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_RACE",
   "code": -406,
-  "range": "Cache",
-  "desc": "Multiple transactions are racing to create disk cache entries. This is an internal error returned from the HttpCache to the HttpCacheTransaction that tells the transaction to restart the entry-creation logic because the state of the cache has changed.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_CHECKSUM_READ_FAILURE",
   "code": -407,
-  "range": "Cache",
-  "desc": "The cache was unable to read a checksum record on an entry. This can be returned from attempts to read from the cache. It is an internal error, returned by the SimpleCache backend, but not by any URLRequest methods or members.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_CHECKSUM_MISMATCH",
   "code": -408,
-  "range": "Cache",
-  "desc": "The cache found an entry with an invalid checksum. This can be returned from attempts to read from the cache. It is an internal error, returned by the SimpleCache backend, but not by any URLRequest methods or members.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_LOCK_TIMEOUT",
   "code": -409,
-  "range": "Cache",
-  "desc": "Internal error code for the HTTP cache. The cache lock timeout has fired.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_AUTH_FAILURE_AFTER_READ",
   "code": -410,
-  "range": "Cache",
-  "desc": "Received a challenge after the transaction has read some data, and the credentials aren't available. There isn't a way to get them at that point.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_ENTRY_NOT_SUITABLE",
   "code": -411,
-  "range": "Cache",
-  "desc": "Internal not-quite error code for the HTTP cache. In-memory hints suggest that the cache entry would not have been usable with the transaction's current configuration (e.g. load flags, mode, etc.)",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_DOOM_FAILURE",
   "code": -412,
-  "range": "Cache",
-  "desc": "The disk cache is unable to doom this entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_OPEN_OR_CREATE_FAILURE",
   "code": -413,
-  "range": "Cache",
-  "desc": "The disk cache is unable to open or create this entry.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_CACHE_COMPRESSION_FAILURE",
   "code": -414,
-  "range": "Cache",
-  "desc": "Zstd compression of a cache entry body failed.",
-  "more": false
+  "range": "Cache"
  },
  {
   "name": "ERR_INSECURE_RESPONSE",
   "code": -501,
-  "range": "Unnamed range",
-  "desc": "The server's response was insecure (e.g. there was a cert error).",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_NO_PRIVATE_KEY_FOR_CERT",
   "code": -502,
-  "range": "Unnamed range",
-  "desc": "An attempt to import a client certificate failed, as the user's key database lacked a corresponding private key.",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_ADD_USER_CERT_FAILED",
   "code": -503,
-  "range": "Unnamed range",
-  "desc": "An error adding a certificate to the OS certificate database.",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_INVALID_SIGNED_EXCHANGE",
   "code": -504,
-  "range": "Unnamed range",
-  "desc": "An error occurred while handling a signed exchange.",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_INVALID_WEB_BUNDLE",
   "code": -505,
-  "range": "Unnamed range",
-  "desc": "An error occurred while handling a Web Bundle source.",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_TRUST_TOKEN_OPERATION_FAILED",
   "code": -506,
-  "range": "Unnamed range",
-  "desc": "A Trust Tokens protocol operation-executing request failed for one of a number of reasons (precondition failure, internal error, bad response).",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_TRUST_TOKEN_OPERATION_SUCCESS_WITHOUT_SENDING_REQUEST",
   "code": -507,
-  "range": "Unnamed range",
-  "desc": "When handling a Trust Tokens protocol operation-executing request, the system was able to execute the request's Trust Tokens operation without sending the request to its destination: for instance, the results could have been present in a local cache (for redemption) or the operation could have been diverted to a local provider (for \"platform-provided\" issuance).",
-  "more": false
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_HTTPENGINE_PROVIDER_IN_USE",
   "code": -508,
-  "range": "Unnamed range",
-  "desc": "This is a placeholder value that should never be used within //net.",
-  "more": true
+  "range": "Unnamed range"
  },
  {
   "name": "ERR_PKCS12_IMPORT_BAD_PASSWORD",
   "code": -701,
-  "range": "Certificate manager",
-  "desc": "PKCS #12 import failed due to incorrect password.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_PKCS12_IMPORT_FAILED",
   "code": -702,
-  "range": "Certificate manager",
-  "desc": "PKCS #12 import failed due to other error.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_IMPORT_CA_CERT_NOT_CA",
   "code": -703,
-  "range": "Certificate manager",
-  "desc": "CA import failed - not a CA cert.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_IMPORT_CERT_ALREADY_EXISTS",
   "code": -704,
-  "range": "Certificate manager",
-  "desc": "Import failed - certificate already exists in database. Note it's a little weird this is an error but reimporting a PKCS12 is ok (no-op). That's how Mozilla does it, though.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_IMPORT_CA_CERT_FAILED",
   "code": -705,
-  "range": "Certificate manager",
-  "desc": "CA import failed due to some other error.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_IMPORT_SERVER_CERT_FAILED",
   "code": -706,
-  "range": "Certificate manager",
-  "desc": "Server certificate import failed due to some internal error.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_PKCS12_IMPORT_INVALID_MAC",
   "code": -707,
-  "range": "Certificate manager",
-  "desc": "PKCS #12 import failed due to invalid MAC.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_PKCS12_IMPORT_INVALID_FILE",
   "code": -708,
-  "range": "Certificate manager",
-  "desc": "PKCS #12 import failed due to invalid/corrupt file.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_PKCS12_IMPORT_UNSUPPORTED",
   "code": -709,
-  "range": "Certificate manager",
-  "desc": "PKCS #12 import failed due to unsupported features.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_KEY_GENERATION_FAILED",
   "code": -710,
-  "range": "Certificate manager",
-  "desc": "Key generation failed.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_PRIVATE_KEY_EXPORT_FAILED",
   "code": -712,
-  "range": "Certificate manager",
-  "desc": "Failure to export private key.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_SELF_SIGNED_CERT_GENERATION_FAILED",
   "code": -713,
-  "range": "Certificate manager",
-  "desc": "Self-signed certificate generation failed.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_CERT_DATABASE_CHANGED",
   "code": -714,
-  "range": "Certificate manager",
-  "desc": "The certificate database changed in some way.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_CERT_VERIFIER_CHANGED",
   "code": -716,
-  "range": "Certificate manager",
-  "desc": "The certificate verifier configuration changed in some way.",
-  "more": false
+  "range": "Certificate manager"
  },
  {
   "name": "ERR_DNS_MALFORMED_RESPONSE",
   "code": -800,
-  "range": "DNS resolver",
-  "desc": "DNS resolver received a malformed response.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SERVER_REQUIRES_TCP",
   "code": -801,
-  "range": "DNS resolver",
-  "desc": "DNS server requires TCP",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_TIMED_OUT",
   "code": -803,
-  "range": "DNS resolver",
-  "desc": "DNS transaction timed out.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_CACHE_MISS",
   "code": -804,
-  "range": "DNS resolver",
-  "desc": "The entry was not found in cache or other local sources, for lookups where only local sources were queried. TODO(ericorth): Consider renaming to DNS_LOCAL_MISS or something like that as the cache is not necessarily queried either.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SEARCH_EMPTY",
   "code": -805,
-  "range": "DNS resolver",
-  "desc": "Suffix search list rules prevent resolution of the given host name.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SORT_ERROR",
   "code": -806,
-  "range": "DNS resolver",
-  "desc": "Failed to sort addresses according to RFC3484.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SECURE_RESOLVER_HOSTNAME_RESOLUTION_FAILED",
   "code": -808,
-  "range": "DNS resolver",
-  "desc": "Failed to resolve the hostname of a DNS-over-HTTPS server.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_NAME_HTTPS_ONLY",
   "code": -809,
-  "range": "DNS resolver",
-  "desc": "DNS identified the request as disallowed for insecure connection (http/ws). Error should be handled as if an HTTP redirect was received to redirect to https or wss.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_REQUEST_CANCELLED",
   "code": -810,
-  "range": "DNS resolver",
-  "desc": "All DNS requests associated with this job have been cancelled.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_NO_MATCHING_SUPPORTED_ALPN",
   "code": -811,
-  "range": "DNS resolver",
-  "desc": "The hostname resolution of HTTPS record was expected to be resolved with alpn values of supported protocols, but did not.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SECURE_PROBE_RECORD_INVALID",
   "code": -814,
-  "range": "DNS resolver",
-  "desc": "When checking whether secure DNS can be used, the response returned for the requested probe record either had no answer or was invalid.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_CACHE_INVALIDATION_IN_PROGRESS",
   "code": -815,
-  "range": "DNS resolver",
-  "desc": "Returned when DNS cache invalidation is in progress. This is a transient error. Callers may want to retry later.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_FORMAT_ERROR",
   "code": -816,
-  "range": "DNS resolver",
-  "desc": "The DNS server responded with a format error response code.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_SERVER_FAILURE",
   "code": -817,
-  "range": "DNS resolver",
-  "desc": "The DNS server responded with a server failure response code.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_NOT_IMPLEMENTED",
   "code": -818,
-  "range": "DNS resolver",
-  "desc": "The DNS server responded that the query type is not implemented.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_REFUSED",
   "code": -819,
-  "range": "DNS resolver",
-  "desc": "The DNS server responded that the request was refused.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_OTHER_FAILURE",
   "code": -820,
-  "range": "DNS resolver",
-  "desc": "The DNS server responded with an rcode indicating that the request failed, but the rcode is not one that we have a specific error code for. In other words, the rcode was not one of the following: - NOERR - FORMERR - SERVFAIL - NXDOMAIN - NOTIMP - REFUSED",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_DNS_DIRECT_ONLY",
   "code": -821,
-  "range": "DNS resolver",
-  "desc": "Declined to call DNS for a direct_only request of a hostname whose traffic would be routed through a proxy.",
-  "more": false
+  "range": "DNS resolver"
  },
  {
   "name": "ERR_BLOB_INVALID_CONSTRUCTION_ARGUMENTS",
   "code": -900,
-  "range": "Blob",
-  "desc": "The construction arguments are invalid. This is considered a bad IPC.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_OUT_OF_MEMORY",
   "code": -901,
-  "range": "Blob",
-  "desc": "We don't have enough memory for the blob.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_FILE_WRITE_FAILED",
   "code": -902,
-  "range": "Blob",
-  "desc": "We couldn't create or write to a file. File system error, like a full disk.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_SOURCE_DIED_IN_TRANSIT",
   "code": -903,
-  "range": "Blob",
-  "desc": "The renderer was destroyed while data was in transit.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_DEREFERENCED_WHILE_BUILDING",
   "code": -904,
-  "range": "Blob",
-  "desc": "The renderer destructed the blob before it was done transferring, and there were no outstanding references (no one is waiting to read) to keep the blob alive.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_REFERENCED_BLOB_BROKEN",
   "code": -905,
-  "range": "Blob",
-  "desc": "A blob that we referenced during construction is broken, or a browser-side builder tries to build a blob with a blob reference that isn't finished constructing.",
-  "more": false
+  "range": "Blob"
  },
  {
   "name": "ERR_BLOB_REFERENCED_FILE_UNAVAILABLE",
   "code": -906,
-  "range": "Blob",
-  "desc": "A file that we referenced during construction is not accessible to the renderer trying to create the blob.",
-  "more": false
+  "range": "Blob"
  }
 ]

@@ -1,34 +1,26 @@
 [
  {
-  "name": "DNS_PROBE_POSSIBLE",
-  "desc": "A DNS probe may be run for this error page. (This status is only used on the renderer side before it's received a status update from the browser.)"
+  "name": "DNS_PROBE_POSSIBLE"
  },
  {
-  "name": "DNS_PROBE_NOT_RUN",
-  "desc": "A DNS probe will not be run for this error page. (This happens if the user has the \"Use web service to resolve navigation errors\" preference turned off, or if probes are disabled by the field trial.)"
+  "name": "DNS_PROBE_NOT_RUN"
  },
  {
-  "name": "DNS_PROBE_STARTED",
-  "desc": "A DNS probe has been started for this error page. The renderer should expect to receive another IPC with one of the FINISHED statuses once the probe has finished (as long as the error page is still loaded)."
+  "name": "DNS_PROBE_STARTED"
  },
  {
-  "name": "DNS_PROBE_FINISHED_INCONCLUSIVE",
-  "desc": "The probe was inconclusive."
+  "name": "DNS_PROBE_FINISHED_INCONCLUSIVE"
  },
  {
-  "name": "DNS_PROBE_FINISHED_NO_INTERNET",
-  "desc": "There's no internet connection."
+  "name": "DNS_PROBE_FINISHED_NO_INTERNET"
  },
  {
-  "name": "DNS_PROBE_FINISHED_BAD_CONFIG",
-  "desc": "The DNS configuration is wrong, or the servers are down or broken."
+  "name": "DNS_PROBE_FINISHED_BAD_CONFIG"
  },
  {
-  "name": "DNS_PROBE_FINISHED_NXDOMAIN",
-  "desc": "The DNS servers are working fine, so the domain must not exist."
+  "name": "DNS_PROBE_FINISHED_NXDOMAIN"
  },
  {
-  "name": "DNS_PROBE_FINISHED_BAD_SECURE_CONFIG",
-  "desc": "The secure DNS configuration is wrong, or the servers are down or broken."
+  "name": "DNS_PROBE_FINISHED_BAD_SECURE_CONFIG"
  }
 ]

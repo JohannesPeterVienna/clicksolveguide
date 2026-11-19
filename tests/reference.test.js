@@ -12,7 +12,7 @@ const one = (q, today) => { const r = R.lookup(data, q, today || '2026-11-18'); 
 test('data: built from the source files without loss', () => {
   assert.equal(data.chrome.length, src('chrome-net-errors.json').length);
   assert.ok(data.chrome.length > 200);
-  assert.equal(data.wu.length, src('wu-errors.json').length);
+  assert.equal(data.wu.length, new Set(src('wu-errors.json').map((x) => x.code)).size, 'one entry per code');
   assert.equal(data.http.length, src('http-status.json').length);
   assert.equal(data.retrieved, '2026-11-18');
   const names = new Set(data.chrome.map((e) => e.name));
@@ -28,12 +28,12 @@ test('data: built from the source files without loss', () => {
 test('data: spot checks against the sources', () => {
   const c = (n) => data.chrome.find((e) => e.name === n);
   assert.deepEqual([c('ERR_NAME_NOT_RESOLVED').code, c('ERR_CONNECTION_REFUSED').code, c('ERR_INTERNET_DISCONNECTED').code, c('ERR_CERT_DATE_INVALID').code], [-105, -102, -106, -201]);
-  assert.equal(c('ERR_NAME_NOT_RESOLVED').desc, 'The host name could not be resolved.');
   assert.equal(data.http.find((h) => h.code === 404).desc, 'Not Found');
   assert.equal(data.http.find((h) => h.code === 429).ref, 'RFC 6585');
   assert.ok(data.ip.v4.some((e) => e.block === '169.254.0.0/16' && e.name === 'Link Local' && e.rfc === 'RFC 3927'));
   assert.ok(data.ports.some((p) => p.port === 631 && p.service === 'ipp'));
-  assert.ok(data.wu.some((x) => x.code === '0x80240022' && x.message.startsWith('WU_E_ALL_UPDATES_FAILED')));
+  assert.ok(data.wu.some((x) => x.code === '0x80240022' && x.name === 'WU_E_ALL_UPDATES_FAILED'));
+  assert.equal(data.wu.find((x) => x.code === '0x80070422').name, 'ERROR_SERVICE_DISABLED', 'the named entry wins over the unnamed one');
   assert.ok(data.win.some((w) => w.build === 22631 && w.version === '23H2' && w.product === 'Windows 11'));
 });
 
@@ -95,11 +95,13 @@ test('lookup: Chrome codes by name and number, DNS probe, unknown code', () => {
   assert.equal(one('-105').title, r.title);
   const p = one('dns_probe_finished_nxdomain');
   assert.equal(p.found, true);
-  assert.match(p.lines[0].v, /domain must not exist/);
+  assert.match(p.meaning, /name does not exist/);
   const cert = one('ERR_CERT_AUTHORITY_INVALID');
   assert.match(cert.meaning, /Do not click through/);
   const range = one('ERR_CACHE_MISS');
   assert.match(range.meaning, /cache/);
+  assert.match(range.ext.href, /^https:\/\/chromium\.googlesource\.com\//, 'unexplained codes link to the source instead of quoting it');
+  assert.equal(r.ext, undefined);
   const none = one('ERR_THIS_DOES_NOT_EXIST');
   assert.equal(none.found, false);
   assert.match(none.meaning, /not in Chromium’s list/);
@@ -116,10 +118,14 @@ test('lookup: no certificate advice ever suggests a way round a warning', () => 
 });
 
 test('lookup: HTTP, ports, Windows Update, Windows builds', () => {
-  const both = R.lookup(data, '404', '2026-11-18');
-  assert.deepEqual(both.map((r) => r.kind), ['http', 'port']);
-  assert.equal(both[0].title, 'HTTP 404 Not Found');
-  assert.equal(both[1].found, false);
+  // ambiguous numbers: only the readings that exist
+  assert.equal(one('404').title, 'HTTP 404 Not Found');
+  assert.equal(one('443').kind, 'port');
+  assert.equal(one('19045').kind, 'winbuild');
+  assert.deepEqual(R.lookup(data, '500', '2026-11-18').map((r) => r.kind), ['http', 'port'], '500 is a status and a registered port');
+  assert.equal(one('299').found, false);
+  assert.match(one('511').meaning, /network you are on/);
+  assert.match(one('407').meaning, /proxy/);
   assert.equal(one('HTTP 599').found, false);
   assert.match(one('HTTP 599').meaning, /not assigned/);
   const ipp = one('631');
@@ -128,7 +134,18 @@ test('lookup: HTTP, ports, Windows Update, Windows builds', () => {
   const wu = one('0x80070422');
   assert.equal(wu.found, true);
   assert.match(wu.ext.href, /^https:\/\/learn\.microsoft\.com\/.*#0x80070422$/);
-  assert.equal(one('0x12345678').found, false);
+  assert.deepEqual(wu.lines.map((l) => l.k), ['Official name', 'Next safe step']);
+  assert.equal(wu.lines[0].v, 'ERROR_SERVICE_DISABLED');
+  for (const l of wu.lines) assert.ok(l.k && l.v, 'no empty heading or value');
+  assert.match(one('0xC1900101').meaning, /driver/);
+  const plain = one('0x80243FFF'); // in Microsoft's list, not in our selection: name + link only
+  assert.equal(plain.found, true);
+  assert.equal(plain.lines.length, 1);
+  assert.match(plain.ext.href, /^https:\/\/learn\.microsoft\.com\//);
+  const miss = one('0x12345678');
+  assert.equal(miss.found, false);
+  assert.doesNotMatch(miss.meaning, /general Windows errors|passed through/);
+  for (const x of data.wu) { const res = one(x.code); for (const l of res.lines) assert.ok(l.k && l.v, x.code); }
   const w = one('22631.1');
   assert.equal(w.found, true);
   assert.match(w.lines[0].v, /Windows 11, version 23H2/);
@@ -185,11 +202,15 @@ test('CSV: quoting, and = + - @ at the start of a cell are defused', () => {
   assert.equal(R.csvCell('say "hi"'), '"say ""hi"""');
   assert.equal(R.csvCell('=1+1'), '"\'=1+1"');
   assert.equal(R.csvCell('+49'), '"\'+49"');
-  assert.equal(R.csvCell('-105'), '"\'-105"');
+  assert.equal(R.csvCell('-105'), '"-105"', 'a plain negative number is not a formula');
+  assert.equal(R.csvCell('-1.5'), '"-1.5"');
+  assert.equal(R.csvCell('-105+cmd'), '"\'-105+cmd"');
+  assert.equal(R.csvCell('-'), '"\'-"');
+  assert.equal(R.csvCell('-1e5'), '"\'-1e5"');
   assert.equal(R.csvCell('@SUM(A1)'), '"\'@SUM(A1)"');
   assert.equal(R.csvCell('\t=cmd'), '"\'\t=cmd"');
   assert.equal(R.csvCell(null), '""');
-  assert.equal(R.toCsv([['a', 'b,c'], ['-1', 'x\ny']]), '"a","b,c"\r\n"\'-1","x\ny"\r\n');
+  assert.equal(R.toCsv([['a', 'b,c'], ['-1', 'x\ny'], ['-x', '']]), '"a","b,c"\r\n"-1","x\ny"\r\n"\'-x",""\r\n');
 });
 
 test('table filter: every word must occur, case-insensitive', () => {
@@ -201,13 +222,68 @@ test('table filter: every word must occur, case-insensitive', () => {
 test('built pages: tables carry every row of the data', () => {
   const page = (p) => fs.readFileSync(path.join(__dirname, '..', 'docs', 'reference', p, 'index.html'), 'utf8');
   const rows = (html, id) => ((html.match(new RegExp('<table id="' + id + '">[\\s\\S]*?</table>')) || [''])[0].match(/<tr>/g) || []).length - 1;
-  assert.equal(rows(page('chrome-error-codes'), 't-chrome'), data.chrome.length);
+  assert.equal(rows(page('chrome-error-codes'), 't-own'), Object.keys(data.advice.chrome).length);
   assert.equal(rows(page('chrome-error-codes'), 't-probe'), data.probe.length);
   assert.equal(rows(page('http-status-codes'), 't-http'), data.http.length);
-  assert.equal(rows(page('windows-update-error-codes'), 't-wu'), data.wu.length);
+  const sel = data.wu.filter((x) => x.meaning);
+  assert.ok(sel.length >= 30 && sel.length <= 40, 'selection of 30 to 40 codes');
+  assert.equal(rows(page('windows-update-error-codes'), 't-wu'), sel.length);
   assert.equal(rows(page('network-ports'), 't-ports'), data.ports.length);
   assert.equal(rows(page('ip-address-check'), 't-ip4'), data.ip.v4.length);
   assert.equal(rows(page('ip-address-check'), 't-ip6'), data.ip.v6.length);
   assert.equal(rows(page('windows-macos-versions'), 't-win'), data.win.length);
   assert.equal(rows(page('troubleshooting-shortcuts'), 't-keys'), src('shortcuts.json').length);
+});
+
+test('no source prose is shipped: lookup data and pages carry identifiers and our own texts only', () => {
+  for (const e of data.chrome) assert.deepEqual(Object.keys(e).sort(), ['code', 'name', 'range']);
+  for (const e of data.probe) assert.deepEqual(Object.keys(e), ['name']);
+  for (const x of data.wu) assert.ok(!('desc' in x) && !('message' in x), x.code);
+  for (const f of ['chrome-net-errors.json', 'chrome-dns-probe.json', 'wu-errors.json', 'shortcuts.json']) for (const e of src(f)) assert.ok(!('desc' in e), f);
+  const raw = JSON.stringify(data);
+  // sentences that only exist in the sources' own wording
+  for (const s of ['The host name could not be resolved', 'TODO(', 'This could mean', 'so the domain must not exist', 'Open Task Manager.', 'Force quit an app', 'Automatic Updates was unable to service', 'CC BY']) {
+    assert.ok(!raw.includes(s), 'lookup.json: ' + s);
+    for (const p of ['chrome-error-codes', 'windows-update-error-codes', 'troubleshooting-shortcuts', 'http-status-codes']) {
+      const html = fs.readFileSync(path.join(__dirname, '..', 'docs', 'reference', p, 'index.html'), 'utf8');
+      assert.ok(!html.includes(s), p + ': ' + s);
+    }
+  }
+  const chromePage = fs.readFileSync(path.join(__dirname, '..', 'docs', 'reference', 'chrome-error-codes', 'index.html'), 'utf8');
+  assert.ok(!/id="t-chrome"/.test(chromePage), 'the full list of 249 codes is not a table on the page');
+  assert.match(chromePage, /href="https:\/\/chromium\.googlesource\.com\/chromium\/src\/\+\/main\/LICENSE"/);
+  assert.match(chromePage, /Copyright The Chromium Authors/);
+});
+
+test('Windows Update selection: every code is documented by Microsoft and has its own text and link', () => {
+  const srcCodes = new Set(src('wu-errors.json').map((x) => x.code));
+  const sel = data.wu.filter((x) => x.meaning);
+  for (const x of sel) {
+    assert.ok(srcCodes.has(x.code), x.code);
+    assert.ok(x.meaning.length > 30 && x.next.length > 30, x.code);
+    assert.match(x.url, /^https:\/\/learn\.microsoft\.com\/en-us\//, x.code);
+    assert.doesNotMatch(x.next, /download(ed)? (a |the )?(tool|fixer|repair program)/i);
+  }
+  for (const must of ['0x80070422', '0xC1900101']) assert.ok(sel.some((x) => x.code === must), must);
+});
+
+test('macOS table: version switcher column from the first number of Apple’s name', async () => {
+  const m = await import('../src/reference.mjs');
+  assert.equal(m.macMajor('macOS 27 Golden Gate'), 27);
+  assert.equal(m.macMajor('macOS Tahoe 26'), 26);
+  assert.equal(m.macMajor('macOS Catalina 10.15'), 10.15);
+  assert.equal(m.macMajor('Mac OS X Cheetah 10'), 10);
+  assert.ok(m.macVersions.length >= 20);
+  for (const v of m.macVersions) {
+    const major = m.macMajor(v.name);
+    assert.ok(!Number.isNaN(major), v.name);
+    assert.equal(Math.floor(parseFloat(v.latest)), Math.floor(major), v.name + ': name and latest version agree');
+    assert.match(m.macColumn(v.name), major >= 13 ? /Ventura or later/ : /Monterey or earlier/, v.name);
+  }
+  const html = fs.readFileSync(path.join(__dirname, '..', 'docs', 'reference', 'windows-macos-versions', 'index.html'), 'utf8');
+  assert.match(html, /macOS 27 Golden Gate<\/th><td>[\d.]+<\/td><td>macOS 13 Ventura or later/);
+  // Windows rows in descending build order
+  const builds = [...html.match(/<table id="t-win">[\s\S]*?<\/table>/)[0].matchAll(/<th scope="row"><b>(\d+)<\/b>/g)].map((x) => +x[1]);
+  assert.deepEqual(builds, [...builds].sort((a, b) => b - a));
+  assert.ok(builds.includes(28000) && builds.includes(26300));
 });

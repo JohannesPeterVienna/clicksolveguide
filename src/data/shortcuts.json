@@ -1,137 +1,110 @@
 [
  {
   "os": "Windows 11",
-  "keys": "Ctrl+Shift+Esc",
-  "desc": "Open Task Manager."
+  "keys": "Ctrl+Shift+Esc"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+I",
-  "desc": "Open Settings."
+  "keys": "Windows key+I"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+X",
-  "desc": "Open the Quick Link menu. This shortcut is the same action as right-click on the Start menu."
+  "keys": "Windows key+X"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+R",
-  "desc": "Open the Run dialog box."
+  "keys": "Windows key+R"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+Pause",
-  "desc": "Opens the Settings app to the System > About page."
+  "keys": "Windows key+Pause"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+A",
-  "desc": "Open the Windows 11 action center."
+  "keys": "Windows key+A"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+Ctrl+Shift+B",
-  "desc": "Wake up the device when the screen is blank or black."
+  "keys": "Windows key+Ctrl+Shift+B"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+L",
-  "desc": "Lock the computer."
+  "keys": "Windows key+L"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+Shift+S",
-  "desc": "Select a region of the screen to capture a screenshot to the clipboard. You can then open the Snipping Tool to share or markup the image."
+  "keys": "Windows key+Shift+S"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+PrtScn",
-  "desc": "Capture a full screen screenshot and save it to a file in the Screenshots subfolder of the Pictures folder."
+  "keys": "Windows key+PrtScn"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+K",
-  "desc": "Open Cast from Quick Settings to connect to a display. For more information, see Screen mirroring and projecting to your PC or wireless display."
+  "keys": "Windows key+K"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+P",
-  "desc": "Open project settings to choose a presentation display mode."
+  "keys": "Windows key+P"
  },
  {
   "os": "Windows 11",
-  "keys": "Windows key+E",
-  "desc": "Open File Explorer."
+  "keys": "Windows key+E"
  },
  {
   "os": "Windows 11",
-  "keys": "Alt+F4",
-  "desc": "Close the active window. If no windows are open, prompt to shutdown."
+  "keys": "Alt+F4"
  },
  {
   "os": "Windows 11",
-  "keys": "F5",
-  "desc": "Refresh the active window."
+  "keys": "F5"
  },
  {
   "os": "macOS",
-  "keys": "Option-Command-Esc",
-  "desc": "Force quit an app."
+  "keys": "Option-Command-Esc"
  },
  {
   "os": "macOS",
-  "keys": "Command–Space bar",
-  "desc": "Show or hide the Spotlight search field."
+  "keys": "Command–Space bar"
  },
  {
   "os": "macOS",
-  "keys": "Command-Q",
-  "desc": "Quit the current app."
+  "keys": "Command-Q"
  },
  {
   "os": "macOS",
-  "keys": "Command-Comma (,)",
-  "desc": "Open settings (preferences) for the front app."
+  "keys": "Command-Comma (,)"
  },
  {
   "os": "macOS",
-  "keys": "Shift-Command-5",
-  "desc": "In macOS Mojave or later, take a screenshot or make a screen recording."
+  "keys": "Shift-Command-5"
  },
  {
   "os": "macOS",
-  "keys": "Control-Command-Q",
-  "desc": "Lock your screen."
+  "keys": "Control-Command-Q"
  },
  {
   "os": "macOS",
-  "keys": "Shift-Command-Q",
-  "desc": "Log out of your macOS user account."
+  "keys": "Shift-Command-Q"
  },
  {
   "os": "macOS",
-  "keys": "Control–Command–Power button",
-  "desc": "On built-in keyboards without Touch ID, force your Mac to restart, without prompting to save any open and unsaved documents."
+  "keys": "Control–Command–Power button"
  },
  {
   "os": "macOS",
-  "keys": "Control–Power button",
-  "desc": "On built-in keyboards without Touch ID, show a dialog asking whether you want to restart, sleep, or shut down."
+  "keys": "Control–Power button"
  },
  {
   "os": "macOS",
-  "keys": "Shift-Command-U",
-  "desc": "Open the Utilities folder."
+  "keys": "Shift-Command-U"
  },
  {
   "os": "macOS",
-  "keys": "Command-Tab",
-  "desc": "Switch to the next most recently used app among your open apps."
+  "keys": "Command-Tab"
  },
  {
   "os": "macOS",
-  "keys": "Command-P",
-  "desc": "Open a print dialog so that you can print the current document."
+  "keys": "Command-P"
  }
 ]

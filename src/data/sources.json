@@ -3,12 +3,14 @@
   "name": "Chromium source code – net/base/net_error_list.h",
   "url": "https://chromium.googlesource.com/chromium/src/+/main/net/base/net_error_list.h",
   "fetched": "https://raw.githubusercontent.com/chromium/chromium/main/net/base/net_error_list.h",
-  "license": "Copyright 2012 The Chromium Authors, BSD-style license"
+  "license": "Copyright The Chromium Authors; BSD-style license",
+  "licenseUrl": "https://chromium.googlesource.com/chromium/src/+/main/LICENSE"
  },
  "probe": {
   "name": "Chromium source code – components/error_page/common/net_error_info.h",
   "url": "https://chromium.googlesource.com/chromium/src/+/main/components/error_page/common/net_error_info.h",
-  "license": "Copyright The Chromium Authors, BSD-style license"
+  "license": "Copyright The Chromium Authors; BSD-style license",
+  "licenseUrl": "https://chromium.googlesource.com/chromium/src/+/main/LICENSE"
  },
  "http": {
   "name": "IANA – Hypertext Transfer Protocol (HTTP) Status Code Registry",
@@ -33,14 +35,17 @@
  "wu": {
   "name": "Microsoft Learn – Windows Update error codes by component",
   "url": "https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-error-reference",
-  "license": "Microsoft Learn documentation, CC BY 4.0",
   "updated": "2025-10-02"
  },
  "wucommon": {
   "name": "Microsoft Learn – Common Windows Update errors",
   "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/common-windows-update-errors",
-  "license": "Microsoft Learn documentation, CC BY 4.0",
   "updated": "2026-09-11"
+ },
+ "upgrade": {
+  "name": "Microsoft Learn – Windows 10 upgrade resolution procedures",
+  "url": "https://learn.microsoft.com/en-us/windows/deployment/upgrade/resolution-procedures",
+  "updated": "2026-09-21"
  },
  "win11": {
   "name": "Microsoft Learn – Windows 11 release information",

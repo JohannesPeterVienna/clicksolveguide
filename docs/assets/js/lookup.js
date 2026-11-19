@@ -91,7 +91,7 @@
     load().then(function (d) {
       clear(out);
       var rs = R.lookup(d, q, today());
-      if (rs.length > 1) out.appendChild(el('p', 'small', 'This number can mean ' + rs.length + ' different things – both are shown.'));
+      if (rs.length > 1) out.appendChild(el('p', 'small', 'This number can mean ' + rs.length + ' different things – all are shown.'));
       rs.forEach(function (r) { out.appendChild(resultCard(r, q)); });
       out.appendChild(el('p', 'small', 'Reference data retrieved from the sources on ' + d.retrieved + '.'));
       if (focus) { var h = out.querySelector('.lk-title'); if (h) { h.tabIndex = -1; h.focus(); } }
@@ -119,11 +119,13 @@
       run(input.value, false);
     }
     var fromHash = function () {
+      if (!/(^#|&)q=/.test(location.hash)) return;
       var q = R.readShare(location.hash);
+      // valid or not: the fragment leaves the address bar (an invalid one is simply dropped)
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* keep the hash */ }
       if (!q) return;
       input.value = q;
       run(q, false);
-      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* keep the hash */ }
     };
     fromHash();
     window.addEventListener('hashchange', fromHash); // a shared link opened while this page is already showing

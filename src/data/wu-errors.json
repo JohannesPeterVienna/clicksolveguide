@@ -1,1822 +1,1567 @@
 [
  {
   "code": "0x80243FFF",
-  "message": "WU_E_AUCLIENT_UNEXPECTED",
-  "desc": "There was a user interface error not covered by another WU_E_AUCLIENT_* error code.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AUCLIENT_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024A000",
-  "message": "WU_E_AU_NOSERVICE",
-  "desc": "Automatic Updates was unable to service incoming requests.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_NOSERVICE",
+  "src": "wu"
  },
  {
   "code": "0x8024A002",
-  "message": "WU_E_AU_NONLEGACYSERVER",
-  "desc": "The old version of the Automatic Updates client has stopped because the WSUS server has been upgraded.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_NONLEGACYSERVER",
+  "src": "wu"
  },
  {
   "code": "0x8024A003",
-  "message": "WU_E_AU_LEGACYCLIENTDISABLED",
-  "desc": "The old version of the Automatic Updates client was disabled.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_LEGACYCLIENTDISABLED",
+  "src": "wu"
  },
  {
   "code": "0x8024A004",
-  "message": "WU_E_AU_PAUSED",
-  "desc": "Automatic Updates was unable to process incoming requests because it was paused.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_PAUSED",
+  "src": "wu"
  },
  {
   "code": "0x8024A005",
-  "message": "WU_E_AU_NO_REGISTERED_SERVICE",
-  "desc": "No unmanaged service is registered with AU.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_NO_REGISTERED_SERVICE",
+  "src": "wu"
  },
  {
   "code": "0x8024AFFF",
-  "message": "WU_E_AU_UNEXPECTED",
-  "desc": "An Automatic Updates error not covered by another WU_E_AU* code.",
-  "component": "Automatic Update Errors"
+  "name": "WU_E_AU_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80243001",
-  "message": "WU_E_INSTALLATION_RESULTS_UNKNOWN_VERSION",
-  "desc": "The results of download and installation couldn't be read from the registry due to an unrecognized data format version.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_INSTALLATION_RESULTS_UNKNOWN_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x80243002",
-  "message": "WU_E_INSTALLATION_RESULTS_INVALID_DATA",
-  "desc": "The results of download and installation couldn't be read from the registry due to an invalid data format.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_INSTALLATION_RESULTS_INVALID_DATA",
+  "src": "wu"
  },
  {
   "code": "0x80243003",
-  "message": "WU_E_INSTALLATION_RESULTS_NOT_FOUND",
-  "desc": "The results of download and installation aren't available; the operation may have failed to start.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_INSTALLATION_RESULTS_NOT_FOUND",
+  "src": "wu"
  },
  {
   "code": "0x80243004",
-  "message": "WU_E_TRAYICON_FAILURE",
-  "desc": "A failure occurred when trying to create an icon in the taskbar notification area.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_TRAYICON_FAILURE",
+  "src": "wu"
  },
  {
   "code": "0x80243FFD",
-  "message": "WU_E_NON_UI_MODE",
-  "desc": "Unable to show UI when in non-UI mode; Windows Update client UI modules may not be installed.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_NON_UI_MODE",
+  "src": "wu"
  },
  {
   "code": "0x80243FFE",
-  "message": "WU_E_WUCLTUI_UNSUPPORTED_VERSION",
-  "desc": "Unsupported version of Windows Update client UI exported functions.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_WUCLTUI_UNSUPPORTED_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x80243FFF",
-  "message": "WU_E_AUCLIENT_UNEXPECTED",
-  "desc": "There was a user interface error not covered by another WU_E_AUCLIENT_* error code.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_AUCLIENT_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024043D",
-  "message": "WU_E_SERVICEPROP_NOTAVAIL",
-  "desc": "The requested service property isn't available.",
-  "component": "Windows Update UI errors"
+  "name": "WU_E_SERVICEPROP_NOTAVAIL",
+  "src": "wu"
  },
  {
   "code": "0x80249001",
-  "message": "WU_E_INVENTORY_PARSEFAILED",
-  "desc": "Parsing of the rule file failed.",
-  "component": "Inventory errors"
+  "name": "WU_E_INVENTORY_PARSEFAILED",
+  "src": "wu"
  },
  {
   "code": "0x80249002",
-  "message": "WU_E_INVENTORY_GET_INVENTORY_TYPE_FAILED",
-  "desc": "Failed to get the requested inventory type from the server.",
-  "component": "Inventory errors"
+  "name": "WU_E_INVENTORY_GET_INVENTORY_TYPE_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x80249003",
-  "message": "WU_E_INVENTORY_RESULT_UPLOAD_FAILED",
-  "desc": "Failed to upload inventory result to the server.",
-  "component": "Inventory errors"
+  "name": "WU_E_INVENTORY_RESULT_UPLOAD_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x80249004",
-  "message": "WU_E_INVENTORY_UNEXPECTED",
-  "desc": "There was an inventory error not covered by another error code.",
-  "component": "Inventory errors"
+  "name": "WU_E_INVENTORY_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80249005",
-  "message": "WU_E_INVENTORY_WMI_ERROR",
-  "desc": "A WMI error occurred when enumerating the instances for a particular class.",
-  "component": "Inventory errors"
+  "name": "WU_E_INVENTORY_WMI_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x8024E001",
-  "message": "WU_E_EE_UNKNOWN_EXPRESSION",
-  "desc": "An expression evaluator operation couldn't be completed because an expression was unrecognized.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_UNKNOWN_EXPRESSION",
+  "src": "wu"
  },
  {
   "code": "0x8024E002",
-  "message": "WU_E_EE_INVALID_EXPRESSION",
-  "desc": "An expression evaluator operation couldn't be completed because an expression was invalid.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_INVALID_EXPRESSION",
+  "src": "wu"
  },
  {
   "code": "0x8024E003",
-  "message": "WU_E_EE_MISSING_METADATA",
-  "desc": "An expression evaluator operation couldn't be completed because an expression contains an incorrect number of metadata nodes.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_MISSING_METADATA",
+  "src": "wu"
  },
  {
   "code": "0x8024E004",
-  "message": "WU_E_EE_INVALID_VERSION",
-  "desc": "An expression evaluator operation couldn't be completed because the version of the serialized expression data is invalid.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_INVALID_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x8024E005",
-  "message": "WU_E_EE_NOT_INITIALIZED",
-  "desc": "The expression evaluator couldn't be initialized.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_NOT_INITIALIZED",
+  "src": "wu"
  },
  {
   "code": "0x8024E006",
-  "message": "WU_E_EE_INVALID_ATTRIBUTEDATA",
-  "desc": "An expression evaluator operation couldn't be completed because there was an invalid attribute.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_INVALID_ATTRIBUTEDATA",
+  "src": "wu"
  },
  {
   "code": "0x8024E007",
-  "message": "WU_E_EE_CLUSTER_ERROR",
-  "desc": "An expression evaluator operation couldn't be completed because the cluster state of the computer couldn't be determined.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_CLUSTER_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x8024EFFF",
-  "message": "WU_E_EE_UNEXPECTED",
-  "desc": "There was an expression evaluator error not covered by another WU_E_EE_* error code.",
-  "component": "Expression evaluator errors"
+  "name": "WU_E_EE_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80247001",
-  "message": "WU_E_OL_INVALID_SCANFILE",
-  "desc": "An operation couldn't be completed because the scan package was invalid.",
-  "component": "Reporter errors"
+  "name": "WU_E_OL_INVALID_SCANFILE",
+  "src": "wu"
  },
  {
   "code": "0x80247002",
-  "message": "WU_E_OL_NEWCLIENT_REQUIRED",
-  "desc": "An operation couldn't be completed because the scan package requires a greater version of the Windows Update Agent.",
-  "component": "Reporter errors"
+  "name": "WU_E_OL_NEWCLIENT_REQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x80247FFF",
-  "message": "WU_E_OL_UNEXPECTED",
-  "desc": "Search using the scan package failed.",
-  "component": "Reporter errors"
+  "name": "WU_E_OL_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024F001",
-  "message": "WU_E_REPORTER_EVENTCACHECORRUPT",
-  "desc": "The event cache file was defective.",
-  "component": "Reporter errors"
+  "name": "WU_E_REPORTER_EVENTCACHECORRUPT",
+  "src": "wu"
  },
  {
   "code": "0x8024F002",
-  "message": "WU_E_REPORTER_EVENTNAMESPACEPARSEFAILED",
-  "desc": "The XML in the event namespace descriptor couldn't be parsed.",
-  "component": "Reporter errors"
+  "name": "WU_E_REPORTER_EVENTNAMESPACEPARSEFAILED",
+  "src": "wu"
  },
  {
   "code": "0x8024F003",
-  "message": "WU_E_INVALID_EVENT",
-  "desc": "The XML in the event namespace descriptor couldn't be parsed.",
-  "component": "Reporter errors"
+  "name": "WU_E_INVALID_EVENT",
+  "src": "wu"
  },
  {
   "code": "0x8024F004",
-  "message": "WU_E_SERVER_BUSY",
-  "desc": "The server rejected an event because the server was too busy.",
-  "component": "Reporter errors"
+  "name": "WU_E_SERVER_BUSY",
+  "src": "wu"
  },
  {
   "code": "0x8024FFFF",
-  "message": "WU_E_REPORTER_UNEXPECTED",
-  "desc": "There was a reporter error not covered by another error code.",
-  "component": "Reporter errors"
+  "name": "WU_E_REPORTER_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80245001",
-  "message": "WU_E_REDIRECTOR_LOAD_XML",
-  "desc": "The redirector XML document couldn't be loaded into the DOM class.",
-  "component": "Redirector errors"
+  "name": "WU_E_REDIRECTOR_LOAD_XML",
+  "src": "wu"
  },
  {
   "code": "0x80245002",
-  "message": "WU_E_REDIRECTOR_S_FALSE",
-  "desc": "The redirector XML document is missing some required information.",
-  "component": "Redirector errors"
+  "name": "WU_E_REDIRECTOR_S_FALSE",
+  "src": "wu"
  },
  {
   "code": "0x80245003",
-  "message": "WU_E_REDIRECTOR_ID_SMALLER",
-  "desc": "The redirectorId in the downloaded redirector cab is less than in the cached cab.",
-  "component": "Redirector errors"
+  "name": "WU_E_REDIRECTOR_ID_SMALLER",
+  "src": "wu"
  },
  {
   "code": "0x80245FFF",
-  "message": "WU_E_REDIRECTOR_UNEXPECTED",
-  "desc": "The redirector failed for reasons not covered by another WU_E_REDIRECTOR_* error code.",
-  "component": "Redirector errors"
+  "name": "WU_E_REDIRECTOR_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80244000",
-  "message": "WU_E_PT_SOAPCLIENT_BASE",
-  "desc": "WU_E_PT_SOAPCLIENT_* error codes map to the SOAPCLIENT_ERROR enum of the ATL Server Library.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_BASE",
+  "src": "wu"
  },
  {
   "code": "0x80244001",
-  "message": "WU_E_PT_SOAPCLIENT_INITIALIZE",
-  "desc": "Same as SOAPCLIENT_INITIALIZE_ERROR - initialization of the SOAP client failed possibly because of an MSXML installation failure.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_INITIALIZE",
+  "src": "wu"
  },
  {
   "code": "0x80244002",
-  "message": "WU_E_PT_SOAPCLIENT_OUTOFMEMORY",
-  "desc": "Same as SOAPCLIENT_OUTOFMEMORY - SOAP client failed because it ran out of memory.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_OUTOFMEMORY",
+  "src": "wu"
  },
  {
   "code": "0x80244003",
-  "message": "WU_E_PT_SOAPCLIENT_GENERATE",
-  "desc": "Same as SOAPCLIENT_GENERATE_ERROR - SOAP client failed to generate the request.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_GENERATE",
+  "src": "wu"
  },
  {
   "code": "0x80244004",
-  "message": "WU_E_PT_SOAPCLIENT_CONNECT",
-  "desc": "Same as SOAPCLIENT_CONNECT_ERROR - SOAP client failed to connect to the server.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_CONNECT",
+  "src": "wu"
  },
  {
   "code": "0x80244005",
-  "message": "WU_E_PT_SOAPCLIENT_SEND",
-  "desc": "Same as SOAPCLIENT_SEND_ERROR - SOAP client failed to send a message for reasons of WU_E_WINHTTP_* error codes.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_SEND",
+  "src": "wu"
  },
  {
   "code": "0x80244006",
-  "message": "WU_E_PT_SOAPCLIENT_SERVER",
-  "desc": "Same as SOAPCLIENT_SERVER_ERROR - SOAP client failed because there was a server error.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_SERVER",
+  "src": "wu"
  },
  {
   "code": "0x80244007",
-  "message": "WU_E_PT_SOAPCLIENT_SOAPFAULT",
-  "desc": "Same as SOAPCLIENT_SOAPFAULT - SOAP client failed because there was a SOAP fault for reasons of WU_E_PT_SOAP_* error codes.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_SOAPFAULT",
+  "src": "wu"
  },
  {
   "code": "0x80244008",
-  "message": "WU_E_PT_SOAPCLIENT_PARSEFAULT",
-  "desc": "Same as SOAPCLIENT_PARSEFAULT_ERROR - SOAP client failed to parse a SOAP fault.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_PARSEFAULT",
+  "src": "wu"
  },
  {
   "code": "0x80244009",
-  "message": "WU_E_PT_SOAPCLIENT_READ",
-  "desc": "Same as SOAPCLIENT_READ_ERROR - SOAP client failed while reading the response from the server.",
-  "component": "Protocol Talker errors"
+  "name": "WU_E_PT_SOAPCLIENT_READ",
+  "src": "wu"
  },
  {
   "code": "0x8024400B",
-  "message": "WU_E_PT_SOAP_VERSION",
-  "desc": "Same as SOAP_E_VERSION_MISMATCH - SOAP client found an unrecognizable namespace for the SOAP envelope.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SOAP_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x8024400C",
-  "message": "WU_E_PT_SOAP_MUST_UNDERSTAND",
-  "desc": "Same as SOAP_E_MUST_UNDERSTAND - SOAP client was unable to understand a header.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SOAP_MUST_UNDERSTAND",
+  "src": "wu"
  },
  {
   "code": "0x8024400D",
-  "message": "WU_E_PT_SOAP_CLIENT",
-  "desc": "Same as SOAP_E_CLIENT - SOAP client found the message was malformed; fix before resending.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SOAP_CLIENT",
+  "src": "wu"
  },
  {
   "code": "0x8024400E",
-  "message": "WU_E_PT_SOAP_SERVER",
-  "desc": "Same as SOAP_E_SERVER - The SOAP message couldn't be processed due to a server error; resend later.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SOAP_SERVER",
+  "src": "wu"
  },
  {
   "code": "0x8024400F",
-  "message": "WU_E_PT_WMI_ERROR",
-  "desc": "There was an unspecified Windows Management Instrumentation (WMI) error.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_WMI_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x80244010",
-  "message": "WU_E_PT_EXCEEDED_MAX_SERVER_TRIPS",
-  "desc": "The number of round trips to the server exceeded the maximum limit.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_EXCEEDED_MAX_SERVER_TRIPS",
+  "src": "wu"
  },
  {
   "code": "0x80244011",
-  "message": "WU_E_PT_SUS_SERVER_NOT_SET",
-  "desc": "WUServer policy value is missing in the registry.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SUS_SERVER_NOT_SET",
+  "src": "wu"
  },
  {
   "code": "0x80244012",
-  "message": "WU_E_PT_DOUBLE_INITIALIZATION",
-  "desc": "Initialization failed because the object was already initialized.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_DOUBLE_INITIALIZATION",
+  "src": "wu"
  },
  {
   "code": "0x80244013",
-  "message": "WU_E_PT_INVALID_COMPUTER_NAME",
-  "desc": "The computer name couldn't be determined.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_INVALID_COMPUTER_NAME",
+  "src": "wu"
  },
  {
   "code": "0x80244015",
-  "message": "WU_E_PT_REFRESH_CACHE_REQUIRED",
-  "desc": "The reply from the server indicates that the server was changed or the cookie was invalid; refresh the state of the internal cache and retry.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_REFRESH_CACHE_REQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x80244016",
-  "message": "WU_E_PT_HTTP_STATUS_BAD_REQUEST",
-  "desc": "Same as HTTP status 400 - the server couldn't process the request due to invalid syntax.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_BAD_REQUEST",
+  "src": "wu"
  },
  {
   "code": "0x80244017",
-  "message": "WU_E_PT_HTTP_STATUS_DENIED",
-  "desc": "Same as HTTP status 401 - the requested resource requires user authentication.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_DENIED",
+  "src": "wu"
  },
  {
   "code": "0x80244018",
-  "message": "WU_E_PT_HTTP_STATUS_FORBIDDEN",
-  "desc": "Same as HTTP status 403 - server understood the request but declined to fulfill it.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_FORBIDDEN",
+  "src": "wu"
  },
  {
   "code": "0x80244019",
-  "message": "WU_E_PT_HTTP_STATUS_NOT_FOUND",
-  "desc": "Same as HTTP status 404 - the server can't find the requested URI (Uniform Resource Identifier).",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_NOT_FOUND",
+  "src": "wu"
  },
  {
   "code": "0x8024401A",
-  "message": "WU_E_PT_HTTP_STATUS_BAD_METHOD",
-  "desc": "Same as HTTP status 405 - the HTTP method isn't allowed.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_BAD_METHOD",
+  "src": "wu"
  },
  {
   "code": "0x8024401B",
-  "message": "WU_E_PT_HTTP_STATUS_PROXY_AUTH_REQ",
-  "desc": "Same as HTTP status 407 - proxy authentication is required.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_PROXY_AUTH_REQ",
+  "src": "wu"
  },
  {
   "code": "0x8024401C",
-  "message": "WU_E_PT_HTTP_STATUS_REQUEST_TIMEOUT",
-  "desc": "Same as HTTP status 408 - the server timed out waiting for the request.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_REQUEST_TIMEOUT",
+  "src": "wu"
  },
  {
   "code": "0x8024401D",
-  "message": "WU_E_PT_HTTP_STATUS_CONFLICT",
-  "desc": "Same as HTTP status 409 - the request wasn't completed due to a conflict with the current state of the resource.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_CONFLICT",
+  "src": "wu"
  },
  {
   "code": "0x8024401E",
-  "message": "WU_E_PT_HTTP_STATUS_GONE",
-  "desc": "Same as HTTP status 410 - requested resource is no longer available at the server.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_GONE",
+  "src": "wu"
  },
  {
   "code": "0x8024401F",
-  "message": "WU_E_PT_HTTP_STATUS_SERVER_ERROR",
-  "desc": "Same as HTTP status 500 - an error internal to the server prevented fulfilling the request.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_SERVER_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x80244020",
-  "message": "WU_E_PT_HTTP_STATUS_NOT_SUPPORTED",
-  "desc": "Same as HTTP status 500 - server doesn't support the functionality required to fulfill the request.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_NOT_SUPPORTED",
+  "src": "wu"
  },
  {
   "code": "0x80244021",
-  "message": "WU_E_PT_HTTP_STATUS_BAD_GATEWAY",
-  "desc": "Same as HTTP status 502 - the server while acting as a gateway or a proxy received an invalid response from the upstream server it accessed in attempting to fulfill the request.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_BAD_GATEWAY",
+  "src": "wu"
  },
  {
   "code": "0x80244022",
-  "message": "WU_E_PT_HTTP_STATUS_SERVICE_UNAVAIL",
-  "desc": "Same as HTTP status 503 - the service is temporarily overloaded.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_SERVICE_UNAVAIL",
+  "src": "wu"
  },
  {
   "code": "0x80244023",
-  "message": "WU_E_PT_HTTP_STATUS_GATEWAY_TIMEOUT",
-  "desc": "Same as HTTP status 503 - the request was timed out waiting for a gateway.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_GATEWAY_TIMEOUT",
+  "src": "wu"
  },
  {
   "code": "0x80244024",
-  "message": "WU_E_PT_HTTP_STATUS_VERSION_NOT_SUP",
-  "desc": "Same as HTTP status 505 - the server doesn't support the HTTP protocol version used for the request.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_VERSION_NOT_SUP",
+  "src": "wu"
  },
  {
   "code": "0x80244025",
-  "message": "WU_E_PT_FILE_LOCATIONS_CHANGED",
-  "desc": "Operation failed due to a changed file location; refresh internal state and resend.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_FILE_LOCATIONS_CHANGED",
+  "src": "wu"
  },
  {
   "code": "0x80244026",
-  "message": "WU_E_PT_REGISTRATION_NOT_SUPPORTED",
-  "desc": "Operation failed because Windows Update Agent doesn't support registration with a non-WSUS server.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_REGISTRATION_NOT_SUPPORTED",
+  "src": "wu"
  },
  {
   "code": "0x80244027",
-  "message": "WU_E_PT_NO_AUTH_PLUGINS_REQUESTED",
-  "desc": "The server returned an empty authentication information list.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_NO_AUTH_PLUGINS_REQUESTED",
+  "src": "wu"
  },
  {
   "code": "0x80244028",
-  "message": "WU_E_PT_NO_AUTH_COOKIES_CREATED",
-  "desc": "Windows Update Agent was unable to create any valid authentication cookies.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_NO_AUTH_COOKIES_CREATED",
+  "src": "wu"
  },
  {
   "code": "0x80244029",
-  "message": "WU_E_PT_INVALID_CONFIG_PROP",
-  "desc": "A configuration property value was wrong.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_INVALID_CONFIG_PROP",
+  "src": "wu"
  },
  {
   "code": "0x8024402A",
-  "message": "WU_E_PT_CONFIG_PROP_MISSING",
-  "desc": "A configuration property value was missing.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_CONFIG_PROP_MISSING",
+  "src": "wu"
  },
  {
   "code": "0x8024402B",
-  "message": "WU_E_PT_HTTP_STATUS_NOT_MAPPED",
-  "desc": "The HTTP request couldn't be completed and the reason didn't correspond to any of the WU_E_PT_HTTP_* error codes.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_HTTP_STATUS_NOT_MAPPED",
+  "src": "wu"
  },
  {
   "code": "0x8024402C",
-  "message": "WU_E_PT_WINHTTP_NAME_NOT_RESOLVED",
-  "desc": "Same as ERROR_WINHTTP_NAME_NOT_RESOLVED - the proxy server or target server name can't be resolved.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_WINHTTP_NAME_NOT_RESOLVED",
+  "src": "wu"
  },
  {
   "code": "0x8024402F",
-  "message": "WU_E_PT_ECP_SUCCEEDED_WITH_ERRORS",
-  "desc": "External cab file processing completed with some errors.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_SUCCEEDED_WITH_ERRORS",
+  "src": "wu"
  },
  {
   "code": "0x80244030",
-  "message": "WU_E_PT_ECP_INIT_FAILED",
-  "desc": "The external cab processor initialization didn't complete.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_INIT_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x80244031",
-  "message": "WU_E_PT_ECP_INVALID_FILE_FORMAT",
-  "desc": "The format of a metadata file was invalid.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_INVALID_FILE_FORMAT",
+  "src": "wu"
  },
  {
   "code": "0x80244032",
-  "message": "WU_E_PT_ECP_INVALID_METADATA",
-  "desc": "External cab processor found invalid metadata.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_INVALID_METADATA",
+  "src": "wu"
  },
  {
   "code": "0x80244033",
-  "message": "WU_E_PT_ECP_FAILURE_TO_EXTRACT_DIGEST",
-  "desc": "The file digest couldn't be extracted from an external cab file.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_FAILURE_TO_EXTRACT_DIGEST",
+  "src": "wu"
  },
  {
   "code": "0x80244034",
-  "message": "WU_E_PT_ECP_FAILURE_TO_DECOMPRESS_CAB_FILE",
-  "desc": "An external cab file couldn't be decompressed.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_FAILURE_TO_DECOMPRESS_CAB_FILE",
+  "src": "wu"
  },
  {
   "code": "0x80244035",
-  "message": "WU_E_PT_ECP_FILE_LOCATION_ERROR",
-  "desc": "External cab processor was unable to get file locations.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_ECP_FILE_LOCATION_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x80244FFF",
-  "message": "WU_E_PT_UNEXPECTED",
-  "desc": "A communication error not covered by another WU_E_PT_* error code.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024502D",
-  "message": "WU_E_PT_SAME_REDIR_ID",
-  "desc": "Windows Update Agent failed to download a redirector cabinet file with a new redirectorId value from the server during the recovery.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_SAME_REDIR_ID",
+  "src": "wu"
  },
  {
   "code": "0x8024502E",
-  "message": "WU_E_PT_NO_MANAGED_RECOVER",
-  "desc": "A redirector recovery action didn't complete because the server is managed.",
-  "component": "Other Protocol Talker errors"
+  "name": "WU_E_PT_NO_MANAGED_RECOVER",
+  "src": "wu"
  },
  {
   "code": "0x80246001",
-  "message": "WU_E_DM_URLNOTAVAILABLE",
-  "desc": "A download manager operation couldn't be completed because the requested file doesn't have a URL.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_URLNOTAVAILABLE",
+  "src": "wu"
  },
  {
   "code": "0x80246002",
-  "message": "WU_E_DM_INCORRECTFILEHASH",
-  "desc": "A download manager operation couldn't be completed because the file digest wasn't recognized.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_INCORRECTFILEHASH",
+  "src": "wu"
  },
  {
   "code": "0x80246003",
-  "message": "WU_E_DM_UNKNOWNALGORITHM",
-  "desc": "A download manager operation couldn't be completed because the file metadata requested an unrecognized hash algorithm.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_UNKNOWNALGORITHM",
+  "src": "wu"
  },
  {
   "code": "0x80246004",
-  "message": "WU_E_DM_NEEDDOWNLOADREQUEST",
-  "desc": "An operation couldn't be completed because a download request is required from the download handler.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_NEEDDOWNLOADREQUEST",
+  "src": "wu"
  },
  {
   "code": "0x80246005",
-  "message": "WU_E_DM_NONETWORK",
-  "desc": "A download manager operation couldn't be completed because the network connection was unavailable.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_NONETWORK",
+  "src": "wu"
  },
  {
   "code": "0x80246006",
-  "message": "WU_E_DM_WRONGBITSVERSION",
-  "desc": "A download manager operation couldn't be completed because the version of Background Intelligent Transfer Service (BITS) is incompatible.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_WRONGBITSVERSION",
+  "src": "wu"
  },
  {
   "code": "0x80246007",
-  "message": "WU_E_DM_NOTDOWNLOADED",
-  "desc": "The update hasn't been downloaded.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_NOTDOWNLOADED",
+  "src": "wu"
  },
  {
   "code": "0x80246008",
-  "message": "WU_E_DM_FAILTOCONNECTTOBITS",
-  "desc": "A download manager operation failed because the download manager was unable to connect the Background Intelligent Transfer Service (BITS).",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_FAILTOCONNECTTOBITS",
+  "src": "wu"
  },
  {
   "code": "0x80246009",
-  "message": "WU_E_DM_BITSTRANSFERERROR",
-  "desc": "A download manager operation failed because there was an unspecified Background Intelligent Transfer Service (BITS) transfer error.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_BITSTRANSFERERROR",
+  "src": "wu"
  },
  {
   "code": "0x8024600A",
-  "message": "WU_E_DM_DOWNLOADLOCATIONCHANGED",
-  "desc": "A download must be restarted because the location of the source of the download has changed.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_DOWNLOADLOCATIONCHANGED",
+  "src": "wu"
  },
  {
   "code": "0x8024600B",
-  "message": "WU_E_DM_CONTENTCHANGED",
-  "desc": "A download must be restarted because the update content changed in a new revision.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_CONTENTCHANGED",
+  "src": "wu"
  },
  {
   "code": "0x80246FFF",
-  "message": "WU_E_DM_UNEXPECTED",
-  "desc": "There was a download manager error not covered by another WU_E_DM_* error code.",
-  "component": "Download Manager errors"
+  "name": "WU_E_DM_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80242000",
-  "message": "WU_E_UH_REMOTEUNAVAILABLE",
-  "desc": "A request for a remote update handler couldn't be completed because no remote process is available.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_REMOTEUNAVAILABLE",
+  "src": "wu"
  },
  {
   "code": "0x80242001",
-  "message": "WU_E_UH_LOCALONLY",
-  "desc": "A request for a remote update handler couldn't be completed because the handler is local only.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_LOCALONLY",
+  "src": "wu"
  },
  {
   "code": "0x80242002",
-  "message": "WU_E_UH_UNKNOWNHANDLER",
-  "desc": "A request for an update handler couldn't be completed because the handler couldn't be recognized.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_UNKNOWNHANDLER",
+  "src": "wu"
  },
  {
   "code": "0x80242003",
-  "message": "WU_E_UH_REMOTEALREADYACTIVE",
-  "desc": "A remote update handler couldn't be created because one already exists.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_REMOTEALREADYACTIVE",
+  "src": "wu"
  },
  {
   "code": "0x80242004",
-  "message": "WU_E_UH_DOESNOTSUPPORTACTION",
-  "desc": "A request for the handler to install (uninstall) an update couldn't be completed because the update doesn't support install (uninstall).",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_DOESNOTSUPPORTACTION",
+  "src": "wu"
  },
  {
   "code": "0x80242005",
-  "message": "WU_E_UH_WRONGHANDLER",
-  "desc": "An operation didn't complete because the wrong handler was specified.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_WRONGHANDLER",
+  "src": "wu"
  },
  {
   "code": "0x80242006",
-  "message": "WU_E_UH_INVALIDMETADATA",
-  "desc": "A handler operation couldn't be completed because the update contains invalid metadata.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_INVALIDMETADATA",
+  "src": "wu"
  },
  {
   "code": "0x80242007",
-  "message": "WU_E_UH_INSTALLERHUNG",
-  "desc": "An operation couldn't be completed because the installer exceeded the time limit.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_INSTALLERHUNG",
+  "src": "wu"
  },
  {
   "code": "0x80242008",
-  "message": "WU_E_UH_OPERATIONCANCELLED",
-  "desc": "An operation being done by the update handler was canceled.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_OPERATIONCANCELLED",
+  "src": "wu"
  },
  {
   "code": "0x80242009",
-  "message": "WU_E_UH_BADHANDLERXML",
-  "desc": "An operation couldn't be completed because the handler-specific metadata is invalid.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_BADHANDLERXML",
+  "src": "wu"
  },
  {
   "code": "0x8024200A",
-  "message": "WU_E_UH_CANREQUIREINPUT",
-  "desc": "A request to the handler to install an update couldn't be completed because the update requires user input.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_CANREQUIREINPUT",
+  "src": "wu"
  },
  {
   "code": "0x8024200B",
-  "message": "WU_E_UH_INSTALLERFAILURE",
-  "desc": "The installer failed to install (uninstall) one or more updates.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_INSTALLERFAILURE",
+  "src": "wu"
  },
  {
   "code": "0x8024200C",
-  "message": "WU_E_UH_FALLBACKTOSELFCONTAINED",
-  "desc": "The update handler should download self-contained content rather than delta-compressed content for the update.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_FALLBACKTOSELFCONTAINED",
+  "src": "wu"
  },
  {
   "code": "0x8024200D",
-  "message": "WU_E_UH_NEEDANOTHERDOWNLOAD",
-  "desc": "The update handler didn't install the update because it needs to be downloaded again.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_NEEDANOTHERDOWNLOAD",
+  "src": "wu"
  },
  {
   "code": "0x8024200E",
-  "message": "WU_E_UH_NOTIFYFAILURE",
-  "desc": "The update handler failed to send notification of the status of the install (uninstall) operation.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_NOTIFYFAILURE",
+  "src": "wu"
  },
  {
   "code": "0x8024200F",
-  "message": "WU_E_UH_INCONSISTENT_FILE_NAMES",
-  "desc": "The file names contained in the update metadata and in the update package are inconsistent.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_INCONSISTENT_FILE_NAMES",
+  "src": "wu"
  },
  {
   "code": "0x80242010",
-  "message": "WU_E_UH_FALLBACKERROR",
-  "desc": "The update handler failed to fall back to the self-contained content.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_FALLBACKERROR",
+  "src": "wu"
  },
  {
   "code": "0x80242011",
-  "message": "WU_E_UH_TOOMANYDOWNLOADREQUESTS",
-  "desc": "The update handler has exceeded the maximum number of download requests.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_TOOMANYDOWNLOADREQUESTS",
+  "src": "wu"
  },
  {
   "code": "0x80242012",
-  "message": "WU_E_UH_UNEXPECTEDCBSRESPONSE",
-  "desc": "The update handler has received an unexpected response from CBS.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_UNEXPECTEDCBSRESPONSE",
+  "src": "wu"
  },
  {
   "code": "0x80242013",
-  "message": "WU_E_UH_BADCBSPACKAGEID",
-  "desc": "The update metadata contains an invalid CBS package identifier.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_BADCBSPACKAGEID",
+  "src": "wu"
  },
  {
   "code": "0x80242014",
-  "message": "WU_E_UH_POSTREBOOTSTILLPENDING",
-  "desc": "The post-reboot operation for the update is still in progress.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_POSTREBOOTSTILLPENDING",
+  "src": "wu"
  },
  {
   "code": "0x80242015",
-  "message": "WU_E_UH_POSTREBOOTRESULTUNKNOWN",
-  "desc": "The result of the post-reboot operation for the update couldn't be determined.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_POSTREBOOTRESULTUNKNOWN",
+  "src": "wu"
  },
  {
   "code": "0x80242016",
-  "message": "WU_E_UH_POSTREBOOTUNEXPECTEDSTATE",
-  "desc": "The state of the update after its post-reboot operation has completed is unexpected.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_POSTREBOOTUNEXPECTEDSTATE",
+  "src": "wu"
  },
  {
   "code": "0x80242017",
-  "message": "WU_E_UH_NEW_SERVICING_STACK_REQUIRED",
-  "desc": "The OS servicing stack must be updated before this update is downloaded or installed.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_NEW_SERVICING_STACK_REQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x80242FFF",
-  "message": "WU_E_UH_UNEXPECTED",
-  "desc": "An update handler error not covered by another WU_E_UH_* code.",
-  "component": "Update Handler errors"
+  "name": "WU_E_UH_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80248000",
-  "message": "WU_E_DS_SHUTDOWN",
-  "desc": "An operation failed because Windows Update Agent is shutting down.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_SHUTDOWN",
+  "src": "wu"
  },
  {
   "code": "0x80248001",
-  "message": "WU_E_DS_INUSE",
-  "desc": "An operation failed because the data store was in use.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_INUSE",
+  "src": "wu"
  },
  {
   "code": "0x80248002",
-  "message": "WU_E_DS_INVALID",
-  "desc": "The current and expected states of the data store don't match.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_INVALID",
+  "src": "wu"
  },
  {
   "code": "0x80248003",
-  "message": "WU_E_DS_TABLEMISSING",
-  "desc": "The data store is missing a table.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_TABLEMISSING",
+  "src": "wu"
  },
  {
   "code": "0x80248004",
-  "message": "WU_E_DS_TABLEINCORRECT",
-  "desc": "The data store contains a table with unexpected columns.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_TABLEINCORRECT",
+  "src": "wu"
  },
  {
   "code": "0x80248005",
-  "message": "WU_E_DS_INVALIDTABLENAME",
-  "desc": "A table couldn't be opened because the table isn't in the data store.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_INVALIDTABLENAME",
+  "src": "wu"
  },
  {
   "code": "0x80248006",
-  "message": "WU_E_DS_BADVERSION",
-  "desc": "The current and expected versions of the data store don't match.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_BADVERSION",
+  "src": "wu"
  },
  {
   "code": "0x80248007",
-  "message": "WU_E_DS_NODATA",
-  "desc": "The information requested isn't in the data store.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_NODATA",
+  "src": "wu"
  },
  {
   "code": "0x80248008",
-  "message": "WU_E_DS_MISSINGDATA",
-  "desc": "The data store is missing required information or has a NULL in a table column that requires a non-null value.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_MISSINGDATA",
+  "src": "wu"
  },
  {
   "code": "0x80248009",
-  "message": "WU_E_DS_MISSINGREF",
-  "desc": "The data store is missing required information or has a reference to missing license terms file localized property or linked row.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_MISSINGREF",
+  "src": "wu"
  },
  {
   "code": "0x8024800A",
-  "message": "WU_E_DS_UNKNOWNHANDLER",
-  "desc": "The update wasn't processed because its update handler couldn't be recognized.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_UNKNOWNHANDLER",
+  "src": "wu"
  },
  {
   "code": "0x8024800B",
-  "message": "WU_E_DS_CANTDELETE",
-  "desc": "The update wasn't deleted because it's still referenced by one or more services.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_CANTDELETE",
+  "src": "wu"
  },
  {
   "code": "0x8024800C",
-  "message": "WU_E_DS_LOCKTIMEOUTEXPIRED",
-  "desc": "The data store section couldn't be locked within the allotted time.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_LOCKTIMEOUTEXPIRED",
+  "src": "wu"
  },
  {
   "code": "0x8024800D",
-  "message": "WU_E_DS_NOCATEGORIES",
-  "desc": "The category wasn't added because it contains no parent categories and isn't a top-level category itself.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_NOCATEGORIES",
+  "src": "wu"
  },
  {
   "code": "0x8024800E",
-  "message": "WU_E_DS_ROWEXISTS",
-  "desc": "The row wasn't added because an existing row has the same primary key.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_ROWEXISTS",
+  "src": "wu"
  },
  {
   "code": "0x8024800F",
-  "message": "WU_E_DS_STOREFILELOCKED",
-  "desc": "The data store couldn't be initialized because it was locked by another process.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_STOREFILELOCKED",
+  "src": "wu"
  },
  {
   "code": "0x80248010",
-  "message": "WU_E_DS_CANNOTREGISTER",
-  "desc": "The data store isn't allowed to be registered with COM in the current process.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_CANNOTREGISTER",
+  "src": "wu"
  },
  {
   "code": "0x80248011",
-  "message": "WU_E_DS_UNABLETOSTART",
-  "desc": "Couldn't create a data store object in another process.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_UNABLETOSTART",
+  "src": "wu"
  },
  {
   "code": "0x80248013",
-  "message": "WU_E_DS_DUPLICATEUPDATEID",
-  "desc": "The server sent the same update to the client with two different revision IDs.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_DUPLICATEUPDATEID",
+  "src": "wu"
  },
  {
   "code": "0x80248014",
-  "message": "WU_E_DS_UNKNOWNSERVICE",
-  "desc": "An operation didn't complete because the service isn't in the data store.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_UNKNOWNSERVICE",
+  "src": "wu"
  },
  {
   "code": "0x80248015",
-  "message": "WU_E_DS_SERVICEEXPIRED",
-  "desc": "An operation didn't complete because the registration of the service has expired.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_SERVICEEXPIRED",
+  "src": "wu"
  },
  {
   "code": "0x80248016",
-  "message": "WU_E_DS_DECLINENOTALLOWED",
-  "desc": "A request to hide an update was declined because it's a mandatory update or because it was deployed with a deadline.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_DECLINENOTALLOWED",
+  "src": "wu"
  },
  {
   "code": "0x80248017",
-  "message": "WU_E_DS_TABLESESSIONMISMATCH",
-  "desc": "A table wasn't closed because it isn't associated with the session.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_TABLESESSIONMISMATCH",
+  "src": "wu"
  },
  {
   "code": "0x80248018",
-  "message": "WU_E_DS_SESSIONLOCKMISMATCH",
-  "desc": "A table wasn't closed because it isn't associated with the session.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_SESSIONLOCKMISMATCH",
+  "src": "wu"
  },
  {
   "code": "0x80248019",
-  "message": "WU_E_DS_NEEDWINDOWSSERVICE",
-  "desc": "A request to remove the Windows Update service or to unregister it with Automatic Updates was declined because it's a built-in service and/or Automatic Updates can't fall back to another service.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_NEEDWINDOWSSERVICE",
+  "src": "wu"
  },
  {
   "code": "0x8024801A",
-  "message": "WU_E_DS_INVALIDOPERATION",
-  "desc": "A request was declined because the operation isn't allowed.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_INVALIDOPERATION",
+  "src": "wu"
  },
  {
   "code": "0x8024801B",
-  "message": "WU_E_DS_SCHEMAMISMATCH",
-  "desc": "The schema of the current data store and the schema of a table in a backup XML document don't match.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_SCHEMAMISMATCH",
+  "src": "wu"
  },
  {
   "code": "0x8024801C",
-  "message": "WU_E_DS_RESETREQUIRED",
-  "desc": "The data store requires a session reset; release the session and retry with a new session.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_RESETREQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x8024801D",
-  "message": "WU_E_DS_IMPERSONATED",
-  "desc": "A data store operation didn't complete because it was requested with an impersonated identity.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_IMPERSONATED",
+  "src": "wu"
  },
  {
   "code": "0x80248FFF",
-  "message": "WU_E_DS_UNEXPECTED",
-  "desc": "A data store error not covered by another WU_E_DS_* code.",
-  "component": "Data Store errors"
+  "name": "WU_E_DS_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024C001",
-  "message": "WU_E_DRV_PRUNED",
-  "desc": "A driver was skipped.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_PRUNED",
+  "src": "wu"
  },
  {
   "code": "0x8024C002",
-  "message": "WU_E_DRV_NOPROP_OR_LEGACY",
-  "desc": "A property for the driver couldn't be found. It may not conform with required specifications.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_NOPROP_OR_LEGACY",
+  "src": "wu"
  },
  {
   "code": "0x8024C003",
-  "message": "WU_E_DRV_REG_MISMATCH",
-  "desc": "The registry type read for the driver doesn't match the expected type.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_REG_MISMATCH",
+  "src": "wu"
  },
  {
   "code": "0x8024C004",
-  "message": "WU_E_DRV_NO_METADATA",
-  "desc": "The driver update is missing metadata.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_NO_METADATA",
+  "src": "wu"
  },
  {
   "code": "0x8024C005",
-  "message": "WU_E_DRV_MISSING_ATTRIBUTE",
-  "desc": "The driver update is missing a required attribute.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_MISSING_ATTRIBUTE",
+  "src": "wu"
  },
  {
   "code": "0x8024C006",
-  "message": "WU_E_DRV_SYNC_FAILED",
-  "desc": "Driver synchronization failed.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_SYNC_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x8024C007",
-  "message": "WU_E_DRV_NO_PRINTER_CONTENT",
-  "desc": "Information required for the synchronization of applicable printers is missing.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_NO_PRINTER_CONTENT",
+  "src": "wu"
  },
  {
   "code": "0x8024CFFF",
-  "message": "WU_E_DRV_UNEXPECTED",
-  "desc": "A driver error not covered by another WU_E_DRV_* code.",
-  "component": "Driver Util errors"
+  "name": "WU_E_DRV_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80070020",
-  "message": "InstallFileLocked",
-  "desc": "Couldn't access the file because it is already in use. This can occur when the installer tries to replace a file that an antivirus, antimalware or backup program is currently scanning.",
-  "component": "Windows Update error codes"
+  "name": "InstallFileLocked",
+  "src": "wu"
  },
  {
   "code": "0x80240001",
-  "message": "WU_E_NO_SERVICE",
-  "desc": "Windows Update Agent was unable to provide the service.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_SERVICE",
+  "src": "wu"
  },
  {
   "code": "0x80240002",
-  "message": "WU_E_MAX_CAPACITY_REACHED",
-  "desc": "The maximum capacity of the service was exceeded.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_MAX_CAPACITY_REACHED",
+  "src": "wu"
  },
  {
   "code": "0x80240003",
-  "message": "WU_E_UNKNOWN_ID",
-  "desc": "An ID can't be found.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_UNKNOWN_ID",
+  "src": "wu"
  },
  {
   "code": "0x80240004",
-  "message": "WU_E_NOT_INITIALIZED",
-  "desc": "The object couldn't be initialized.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NOT_INITIALIZED",
+  "src": "wu"
  },
  {
   "code": "0x80240005",
-  "message": "WU_E_RANGEOVERLAP",
-  "desc": "The update handler requested a byte range overlapping a previously requested range.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_RANGEOVERLAP",
+  "src": "wu"
  },
  {
   "code": "0x80240006",
-  "message": "WU_E_TOOMANYRANGES",
-  "desc": "The requested number of byte ranges exceeds the maximum number (2^31 - 1).",
-  "component": "Windows Update error codes"
+  "name": "WU_E_TOOMANYRANGES",
+  "src": "wu"
  },
  {
   "code": "0x80240007",
-  "message": "WU_E_INVALIDINDEX",
-  "desc": "The index to a collection was invalid.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALIDINDEX",
+  "src": "wu"
  },
  {
   "code": "0x80240008",
-  "message": "WU_E_ITEMNOTFOUND",
-  "desc": "The key for the item queried couldn't be found.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_ITEMNOTFOUND",
+  "src": "wu"
  },
  {
   "code": "0x80240009",
-  "message": "WU_E_OPERATIONINPROGRESS",
-  "desc": "Another conflicting operation was in progress. Some operations such as installation can't be performed twice simultaneously.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_OPERATIONINPROGRESS",
+  "src": "wu"
  },
  {
   "code": "0x8024000A",
-  "message": "WU_E_COULDNOTCANCEL",
-  "desc": "Cancellation of the operation wasn't allowed.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_COULDNOTCANCEL",
+  "src": "wu"
  },
  {
   "code": "0x8024000B",
-  "message": "WU_E_CALL_CANCELLED",
-  "desc": "Operation was canceled.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_CALL_CANCELLED",
+  "src": "wu"
  },
  {
   "code": "0x8024000C",
-  "message": "WU_E_NOOP",
-  "desc": "No operation was required.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NOOP",
+  "src": "wu"
  },
  {
   "code": "0x8024000D",
-  "message": "WU_E_XML_MISSINGDATA",
-  "desc": "Windows Update Agent couldn't find required information in the update's XML data.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_XML_MISSINGDATA",
+  "src": "wu"
  },
  {
   "code": "0x8024000E",
-  "message": "WU_E_XML_INVALID",
-  "desc": "Windows Update Agent found invalid information in the update's XML data.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_XML_INVALID",
+  "src": "wu"
  },
  {
   "code": "0x8024000F",
-  "message": "WU_E_CYCLE_DETECTED",
-  "desc": "Circular update relationships were detected in the metadata.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_CYCLE_DETECTED",
+  "src": "wu"
  },
  {
   "code": "0x80240010",
-  "message": "WU_E_TOO_DEEP_RELATION",
-  "desc": "Update relationships too deep to evaluate were evaluated.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_TOO_DEEP_RELATION",
+  "src": "wu"
  },
  {
   "code": "0x80240011",
-  "message": "WU_E_INVALID_RELATIONSHIP",
-  "desc": "An invalid update relationship was detected.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_RELATIONSHIP",
+  "src": "wu"
  },
  {
   "code": "0x80240012",
-  "message": "WU_E_REG_VALUE_INVALID",
-  "desc": "An invalid registry value was read.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_REG_VALUE_INVALID",
+  "src": "wu"
  },
  {
   "code": "0x80240013",
-  "message": "WU_E_DUPLICATE_ITEM",
-  "desc": "Operation tried to add a duplicate item to a list.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_DUPLICATE_ITEM",
+  "src": "wu"
  },
  {
   "code": "0x80240016",
-  "message": "WU_E_INSTALL_NOT_ALLOWED",
-  "desc": "Operation tried to install while another installation was in progress or the system was pending a mandatory restart.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INSTALL_NOT_ALLOWED",
+  "src": "wu"
  },
  {
   "code": "0x80240017",
-  "message": "WU_E_NOT_APPLICABLE",
-  "desc": "Operation wasn't performed because there are no applicable updates.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NOT_APPLICABLE",
+  "src": "wu"
  },
  {
   "code": "0x80240018",
-  "message": "WU_E_NO_USERTOKEN",
-  "desc": "Operation failed because a required user token is missing.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_USERTOKEN",
+  "src": "wu"
  },
  {
   "code": "0x80240019",
-  "message": "WU_E_EXCLUSIVE_INSTALL_CONFLICT",
-  "desc": "An exclusive update can't be installed with other updates at the same time.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_EXCLUSIVE_INSTALL_CONFLICT",
+  "src": "wu"
  },
  {
   "code": "0x8024001A",
-  "message": "WU_E_POLICY_NOT_SET",
-  "desc": "A policy value wasn't set.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_POLICY_NOT_SET",
+  "src": "wu"
  },
  {
   "code": "0x8024001B",
-  "message": "WU_E_SELFUPDATE_IN_PROGRESS",
-  "desc": "The operation couldn't be performed because the Windows Update Agent is self-updating.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_SELFUPDATE_IN_PROGRESS",
+  "src": "wu"
  },
  {
   "code": "0x8024001D",
-  "message": "WU_E_INVALID_UPDATE",
-  "desc": "An update contains invalid metadata.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_UPDATE",
+  "src": "wu"
  },
  {
   "code": "0x8024001E",
-  "message": "WU_E_SERVICE_STOP",
-  "desc": "Operation didn't complete because the service or system was being shut down.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_SERVICE_STOP",
+  "src": "wu"
  },
  {
   "code": "0x8024001F",
-  "message": "WU_E_NO_CONNECTION",
-  "desc": "Operation didn't complete because the network connection was unavailable.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_CONNECTION",
+  "src": "wu"
  },
  {
   "code": "0x80240020",
-  "message": "WU_E_NO_INTERACTIVE_USER",
-  "desc": "Operation didn't complete because there's no logged-on interactive user.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_INTERACTIVE_USER",
+  "src": "wu"
  },
  {
   "code": "0x80240021",
-  "message": "WU_E_TIME_OUT",
-  "desc": "Operation didn't complete because it timed out.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_TIME_OUT",
+  "src": "wu"
  },
  {
   "code": "0x80240022",
-  "message": "WU_E_ALL_UPDATES_FAILED",
-  "desc": "Operation failed for all the updates.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_ALL_UPDATES_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x80240023",
-  "message": "WU_E_EULAS_DECLINED",
-  "desc": "The license terms for all updates were declined.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_EULAS_DECLINED",
+  "src": "wu"
  },
  {
   "code": "0x80240024",
-  "message": "WU_E_NO_UPDATE",
-  "desc": "There are no updates.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_UPDATE",
+  "src": "wu"
  },
  {
   "code": "0x80240025",
-  "message": "WU_E_USER_ACCESS_DISABLED",
-  "desc": "Group Policy settings prevented access to Windows Update.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_USER_ACCESS_DISABLED",
+  "src": "wu"
  },
  {
   "code": "0x80240026",
-  "message": "WU_E_INVALID_UPDATE_TYPE",
-  "desc": "The type of update is invalid.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_UPDATE_TYPE",
+  "src": "wu"
  },
  {
   "code": "0x80240027",
-  "message": "WU_E_URL_TOO_LONG",
-  "desc": "The URL exceeded the maximum length.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_URL_TOO_LONG",
+  "src": "wu"
  },
  {
   "code": "0x80240028",
-  "message": "WU_E_UNINSTALL_NOT_ALLOWED",
-  "desc": "The update couldn't be uninstalled because the request didn't originate from a WSUS server.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_UNINSTALL_NOT_ALLOWED",
+  "src": "wu"
  },
  {
   "code": "0x80240029",
-  "message": "WU_E_INVALID_PRODUCT_LICENSE",
-  "desc": "Search may have missed some updates before there's an unlicensed application on the system.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_PRODUCT_LICENSE",
+  "src": "wu"
  },
  {
   "code": "0x8024002A",
-  "message": "WU_E_MISSING_HANDLER",
-  "desc": "A component required to detect applicable updates was missing.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_MISSING_HANDLER",
+  "src": "wu"
  },
  {
   "code": "0x8024002B",
-  "message": "WU_E_LEGACYSERVER",
-  "desc": "An operation didn't complete because it requires a newer version of server.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_LEGACYSERVER",
+  "src": "wu"
  },
  {
   "code": "0x8024002C",
-  "message": "WU_E_BIN_SOURCE_ABSENT",
-  "desc": "A delta-compressed update couldn't be installed because it required the source.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_BIN_SOURCE_ABSENT",
+  "src": "wu"
  },
  {
   "code": "0x8024002D",
-  "message": "WU_E_SOURCE_ABSENT",
-  "desc": "A full-file update couldn't be installed because it required the source.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_SOURCE_ABSENT",
+  "src": "wu"
  },
  {
   "code": "0x8024002E",
-  "message": "WU_E_WU_DISABLED",
-  "desc": "Access to an unmanaged server isn't allowed.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_WU_DISABLED",
+  "src": "wu"
  },
  {
   "code": "0x8024002F",
-  "message": "WU_E_CALL_CANCELLED_BY_POLICY",
-  "desc": "Operation didn't complete because the DisableWindowsUpdateAccess policy was set.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_CALL_CANCELLED_BY_POLICY",
+  "src": "wu"
  },
  {
   "code": "0x80240030",
-  "message": "WU_E_INVALID_PROXY_SERVER",
-  "desc": "The format of the proxy list was invalid.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_PROXY_SERVER",
+  "src": "wu"
  },
  {
   "code": "0x80240031",
-  "message": "WU_E_INVALID_FILE",
-  "desc": "The file is in the wrong format.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_FILE",
+  "src": "wu"
  },
  {
   "code": "0x80240032",
-  "message": "WU_E_INVALID_CRITERIA",
-  "desc": "The search criteria string was invalid.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_CRITERIA",
+  "src": "wu"
  },
  {
   "code": "0x80240033",
-  "message": "WU_E_EULA_UNAVAILABLE",
-  "desc": "License terms couldn't be downloaded.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_EULA_UNAVAILABLE",
+  "src": "wu"
  },
  {
   "code": "0x80240034",
-  "message": "WU_E_DOWNLOAD_FAILED",
-  "desc": "Update failed to download.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_DOWNLOAD_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x80240035",
-  "message": "WU_E_UPDATE_NOT_PROCESSED",
-  "desc": "The update wasn't processed.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_UPDATE_NOT_PROCESSED",
+  "src": "wu"
  },
  {
   "code": "0x80240036",
-  "message": "WU_E_INVALID_OPERATION",
-  "desc": "The object's current state didn't allow the operation.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_INVALID_OPERATION",
+  "src": "wu"
  },
  {
   "code": "0x80240037",
-  "message": "WU_E_NOT_SUPPORTED",
-  "desc": "The functionality for the operation isn't supported.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NOT_SUPPORTED",
+  "src": "wu"
  },
  {
   "code": "0x80240038",
-  "message": "WU_E_WINHTTP_INVALID_FILE",
-  "desc": "The downloaded file has an unexpected content type.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_WINHTTP_INVALID_FILE",
+  "src": "wu"
  },
  {
   "code": "0x80240039",
-  "message": "WU_E_TOO_MANY_RESYNC",
-  "desc": "Agent is asked by server to resync too many times.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_TOO_MANY_RESYNC",
+  "src": "wu"
  },
  {
   "code": "0x80240040",
-  "message": "WU_E_NO_SERVER_CORE_SUPPORT",
-  "desc": "WUA API method doesn't run on Server Core installation.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_SERVER_CORE_SUPPORT",
+  "src": "wu"
  },
  {
   "code": "0x80240041",
-  "message": "WU_E_SYSPREP_IN_PROGRESS",
-  "desc": "Service isn't available while sysprep is running.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_SYSPREP_IN_PROGRESS",
+  "src": "wu"
  },
  {
   "code": "0x80240042",
-  "message": "WU_E_UNKNOWN_SERVICE",
-  "desc": "The update service is no longer registered with AU.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_UNKNOWN_SERVICE",
+  "src": "wu"
  },
  {
   "code": "0x80240043",
-  "message": "WU_E_NO_UI_SUPPORT",
-  "desc": "There's no support for WUA UI.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_NO_UI_SUPPORT",
+  "src": "wu"
  },
  {
   "code": "0x80240FFF",
-  "message": "WU_E_UNEXPECTED",
-  "desc": "An operation failed due to reasons not covered by another error code.",
-  "component": "Windows Update error codes"
+  "name": "WU_E_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x80070422",
-  "message": "",
-  "desc": "Windows Update service stopped working or isn't running.",
-  "component": "Windows Update error codes"
+  "name": "",
+  "src": "wu"
  },
  {
   "code": "0x00240001",
-  "message": "WU_S_SERVICE_STOP",
-  "desc": "Windows Update Agent was stopped successfully.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_SERVICE_STOP",
+  "src": "wu"
  },
  {
   "code": "0x00240002",
-  "message": "WU_S_SELFUPDATE",
-  "desc": "Windows Update Agent updated itself.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_SELFUPDATE",
+  "src": "wu"
  },
  {
   "code": "0x00240003",
-  "message": "WU_S_UPDATE_ERROR",
-  "desc": "Operation completed successfully but there were errors applying the updates.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_UPDATE_ERROR",
+  "src": "wu"
  },
  {
   "code": "0x00240004",
-  "message": "WU_S_MARKED_FOR_DISCONNECT",
-  "desc": "A callback was marked to be disconnected later because the request to disconnect the operation came while a callback was executing.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_MARKED_FOR_DISCONNECT",
+  "src": "wu"
  },
  {
   "code": "0x00240005",
-  "message": "WU_S_REBOOT_REQUIRED",
-  "desc": "The system must be restarted to complete installation of the update.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_REBOOT_REQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x00240006",
-  "message": "WU_S_ALREADY_INSTALLED",
-  "desc": "The update to be installed is already installed on the system.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_ALREADY_INSTALLED",
+  "src": "wu"
  },
  {
   "code": "0x00240007",
-  "message": "WU_S_ALREADY_UNINSTALLED",
-  "desc": "The update to be removed isn't installed on the system.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_ALREADY_UNINSTALLED",
+  "src": "wu"
  },
  {
   "code": "0x00240008",
-  "message": "WU_S_ALREADY_DOWNLOADED",
-  "desc": "The update to be downloaded has already been downloaded.",
-  "component": "Windows Update success codes"
+  "name": "WU_S_ALREADY_DOWNLOADED",
+  "src": "wu"
  },
  {
   "code": "0x80241001",
-  "message": "WU_E_MSI_WRONG_VERSION",
-  "desc": "Search may have missed some updates because the Windows Installer is less than version 3.1.",
-  "component": "Windows Installer minor errors"
+  "name": "WU_E_MSI_WRONG_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x80241002",
-  "message": "WU_E_MSI_NOT_CONFIGURED",
-  "desc": "Search may have missed some updates because the Windows Installer isn't configured.",
-  "component": "Windows Installer minor errors"
+  "name": "WU_E_MSI_NOT_CONFIGURED",
+  "src": "wu"
  },
  {
   "code": "0x80241003",
-  "message": "WU_E_MSP_DISABLED",
-  "desc": "Search may have missed some updates because policy has disabled Windows Installer patching.",
-  "component": "Windows Installer minor errors"
+  "name": "WU_E_MSP_DISABLED",
+  "src": "wu"
  },
  {
   "code": "0x80241004",
-  "message": "WU_E_MSI_WRONG_APP_CONTEXT",
-  "desc": "An update couldn't be applied because the application is installed per-user.",
-  "component": "Windows Installer minor errors"
+  "name": "WU_E_MSI_WRONG_APP_CONTEXT",
+  "src": "wu"
  },
  {
   "code": "0x80241FFF",
-  "message": "WU_E_MSP_UNEXPECTED",
-  "desc": "Search may have missed some updates because there was a failure of the Windows Installer.",
-  "component": "Windows Installer minor errors"
+  "name": "WU_E_MSP_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024D001",
-  "message": "WU_E_SETUP_INVALID_INFDATA",
-  "desc": "Windows Update Agent couldn't be updated because an INF file contains invalid information.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_INVALID_INFDATA",
+  "src": "wu"
  },
  {
   "code": "0x8024D002",
-  "message": "WU_E_SETUP_INVALID_IDENTDATA",
-  "desc": "Windows Update Agent couldn't be updated because the wuident.cab file contains invalid information.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_INVALID_IDENTDATA",
+  "src": "wu"
  },
  {
   "code": "0x8024D003",
-  "message": "WU_E_SETUP_ALREADY_INITIALIZED",
-  "desc": "Windows Update Agent couldn't be updated because of an internal error that caused setup initialization to be performed twice.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_ALREADY_INITIALIZED",
+  "src": "wu"
  },
  {
   "code": "0x8024D004",
-  "message": "WU_E_SETUP_NOT_INITIALIZED",
-  "desc": "Windows Update Agent couldn't be updated because setup initialization never completed successfully.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_NOT_INITIALIZED",
+  "src": "wu"
  },
  {
   "code": "0x8024D005",
-  "message": "WU_E_SETUP_SOURCE_VERSION_MISMATCH",
-  "desc": "Windows Update Agent couldn't be updated because the versions specified in the INF don't match the actual source file versions.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_SOURCE_VERSION_MISMATCH",
+  "src": "wu"
  },
  {
   "code": "0x8024D006",
-  "message": "WU_E_SETUP_TARGET_VERSION_GREATER",
-  "desc": "Windows Update Agent couldn't be updated because a WUA file on the target system is newer than the corresponding source file.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_TARGET_VERSION_GREATER",
+  "src": "wu"
  },
  {
   "code": "0x8024D007",
-  "message": "WU_E_SETUP_REGISTRATION_FAILED",
-  "desc": "Windows Update Agent couldn't be updated because regsvr32.exe returned an error.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_REGISTRATION_FAILED",
+  "src": "wu"
  },
  {
   "code": "0x8024D009",
-  "message": "WU_E_SETUP_SKIP_UPDATE",
-  "desc": "An update to the Windows Update Agent was skipped due to a directive in the wuident.cab file.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_SKIP_UPDATE",
+  "src": "wu"
  },
  {
   "code": "0x8024D00A",
-  "message": "WU_E_SETUP_UNSUPPORTED_CONFIGURATION",
-  "desc": "Windows Update Agent couldn't be updated because the current system configuration isn't supported.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_UNSUPPORTED_CONFIGURATION",
+  "src": "wu"
  },
  {
   "code": "0x8024D00B",
-  "message": "WU_E_SETUP_BLOCKED_CONFIGURATION",
-  "desc": "Windows Update Agent couldn't be updated because the system is configured to block the update.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_BLOCKED_CONFIGURATION",
+  "src": "wu"
  },
  {
   "code": "0x8024D00C",
-  "message": "WU_E_SETUP_REBOOT_TO_FIX",
-  "desc": "Windows Update Agent couldn't be updated because a restart of the system is required.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_REBOOT_TO_FIX",
+  "src": "wu"
  },
  {
   "code": "0x8024D00D",
-  "message": "WU_E_SETUP_ALREADYRUNNING",
-  "desc": "Windows Update Agent setup is already running.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_ALREADYRUNNING",
+  "src": "wu"
  },
  {
   "code": "0x8024D00E",
-  "message": "WU_E_SETUP_REBOOTREQUIRED",
-  "desc": "Windows Update Agent setup package requires a reboot to complete installation.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_REBOOTREQUIRED",
+  "src": "wu"
  },
  {
   "code": "0x8024D00F",
-  "message": "WU_E_SETUP_HANDLER_EXEC_FAILURE",
-  "desc": "Windows Update Agent couldn't be updated because the setup handler failed during execution.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_HANDLER_EXEC_FAILURE",
+  "src": "wu"
  },
  {
   "code": "0x8024D010",
-  "message": "WU_E_SETUP_INVALID_REGISTRY_DATA",
-  "desc": "Windows Update Agent couldn't be updated because the registry contains invalid information.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_INVALID_REGISTRY_DATA",
+  "src": "wu"
  },
  {
   "code": "0x8024D013",
-  "message": "WU_E_SETUP_WRONG_SERVER_VERSION",
-  "desc": "Windows Update Agent couldn't be updated because the server doesn't contain update information for this version.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_WRONG_SERVER_VERSION",
+  "src": "wu"
  },
  {
   "code": "0x8024DFFF",
-  "message": "WU_E_SETUP_UNEXPECTED",
-  "desc": "Windows Update Agent couldn't be updated because of an error not covered by another WU_E_SETUP_* error code.",
-  "component": "Windows Update Agent update and setup errors"
+  "name": "WU_E_SETUP_UNEXPECTED",
+  "src": "wu"
  },
  {
   "code": "0x8024402F",
-  "message": "WU_E_PT_ECP_SUCCEEDED_WITH_ERRORS",
-  "desc": "External .cab file processing completed with some errors",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_PT_ECP_SUCCEEDED_WITH_ERRORS",
+  "src": "wucommon",
   "anchor": "0x8024402f"
  },
  {
   "code": "0x80242006",
-  "message": "WU_E_UH_INVALIDMETADATA",
-  "desc": "A handler operation couldn't be completed because the update contains invalid metadata.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_UH_INVALIDMETADATA",
+  "src": "wucommon",
   "anchor": "0x80242006"
  },
  {
   "code": "0x80070BC9",
-  "message": "ERROR_FAIL_REBOOT_REQUIRED",
-  "desc": "The requested operation failed. Restart the system to roll back changes made.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_FAIL_REBOOT_REQUIRED",
+  "src": "wucommon",
   "anchor": "0x80070bc9"
  },
  {
   "code": "0x80200053",
-  "message": "BG_E_VALIDATION_FAILED",
-  "desc": "NA",
-  "component": "Common errors (troubleshooting article)",
+  "name": "BG_E_VALIDATION_FAILED",
+  "src": "wucommon",
   "anchor": "0x80200053"
  },
  {
   "code": "0x80072EFD",
-  "message": "TIME_OUT_ERRORS",
-  "desc": "The operation timed out",
-  "component": "Common errors (troubleshooting article)",
+  "name": "TIME_OUT_ERRORS",
+  "src": "wucommon",
   "anchor": "0x80072efd-or-0x80072efeor-0x80d02002"
  },
  {
   "code": "0x80072EFE",
-  "message": "TIME_OUT_ERRORS",
-  "desc": "The operation timed out",
-  "component": "Common errors (troubleshooting article)",
+  "name": "TIME_OUT_ERRORS",
+  "src": "wucommon",
   "anchor": "0x80072efd-or-0x80072efeor-0x80d02002"
  },
  {
   "code": "0x80D02002",
-  "message": "TIME_OUT_ERRORS",
-  "desc": "The operation timed out",
-  "component": "Common errors (troubleshooting article)",
+  "name": "TIME_OUT_ERRORS",
+  "src": "wucommon",
   "anchor": "0x80072efd-or-0x80072efeor-0x80d02002"
  },
  {
   "code": "0x8007000D",
-  "message": "ERROR_INVALID_DATA",
-  "desc": "Indicates data that isn't valid was downloaded or corruption occurred.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_INVALID_DATA",
+  "src": "wucommon",
   "anchor": "0x8007000d"
  },
  {
   "code": "0x8024A10A",
-  "message": "USO_E_SERVICE_SHUTTING_DOWN",
-  "desc": "Indicates that the Windows Update Service is shutting down.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "USO_E_SERVICE_SHUTTING_DOWN",
+  "src": "wucommon",
   "anchor": "0x8024a10a"
  },
  {
   "code": "0x80240020",
-  "message": "WU_E_NO_INTERACTIVE_USER",
-  "desc": "The operation didn't finish because no interactive user is signed in.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_NO_INTERACTIVE_USER",
+  "src": "wucommon",
   "anchor": "0x80240020"
  },
  {
   "code": "0x80242014",
-  "message": "WU_E_UH_POSTREBOOTSTILLPENDING",
-  "desc": "The post-restart operation for the update is still in progress.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_UH_POSTREBOOTSTILLPENDING",
+  "src": "wucommon",
   "anchor": "0x80242014"
  },
  {
   "code": "0x80246017",
-  "message": "WU_E_DM_UNAUTHORIZED_LOCAL_USER",
-  "desc": "The download failed because the local user was denied authorization to download the content.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_DM_UNAUTHORIZED_LOCAL_USER",
+  "src": "wucommon",
   "anchor": "0x80246017"
  },
  {
   "code": "0x8024000B",
-  "message": "WU_E_CALL_CANCELLED",
-  "desc": "Operation was canceled.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_CALL_CANCELLED",
+  "src": "wucommon",
   "anchor": "0x8024000b"
  },
  {
   "code": "0x8024000E",
-  "message": "WU_E_XML_INVALID",
-  "desc": "Windows Update Agent found information in the update's XML data that isn't valid.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_XML_INVALID",
+  "src": "wucommon",
   "anchor": "0x8024000e"
  },
  {
   "code": "0x8024D009",
-  "message": "WU_E_SETUP_SKIP_UPDATE",
-  "desc": "An update to the Windows Update Agent was skipped due to a directive in the Wuident.cab file.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_SETUP_SKIP_UPDATE",
+  "src": "wucommon",
   "anchor": "0x8024d009"
  },
  {
   "code": "0x80244007",
-  "message": "WU_E_PT_SOAPCLIENT_SOAPFAULT",
-  "desc": "SOAP client failed because there was a SOAP fault for reasons of WU_E_PT_SOAP_* error codes.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_PT_SOAPCLIENT_SOAPFAULT",
+  "src": "wucommon",
   "anchor": "0x80244007"
  },
  {
   "code": "0x80070422",
-  "message": "ERROR_SERVICE_DISABLED",
-  "desc": "This issue occurs when the Windows Update service stops working or isn't running.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_SERVICE_DISABLED",
+  "src": "wucommon",
   "anchor": "0x80070422"
  },
  {
   "code": "0x800F0821",
-  "message": "CBS_E_ABORT; client abort, IDABORT returned by ICbsUIHandler method except Error()",
-  "desc": "CBS transaction timeout exceeded.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_ABORT",
+  "src": "wucommon",
   "anchor": "0x800f0821"
  },
  {
   "code": "0x800F0825",
-  "message": "CBS_E_CANNOT_UNINSTALL; Package can't be uninstalled.",
-  "desc": "Typically this error occurs because of component store corruption that was caused by a component in a partially installed state.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_CANNOT_UNINSTALL",
+  "src": "wucommon",
   "anchor": "0x800f0825"
  },
  {
   "code": "0x800F0920",
-  "message": "CBS_E_HANG_DETECTED; A failure to respond was detected while processing the operation.",
-  "desc": "Subsequent error logged after getting 0x800f0821",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_HANG_DETECTED",
+  "src": "wucommon",
   "anchor": "0x800f0920"
  },
  {
   "code": "0x800F081F",
-  "message": "CBS_E_SOURCE_MISSING; source for package or file not found, ResolveSource() unsuccessful",
-  "desc": "Component Store corruption",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_SOURCE_MISSING",
+  "src": "wucommon",
   "anchor": "0x800f081f"
  },
  {
   "code": "0x800F0831",
-  "message": "CBS_E_STORE_CORRUPTION; CBS store is corrupted.",
-  "desc": "Corruption in the Windows Component Store.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_STORE_CORRUPTION",
+  "src": "wucommon",
   "anchor": "0x800f0831"
  },
  {
   "code": "0x80070005",
-  "message": "E_ACCESSDENIED; General access denied error",
-  "desc": "File system or registry key permissions have been changed and the servicing stack doesn't have the required level of access.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "E_ACCESSDENIED",
+  "src": "wucommon",
   "anchor": "0x80070005"
  },
  {
   "code": "0x80070570",
-  "message": "ERROR_FILE_CORRUPT; The file or directory is corrupted and unreadable.",
-  "desc": "Component Store corruption",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_FILE_CORRUPT",
+  "src": "wucommon",
   "anchor": "0x80070570"
  },
  {
   "code": "0x80070003",
-  "message": "ERROR_PATH_NOT_FOUND; The system can't find the path specified.",
-  "desc": "The servicing stack can't access a specific path.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_PATH_NOT_FOUND",
+  "src": "wucommon",
   "anchor": "0x80070003"
  },
  {
   "code": "0x80070020",
-  "message": "ERROR_SHARING_VIOLATION",
-  "desc": "Numerous causes. CBS log analysis required.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_SHARING_VIOLATION",
+  "src": "wucommon",
   "anchor": "0x80070020"
  },
  {
   "code": "0x80073701",
-  "message": "ERROR_SXS_ASSEMBLY_MISSING; The referenced assembly couldn't be found.",
-  "desc": "Typically, a component store corruption caused when a component is in a partially installed state.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_SXS_ASSEMBLY_MISSING",
+  "src": "wucommon",
   "anchor": "0x80073701"
  },
  {
   "code": "0x8007371B",
-  "message": "ERROR_SXS_TRANSACTION_CLOSURE_INCOMPLETE; One or more required members of the transaction aren't present.",
-  "desc": "Component Store corruption.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_SXS_TRANSACTION_CLOSURE_INCOMPLETE",
+  "src": "wucommon",
   "anchor": "0x8007371b"
  },
  {
   "code": "0x80072EFE",
-  "message": "WININET_E_CONNECTION_ABORTED; The connection with the server was closed abnormally",
-  "desc": "BITS is unable to transfer the file successfully.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WININET_E_CONNECTION_ABORTED",
+  "src": "wucommon",
   "anchor": "0x80072efe"
  },
  {
   "code": "0x80072F8F",
-  "message": "WININET_E_DECODING_FAILED; Content decoding has failed",
-  "desc": "TLS 1.2 isn't configured correctly on the client.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WININET_E_DECODING_FAILED",
+  "src": "wucommon",
   "anchor": "0x80072f8f"
  },
  {
   "code": "0x80072EE2",
-  "message": "WININET_E_TIMEOUT; The operation timed out",
-  "desc": "Unable to scan for updates due to a connectivity issue to Windows Update, Configuration Manager, or WSUS.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WININET_E_TIMEOUT",
+  "src": "wucommon",
   "anchor": "0x80072ee2"
  },
  {
   "code": "0x80240022",
-  "message": "WU_E_ALL_UPDATES_FAILED; Operation failed for all the updates.",
-  "desc": "Multiple root causes for this error.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_ALL_UPDATES_FAILED",
+  "src": "wucommon",
   "anchor": "0x80240022"
  },
  {
   "code": "0x8024401B",
-  "message": "WU_E_PT_HTTP_STATUS_PROXY_AUTH_REQ; Same as HTTP status 407 - proxy authentication is required.",
-  "desc": "Unable to authenticate through a proxy server.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_PT_HTTP_STATUS_PROXY_AUTH_REQ",
+  "src": "wucommon",
   "anchor": "0x8024401b"
  },
  {
   "code": "0x80244022",
-  "message": "WU_E_PT_HTTP_STATUS_SERVICE_UNAVAILABLE; Same as HTTP status 503 - the service is temporarily overloaded.",
-  "desc": "Unable to connect to the configured update source.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "WU_E_PT_HTTP_STATUS_SERVICE_UNAVAILABLE",
+  "src": "wucommon",
   "anchor": "0x80244022"
  },
  {
   "code": "0x80070490",
-  "message": "ERROR_NOT_FOUND",
-  "desc": "This error occurs during driver installation as part of the update.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_NOT_FOUND",
+  "src": "wucommon",
   "anchor": "0x80070490"
  },
  {
   "code": "0x800F0922",
-  "message": "CBS_E_INSTALLERS_FAILED",
-  "desc": "The July cumulative update failed to be installed on Windows Server 2016",
-  "component": "Common errors (troubleshooting article)",
+  "name": "CBS_E_INSTALLERS_FAILED",
+  "src": "wucommon",
   "anchor": "0x800f0922"
  },
  {
   "code": "0x80070BC9",
-  "message": "ERROR_FAIL_REBOOT_REQUIRED",
-  "desc": "The TrustedInstaller service startup type is set to Manual by a Group Policy Object (GPO). Group Policy prevented the startup to complete pending operations.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "ERROR_FAIL_REBOOT_REQUIRED",
+  "src": "wucommon",
   "anchor": "0x80070bc9-1"
  },
  {
   "code": "0x800706BE",
-  "message": "Failed to install cumulative updates",
-  "desc": "Windows Server 2016 Std failed to install cumulative packages by using the .msu package. No error is returned. When installing the packages with dism.exe, it returned the error 0x800706be.",
-  "component": "Common errors (troubleshooting article)",
+  "name": "",
+  "src": "wucommon",
   "anchor": "0x800706be"
+ },
+ {
+  "code": "0xC1900101",
+  "name": "",
+  "src": "upgrade",
+  "anchor": ""
+ },
+ {
+  "code": "0xC1900200",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-result-codes"
+ },
+ {
+  "code": "0xC1900201",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-result-codes"
+ },
+ {
+  "code": "0xC1900107",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-result-codes"
+ },
+ {
+  "code": "0xC1900209",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-result-codes"
+ },
+ {
+  "code": "0xC190020E",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-error-codes"
+ },
+ {
+  "code": "0x80070070",
+  "name": "",
+  "src": "upgrade",
+  "anchor": "other-error-codes"
  }
 ]

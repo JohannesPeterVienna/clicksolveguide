@@ -3,21 +3,24 @@
 
 Usage: python3 -I src/data/extract.py <dir with the downloaded files> src/data
 The file names and their addresses are listed in SOURCES below (also written to sources.json).
-Nothing is added or reworded here: names, numbers, dates and descriptions are copied from the sources.
+Only identifiers and facts are taken over: code names, numbers, version names, dates, registry entries and key
+combinations. Explanatory prose of the sources (code comments, Microsoft's and Apple's descriptions) is NOT copied;
+the explanations on the pages are written by ClickSolve Guide (src/reference.mjs).
 """
 import csv, html, json, re, sys, os
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 RETRIEVED = '2026-11-18'
 SOURCES = {
-    'chrome': {'file': 'net_error_list.h', 'name': 'Chromium source code – net/base/net_error_list.h', 'url': 'https://chromium.googlesource.com/chromium/src/+/main/net/base/net_error_list.h', 'fetched': 'https://raw.githubusercontent.com/chromium/chromium/main/net/base/net_error_list.h', 'license': 'Copyright 2012 The Chromium Authors, BSD-style license'},
-    'probe': {'file': 'net_error_info.h', 'name': 'Chromium source code – components/error_page/common/net_error_info.h', 'url': 'https://chromium.googlesource.com/chromium/src/+/main/components/error_page/common/net_error_info.h', 'license': 'Copyright The Chromium Authors, BSD-style license'},
+    'chrome': {'file': 'net_error_list.h', 'name': 'Chromium source code – net/base/net_error_list.h', 'url': 'https://chromium.googlesource.com/chromium/src/+/main/net/base/net_error_list.h', 'fetched': 'https://raw.githubusercontent.com/chromium/chromium/main/net/base/net_error_list.h', 'license': 'Copyright The Chromium Authors; BSD-style license', 'licenseUrl': 'https://chromium.googlesource.com/chromium/src/+/main/LICENSE'},
+    'probe': {'file': 'net_error_info.h', 'name': 'Chromium source code – components/error_page/common/net_error_info.h', 'url': 'https://chromium.googlesource.com/chromium/src/+/main/components/error_page/common/net_error_info.h', 'license': 'Copyright The Chromium Authors; BSD-style license', 'licenseUrl': 'https://chromium.googlesource.com/chromium/src/+/main/LICENSE'},
     'http': {'file': 'http-status.csv', 'name': 'IANA – Hypertext Transfer Protocol (HTTP) Status Code Registry', 'url': 'https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml'},
     'ipv4': {'file': 'ipv4-special.csv', 'name': 'IANA – IPv4 Special-Purpose Address Registry', 'url': 'https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml'},
     'ipv6': {'file': 'ipv6-special.csv', 'name': 'IANA – IPv6 Special-Purpose Address Registry', 'url': 'https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml'},
     'ports': {'file': 'ports.csv', 'name': 'IANA – Service Name and Transport Protocol Port Number Registry', 'url': 'https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml'},
-    'wu': {'file': 'wu-errors.html', 'name': 'Microsoft Learn – Windows Update error codes by component', 'url': 'https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-error-reference', 'license': 'Microsoft Learn documentation, CC BY 4.0'},
-    'wucommon': {'file': 'wu-common.html', 'name': 'Microsoft Learn – Common Windows Update errors', 'url': 'https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/common-windows-update-errors', 'license': 'Microsoft Learn documentation, CC BY 4.0'},
+    'wu': {'file': 'wu-errors.html', 'name': 'Microsoft Learn – Windows Update error codes by component', 'url': 'https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-error-reference'},
+    'wucommon': {'file': 'wu-common.html', 'name': 'Microsoft Learn – Common Windows Update errors', 'url': 'https://learn.microsoft.com/en-us/troubleshoot/windows-client/installing-updates-features-roles/common-windows-update-errors'},
+    'upgrade': {'file': 'upg-res.html', 'name': 'Microsoft Learn – Windows 10 upgrade resolution procedures', 'url': 'https://learn.microsoft.com/en-us/windows/deployment/upgrade/resolution-procedures'},
     'win11': {'file': 'win11-rel.html', 'name': 'Microsoft Learn – Windows 11 release information', 'url': 'https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information'},
     'win10': {'file': 'win10-rel.html', 'name': 'Microsoft Learn – Windows 10 release information', 'url': 'https://learn.microsoft.com/en-us/windows/release-health/release-information'},
     'macos': {'file': 'apple-macos.html', 'name': 'Apple Support – Find out which macOS your Mac is using', 'url': 'https://support.apple.com/en-us/109033'},
@@ -47,43 +50,25 @@ def write(name, data):
 
 # ---- Chromium net errors ----
 RANGES = [(0, 99, 'System'), (100, 199, 'Connection'), (200, 299, 'Certificate'), (300, 399, 'HTTP'), (400, 499, 'Cache'), (500, 599, 'Unnamed range'), (600, 699, 'FTP (obsolete)'), (700, 799, 'Certificate manager'), (800, 899, 'DNS resolver'), (900, 999, 'Blob')]
-errs, comment = [], []
+errs = []
 for line in read('chrome').splitlines():
-    t = line.strip()
-    m = re.match(r'NET_ERROR\((\w+),\s*(-\d+)\)', t)
+    m = re.match(r'NET_ERROR\((\w+),\s*(-\d+)\)', line.strip())
     if m:
         n = -int(m.group(2))
-        rng = next((r[2] for r in RANGES if r[0] <= n <= r[1]), '')
-        # the comment block directly above the code; its first paragraph is the description
-        paras = [re.sub(r'\s+', ' ', p).strip() for p in '\n'.join(comment).split('\n\n')]
-        paras = [p for p in paras if p]
-        errs.append({'name': 'ERR_' + m.group(1), 'code': int(m.group(2)), 'range': rng, 'desc': paras[0] if paras else '', 'more': len(paras) > 1})
-        comment = []
-    elif t.startswith('//'):
-        comment.append(t[2:].strip())
-    else:
-        comment = []
+        errs.append({'name': 'ERR_' + m.group(1), 'code': int(m.group(2)), 'range': next((r[2] for r in RANGES if r[0] <= n <= r[1]), '')})
 write('chrome-net-errors.json', errs)
 
 # ---- Chrome DNS probe statuses (shown as the code on Chrome's DNS error page) ----
-probe, comment, on = [], [], False
+probe, on = [], False
 for line in read('probe').splitlines():
     t = line.strip()
     if t.startswith('enum DnsProbeStatus'):
-        on = True; comment = []; continue
-    if not on:
-        continue
-    if t.startswith('}'):
+        on = True; continue
+    if on and t.startswith('}'):
         break
     m = re.match(r'(DNS_PROBE_\w+),?$', t)
-    if m:
-        if m.group(1) != 'DNS_PROBE_MAX':
-            probe.append({'name': m.group(1), 'desc': re.sub(r'\s+', ' ', ' '.join(comment)).strip()})
-        comment = []
-    elif t.startswith('//'):
-        comment.append(t[2:].strip())
-    elif not t:
-        comment = []
+    if on and m and m.group(1) != 'DNS_PROBE_MAX':
+        probe.append({'name': m.group(1)})
 write('chrome-dns-probe.json', probe)
 
 # ---- HTTP status codes ----
@@ -154,23 +139,22 @@ write('macos-versions.json', mac)
 WIN = ['Ctrl+Shift+Esc', 'Windows key+I', 'Windows key+X', 'Windows key+R', 'Windows key+Pause', 'Windows key+A', 'Windows key+Ctrl+Shift+B', 'Windows key+L', 'Windows key+Shift+S', 'Windows key+PrtScn', 'Windows key+K', 'Windows key+P', 'Windows key+E', 'Alt+F4', 'F5']
 s = read('winkeys')
 second = s.find('Copy, paste, and other general keyboard shortcuts')  # start of the Windows 10 tab
-wrows = {}
+wrows = set()
 for head, rows, pos in tables(s):
     if second > 0 and pos > second:
         continue
     for r in rows:
-        if len(r) >= 2 and r[0] in WIN and r[0] not in wrows:
-            wrows[r[0]] = re.split(r'\s*Note:', r[1])[0].strip()
-keys = [{'os': 'Windows 11', 'keys': k, 'desc': wrows[k]} for k in WIN if k in wrows]
+        if len(r) >= 2 and r[0] in WIN:
+            wrows.add(r[0])
+keys = [{'os': 'Windows 11', 'keys': k} for k in WIN if k in wrows]
 MAC = ['Option-Command-Esc', 'Command–Space bar', 'Command-Q', 'Command-Comma (,)', 'Shift-Command-5', 'Control-Command-Q', 'Shift-Command-Q', 'Control–Command–Power button', 'Control–Power button', 'Shift-Command-U', 'Command-Tab', 'Command-P']
-mrows = {}
+mrows = set()
 for li in re.findall(r'<li[^>]*>(.*?)</li>', read('mackeys'), re.S):
     t = strip(li)
     for k in MAC:
-        if t.startswith(k + ':') and k not in mrows:
-            first = re.match(r'(.*?\.)(\s|$)', t[len(k) + 1:].strip())
-            mrows[k] = first.group(1) if first else t[len(k) + 1:].strip()
-keys += [{'os': 'macOS', 'keys': k, 'desc': mrows[k]} for k in MAC if k in mrows]
+        if t.startswith(k + ':'):
+            mrows.add(k)
+keys += [{'os': 'macOS', 'keys': k} for k in MAC if k in mrows]
 missing = [k for k in WIN if k not in wrows] + [k for k in MAC if k not in mrows]
 if missing:
     print('NOT FOUND in the sources (left out):', missing)
@@ -182,7 +166,7 @@ def pick(s, *pats):
         m = re.search(p, s)
         if m: return m.group(1)
     return ''
-for k in ('wu', 'wucommon', 'win11', 'win10', 'winkeys'):
+for k in ('wu', 'wucommon', 'upgrade', 'win11', 'win10', 'winkeys'):
     meta[k]['updated'] = pick(read(k), r'<meta name="updated_at" content="([^"T ]+)', r'<meta name="lastPublishedDate" content="([^" ]+)')
 for k in ('macos', 'mackeys'):
     meta[k]['updated'] = pick(strip(read(k)), r'Published Date[^A-Za-z]*([A-Za-z]+ \d+, \d{4})')
@@ -191,20 +175,33 @@ for k in ('http', 'ipv4', 'ipv6', 'ports'):
 meta['_retrieved'] = RETRIEVED
 write('sources.json', meta)
 
-# ---- Windows Update errors ----
+# ---- Windows Update errors: code, official name, where Microsoft documents it (no description text) ----
 wu = []
 for head, rows, _ in tables(read('wu')):
     if not rows or rows[0][:1] != ['Error code']:
         continue
     for r in rows[1:]:
         if len(r) >= 3 and re.match(r'0x[0-9A-Fa-f]{8}$', r[0]):
-            wu.append({'code': '0x' + r[0][2:].upper(), 'message': r[1], 'desc': r[2], 'component': head})
+            wu.append({'code': '0x' + r[0][2:].upper(), 'name': r[1], 'src': 'wu'})
 cs = read('wucommon')
 for m in re.finditer(r'<h2 id="([^"]+)"[^>]*>((?:(?!</h2>).)*)</h2>\s*(<table.*?</table>)', cs, re.S):
     codes = re.findall(r'0[xX][0-9A-Fa-f]{8}', strip(m.group(2)))
     rows = [[strip(c) for c in re.findall(r'<t[hd][^>]*>(.*?)</t[hd]>', r, re.S)] for r in re.findall(r'<tr.*?</tr>', m.group(3), re.S)]
     if not codes or len(rows) < 2 or rows[0][:2] != ['Message', 'Description']:
         continue
+    name = re.split(r'[;,]| - ', rows[1][0])[0].strip()
+    if not re.match(r'^[A-Z][A-Z0-9_]+$', name):
+        name = ''  # the source gives a sentence instead of an identifier
     for c in codes:
-        wu.append({'code': '0x' + c[2:].upper(), 'message': rows[1][0], 'desc': rows[1][1], 'component': 'Common errors (troubleshooting article)', 'anchor': m.group(1)})
+        wu.append({'code': '0x' + c[2:].upper(), 'name': name, 'src': 'wucommon', 'anchor': m.group(1)})
+us = read('upgrade')
+heads = [(m.start(), m.group(1)) for m in re.finditer(r'<h[23][^>]*id="([^"]+)"', us)]
+seen = set()
+for m in re.finditer(r'0x(?:C19[0-9A-Fa-f]{5}|80070070)', us):
+    c = '0x' + m.group(0)[2:].upper()
+    if c in seen:
+        continue
+    seen.add(c)
+    anchor = [h[1] for h in heads if h[0] < m.start()]
+    wu.append({'code': c, 'name': '', 'src': 'upgrade', 'anchor': anchor[-1] if anchor and not anchor[-1].startswith('ms--') else ''})
 write('wu-errors.json', wu)

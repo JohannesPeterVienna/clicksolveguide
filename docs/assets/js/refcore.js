@@ -2,8 +2,9 @@
  * ClickSolve Guide – reference lookup core (pure functions, no DOM).
  * Used by lookup.js in the browser and by tests/reference.test.js in Node.
  *
- * The data object (assets/data/lookup.json) is built from the primary sources named on the
- * reference pages: Chromium's net_error_list.h, the IANA registries, Microsoft Learn and Apple Support.
+ * The data object (assets/data/lookup.json) holds identifiers and facts from the primary sources named
+ * on the reference pages (code names, numbers, registry entries, versions, dates) and this site's own
+ * explanations. It contains no description text of Chromium, Microsoft or Apple.
  * Everything here only reads that data; an input never becomes markup or a formula.
  */
 (function (root) {
@@ -144,23 +145,24 @@
     classify(q).forEach(function (c) {
       var r = { kind: c.kind, found: false, title: '', lines: [], meaning: '', next: null, page: null, source: '', share: true };
       if (c.kind === 'chrome') {
-        r.page = { href: '/reference/chrome-error-codes/', label: 'All Chrome network error codes' };
+        r.page = { href: '/reference/chrome-error-codes/', label: 'Chrome error codes explained' };
         r.source = data.sources.chrome;
-        var e = null;
+        var e = null, probe = null;
         data.chrome.forEach(function (x) { if (x.name === c.key || x.code === c.key) e = x; });
-        var probe = null;
         (data.probe || []).forEach(function (x) { if (x.name === c.key) probe = x; });
         if (e) {
           r.found = true;
           r.title = e.name + ' (' + e.code + ')';
-          r.lines.push({ k: 'Chromium’s description', v: e.desc || 'no comment in the source file' });
-          r.lines.push({ k: 'Range', v: e.range + ' errors' });
-          var adv = data.advice.chrome[e.name] || data.advice.chromeRange[e.range];
+          r.lines.push({ k: 'Range in Chromium’s list', v: e.range + ' errors' });
+          var own = data.advice.chrome[e.name], adv = own || data.advice.chromeRange[e.range];
           if (adv) { r.meaning = adv.meaning; r.next = adv.next || null; }
+          if (!own) {
+            r.meaning += ' This site has no explanation of its own for this particular code; Chromium’s source file has a short comment on it for programmers.';
+            r.ext = { href: data.sources.chromeUrl, label: 'Chromium source: net_error_list.h' };
+          }
         } else if (probe) {
           r.found = true;
           r.title = probe.name;
-          r.lines.push({ k: 'Chromium’s description', v: probe.desc });
           r.lines.push({ k: 'Kind', v: 'Result of Chrome’s own DNS test (DNS probe status)' });
           var pa = data.advice.probe[probe.name];
           if (pa) { r.meaning = pa.meaning; r.next = pa.next || null; }
@@ -169,22 +171,25 @@
           r.meaning = 'This code is not in Chromium’s list of network errors as retrieved on ' + data.retrieved + '. Check the spelling – the code is printed in small grey letters on Chrome’s error page.';
         }
       } else if (c.kind === 'wu') {
-        r.page = { href: '/reference/windows-update-error-codes/', label: 'All Windows Update error codes' };
+        r.page = { href: '/reference/windows-update-error-codes/', label: 'Windows Update error codes explained' };
         r.source = data.sources.wu;
-        var hits = data.wu.filter(function (x) { return x.code === c.key; });
+        var guide = { href: '/guides/windows-update-stuck/', label: 'Windows Update stuck: what is safe, in which order' };
+        var hit = null;
+        data.wu.forEach(function (x) { if (x.code === c.key) hit = x; });
         r.title = c.key;
-        if (hits.length) {
+        r.next = guide;
+        if (hit) {
           r.found = true;
-          hits.forEach(function (h) {
-            r.lines.push({ k: h.message, v: h.desc + ' (' + h.component + ')' });
-          });
-          var common = hits.filter(function (h) { return h.anchor; })[0];
-          r.meaning = common ? data.advice.wu.common : data.advice.wu.listed;
-          r.next = { href: '/guides/windows-update-stuck/', label: 'Windows Update stuck: what is safe, in which order' };
-          if (common) r.ext = { href: data.advice.wu.commonUrl + '#' + common.anchor, label: 'Microsoft’s mitigation for ' + c.key };
+          r.lines.push({ k: 'Official name', v: hit.name || 'Microsoft gives no name for this code' });
+          if (hit.meaning) {
+            r.meaning = hit.meaning;
+            r.lines.push({ k: 'Next safe step', v: hit.next });
+          } else {
+            r.meaning = data.advice.wu.listed;
+          }
+          r.ext = { href: hit.url, label: 'Microsoft’s page for ' + c.key };
         } else {
           r.meaning = data.advice.wu.missing;
-          r.next = { href: '/guides/windows-update-stuck/', label: 'Windows Update stuck: what is safe, in which order' };
         }
       } else if (c.kind === 'http') {
         r.page = { href: '/reference/http-status-codes/', label: 'All HTTP status codes' };
@@ -271,15 +276,23 @@
       }
       results.push(r);
     });
+    // an ambiguous number: only the readings that exist, e.g. "404" -> the status, "443" -> the port
+    if (results.length > 1) {
+      var found = results.filter(function (x) { return x.found; });
+      results = found.length ? found : results.slice(0, 1);
+    }
     return results;
   }
 
   /* ---------- export helpers ---------- */
 
-  /** One CSV cell: quoted, quotes doubled; a leading = + - @ (also after tab/CR) is defused with an apostrophe. */
+  /**
+   * One CSV cell: quoted, quotes doubled; a leading = + - @ (also after tab/CR) is defused with an
+   * apostrophe – except a plain number such as -105, which a spreadsheet reads as a number, not a formula.
+   */
   function csvCell(v) {
     var s = String(v == null ? '' : v);
-    if (/^[=+\-@\t\r]/.test(s)) s = '\'' + s;
+    if (/^[=+\-@\t\r]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s)) s = '\'' + s;
     return '"' + s.replace(/"/g, '""') + '"';
   }
   function toCsv(rows) {
