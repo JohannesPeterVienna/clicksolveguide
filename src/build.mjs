@@ -6,6 +6,8 @@ import { esc, VERSIONS } from './lib.mjs';
 import { sitePages, ORDER, OLD_URLS } from './site.mjs';
 import { referencePages, lookupData, lookupBox, REF_ISO } from './reference.mjs';
 
+const shopLink = fs.readFileSync(new URL('./shop-link.html', import.meta.url), 'utf8');
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'docs');
 const ORIGIN = 'https://clicksolveguide.com';
@@ -134,7 +136,7 @@ ${pg.body}
 <div><h2>ClickSolve Guide</h2><p>Guided checks that find <i>where</i> a computer, phone, Wi-Fi or printer problem sits – device, Wi-Fi, router, provider or service – before anything gets changed.</p><p>No phone numbers. No download tools. No remote access. Published by AdStern, Vienna.</p></div>
 <div><h2>Diagnoses</h2><ul>${content.filter((c) => c.kind === 'tool').map((c) => `<li><a href="${c.path}">${esc(c.short)}</a></li>`).join('')}</ul></div>
 <div><h2>Site</h2><ul><li><a href="/reference/">Error code lookup and reference tables</a></li><li><a href="/about/">About</a></li><li><a href="/how-we-check/">How we check our guides</a></li><li><a href="/contact/">Contact</a></li><li><a href="/imprint/">Imprint</a></li><li><a href="/privacy/">Privacy policy</a></li><li><button type="button" class="linklike" data-privacy-settings>Privacy settings</button></li></ul></div>
-</div></footer>
+${shopLink}</div></footer>
 </body>
 </html>
 `;
