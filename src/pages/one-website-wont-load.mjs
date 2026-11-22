@@ -6,12 +6,12 @@ const svg = `
 <text class="d-t" x="125" y="68" text-anchor="middle">Other sites, same device</text>
 <text class="d-tg" x="125" y="104" text-anchor="middle">load → network OK</text>
 <text class="d-tr" x="125" y="130" text-anchor="middle">fail → connection</text>
-<text class="d-s" x="125" y="170" text-anchor="middle">clears Wi-Fi, router, ISP</text>
+<text class="d-s" x="125" y="170" text-anchor="middle">connection reaches other sites</text>
 <rect class="d-box" x="255" y="40" width="210" height="150" rx="8"/>
 <text class="d-t" x="360" y="68" text-anchor="middle">Same site, mobile data</text>
 <text class="d-tg" x="360" y="104" text-anchor="middle">opens → site is up</text>
-<text class="d-tr" x="360" y="130" text-anchor="middle">fails → the site</text>
-<text class="d-s" x="360" y="170" text-anchor="middle">clears or blames the website</text>
+<text class="d-tr" x="360" y="130" text-anchor="middle">fails → check status</text>
+<text class="d-s" x="360" y="170" text-anchor="middle">compare the same phone</text>
 <rect class="d-box" x="490" y="40" width="210" height="150" rx="8"/>
 <text class="d-t" x="595" y="68" text-anchor="middle">Private window</text>
 <text class="d-tg" x="595" y="104" text-anchor="middle">works → browser data</text>
@@ -36,8 +36,8 @@ export default {
   versions: ['win11', 'win10', 'macnew', 'macold', 'ios', 'android'],
   sections: [
     { id: 'logic', h2: 'Why one failing site is a different problem', html: `
-<p>If other websites load, four of the five layers on the map are already proven: your device can reach the internet, the Wi-Fi works, the router passes traffic and the provider delivers it. What remains is everything specific to this one address – the website’s servers, its domain name, your browser’s stored data for it, and any filter that treats this site differently from others.</p>
-<p>Each of those can be separated with a comparison that changes nothing. Open the site on a phone using mobile data: a different network with different DNS servers. Open it in a private window: the same browser without its stored cookies and usually without extensions. Open it on another device on the same Wi-Fi: same network, different device. Three answers usually leave one suspect.</p>
+<p>If two unrelated sites open, your device can reach those addresses. A filter, DNS fault or session problem can still affect just one destination. Copy the failing URL, note the exact error and time, and keep your sign-in state the same for the comparison.</p>
+<p>First open that URL on a phone connected to the same Wi-Fi. Then switch only that phone to mobile data and retry in the same browser. If the phone opens the page on both connections while the computer fails, compare browser profiles on the computer. If only the phone’s network switch changes the outcome, investigate that network. If the phone cannot use mobile data, the guided check offers a route that keeps the evidence you do have.</p>
 ${figure('one-fig', 'Three comparisons for a single failing website and what each result rules out; certificate warnings stop the diagnosis', svg, 'The comparisons that isolate a single failing site. A certificate warning is not compared – it ends the diagnosis.', '0 0 720 260')}` },
     { id: 'symptoms', h2: 'What you see, and what it usually means', html: `
 ${table('Symptoms of a single failing site', ['What you see', 'Usually means', 'Where the diagnosis goes'], [
@@ -62,7 +62,7 @@ ${note('stop', 'Never click past a certificate warning to sign in or pay.', '<p>
 <p>A deliberate block is not a fault. If you don’t run the network, ask the person who does. If you do, the router’s app or admin page usually lists blocked sites or content categories. The <a href="/guides/dns-server-not-responding/">DNS guide</a> explains how to test a different DNS server on one device, with an undo.</p>
 <p>If only one device fails while others on the same Wi-Fi open the site, the cause sits on that device but outside the browser: an outdated DNS cache entry, a VPN, a proxy setting or security software that classifies the site as risky. If security software names a threat, take that seriously and don’t visit the site.</p>` },
     { id: 'down', h2: 'When the site itself is down', html: `
-<p>When the site fails on mobile data too, you have done all you can. Large services run official status pages, and many post outages on their verified social media accounts. Type those addresses yourself. Avoid “is it down” pages that push downloads or phone numbers – a website outage never requires you to install anything or call anyone.</p>
+<p>If the same URL fails on mobile data too, record whether the error message matches. Check for a service incident covering that page or region. Large services run official status pages, and many post outages on their verified social media accounts. Type those addresses yourself. Avoid “is it down” pages that push downloads or phone numbers – a website outage never requires you to install anything or call anyone.</p>
 <p>A site can also be unreachable only from your country, or block certain connections such as VPN addresses. In that case the error may look like an outage but persist for days. Contact the operator through an address you already know, for example from an old invoice or order confirmation.</p>` }
   ],
   faq: [

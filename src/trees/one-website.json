@@ -38,7 +38,7 @@
     "o_mobile": {
       "title": "Open the site on a phone using mobile data",
       "risk": "harmless", "time": "about 1 min",
-      "text": "Switch Wi-Fi off on your phone and open the same address over mobile data. This uses a completely different network and DNS server. If the site opens there, the site itself is up."
+      "text": "Open the same URL in the same phone browser on Wi-Fi, then on mobile data. Note the result and error on each. Keep the account and any VPN settings the same. If the phone already works on Wi-Fi, return to the original device and compare browsers."
     },
     "o_private": {
       "title": "Use a private window, then a second browser",
@@ -127,7 +127,8 @@
       "steps": ["o_mobile"],
       "answers": [
         { "label": "Yes, it opens on mobile data", "clear": ["service"], "suspect": ["device", "router", "isp"], "next": "q_private" },
-        { "label": "No, it fails there too", "clear": ["device", "router", "isp"], "next": "q_status" }
+        { "label": "No, it fails there too", "suspect": ["service"], "next": "q_status" },
+        { "label": "No mobile data available, or the comparison is unclear", "next": "q_private" }
       ]
     },
     "q_status": {
@@ -153,8 +154,23 @@
       "q": "Does it open on another device connected to the same Wi-Fi?",
       "answers": [
         { "label": "Yes, the other device opens it", "clear": ["router", "isp"], "next": "r_device" },
-        { "label": "No, it fails on every device on this Wi-Fi", "clear": ["device"], "next": "r_network" }
+        { "label": "No, it fails on every device on this Wi-Fi", "next": "q_network_evidence" },
+        { "label": "I cannot test another device", "next": "r_record" }
       ]
+    },
+    "q_network_evidence": {
+      "type": "question", "layer": "router",
+      "q": "Did the same phone and URL work when you switched to mobile data?",
+      "answers": [
+        { "label": "Yes, only changing the connection made it work", "next": "r_network" },
+        { "label": "No, or I could not compare", "next": "r_record" }
+      ]
+    },
+    "r_record": {
+      "type": "result", "likely": ["device", "service"],
+      "title": "Keep the cause open",
+      "text": "Write down the time, the failing page and error, which other sites opened, and whether a private window changed the result. Ask the operator through its usual contact channel whether this particular page is available. Remove private tokens or account details before sharing a URL.",
+      "why": "Without a successful comparison the observations do not isolate a device, network or service fault."
     },
     "stop_cert": {
       "type": "stop",
@@ -192,9 +208,9 @@
     },
     "r_down_quiet": {
       "type": "result", "likely": "service",
-      "title": "Likely here: the website or its access rules",
+      "title": "Two failed attempts, no confirmed outage",
       "text": "The site fails on your network and on mobile data. It may be down without notice, its domain may have expired, or it may not serve your country or block your type of connection. Try again later or reach the operator through a contact address you already know.",
-      "why": "Two independent networks show the same failure, so your own setup is not the difference."
+      "why": "Two attempts failed. A shared browser, account, VPN or a fault affecting that particular URL can produce the same result. An unreported outage remains possible."
     },
     "r_browser": {
       "type": "result", "likely": "device",

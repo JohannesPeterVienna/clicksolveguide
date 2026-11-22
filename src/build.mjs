@@ -220,7 +220,7 @@ function contentBody(pg) {
   const faq = `<section id="faq" class="prose faq"><h2>Questions people ask</h2>${pg.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
   const src = `<section id="sources" class="prose sources"><h2>Sources</h2><p>${pg.sourcesNote} Menu paths and commands follow the vendors’ own documentation; menus can change with updates – <a href="/contact/">tell us</a> if one differs.</p><ul>${pg.sources.map(([n, u]) => `<li>${u ? `<a href="${u}" rel="noopener">${n}</a>` : n}</li>`).join('')}</ul></section>`;
   const rel = `<section class="prose" aria-labelledby="rel-h"><h2 id="rel-h">Related checks</h2><ul class="related">${pg.related.map((u) => { const r = byPath[u]; if (!r) { if (ONLY) return ''; throw new Error(pg.slug + ': related missing ' + u); } return `<li><a href="${u}"><span>${r.kind === 'tool' ? 'Diagnosis' : 'Guide'}</span>${esc(r.h1)}</a></li>`; }).join('')}</ul></section>`;
-  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}${CHANGED[pg.slug] ? ` ${MOD_REVIEWED} – ${CHANGED[pg.slug]}` : ''} ${NEW_DATE} – ${pg.kind === 'tool' ? TOOL_1811 + '; ' : ''}new section “${rb.h2}” with a link to the reference tables.</p>`;
+  const log = `<p class="changelog prose"><b>Change log:</b> ${pg.changelog || `${REVIEWED} – first published.`}${CHANGED[pg.slug] ? ` ${MOD_REVIEWED} – ${CHANGED[pg.slug]}` : ''} ${NEW_DATE} – ${pg.kind === 'tool' ? TOOL_1811 + '; ' : ''}new section “${rb.h2}” with a link to the reference tables.${pg.slug === 'one-website-wont-load' ? " November 22, 2026 – added a comparison using the same phone and a path for inconclusive observations." : ""}</p>`;
   const article = `<article>${head}
 ${pg.kind === 'tool' ? toolShell(pg) + SCAM_SHORT : ''}
 ${parts.join('\n')}
@@ -274,7 +274,7 @@ writeOut('assets/data/lookup.json', JSON.stringify(lookupData()));
 const indexable = pages.filter((p) => !p.noindex);
 // every page except contact and imprint changed on 2026-11-18
 const UNCHANGED_1811 = ['/contact/', '/imprint/'];
-writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${!UNCHANGED_1811.includes(p.path) ? NEW_ISO : CHANGED_0511.includes(p.path) ? '2026-11-05' : CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
+writeOut('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((p) => `<url><loc>${ORIGIN}${p.path}</loc><lastmod>${p.path === '/diagnose/one-website-wont-load/' ? '2026-11-22' : !UNCHANGED_1811.includes(p.path) ? NEW_ISO : CHANGED_0511.includes(p.path) ? '2026-11-05' : CHANGED_0411.includes(p.path) ? '2026-11-04' : CHANGED[(p.path || '').split('/')[2]] ? MOD_ISO : ISO}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 writeOut('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeOut('ads.txt', 'google.com, pub-7811071715414905, DIRECT, f08c47fec0942fa0\n');
 writeOut('CNAME', 'clicksolveguide.com'); // as committed on main (no trailing newline)
