@@ -90,7 +90,7 @@ for (const p of pages) {
     const main = lds.find((o) => o['@type'] === (isTool ? 'WebApplication' : 'Article'));
     const mod = main && main.dateModified;
     // every diagnosis and guide changed on 2026-11-18 (lookup section, share link, checklist)
-    if (!main || main.datePublished !== '2026-11-02' || mod !== '2026-11-18') fail(url, 'main JSON-LD missing or wrong dates');
+    if (!main || main.datePublished !== '2026-11-02' || mod !== (url.endsWith('/diagnose/one-website-wont-load/') ? '2026-11-22' : '2026-11-18')) fail(url, 'main JSON-LD missing or wrong dates');
     if (!types.includes('BreadcrumbList') || !types.includes('FAQPage')) fail(url, 'BreadcrumbList/FAQPage missing');
     // "Reviewed" is the last check against the sources and stays; the change of 18 Nov is in the change log
     if (!/Reviewed November [23], 2026/.test(html)) fail(url, 'review date missing');

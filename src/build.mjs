@@ -235,7 +235,7 @@ ${log}</article>`;
 function contentLd(pg) {
   const url = ORIGIN + pg.path;
   const main = pg.kind === 'tool'
-    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: NEW_ISO, publisher: ORG }
+    ? { '@context': 'https://schema.org', '@type': 'WebApplication', name: pg.h1, url, description: pg.description, applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any – runs in the web browser', browserRequirements: 'Requires JavaScript', isAccessibleForFree: true, inLanguage: 'en-US', datePublished: ISO, dateModified: pg.slug === 'one-website-wont-load' ? '2026-11-22' : NEW_ISO, publisher: ORG }
     : { '@context': 'https://schema.org', '@type': 'Article', headline: pg.h1, description: pg.description, url, mainEntityOfPage: url, inLanguage: 'en-US', datePublished: ISO, dateModified: NEW_ISO, author: { '@type': 'Organization', name: 'ClickSolve Guide (AdStern)', url: ORIGIN + '/about/' }, publisher: ORG };
   const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: pg.faq.map(([q, a]) => ({ '@type': 'Question', name: q.replace(/<[^>]+>/g, ''), acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) };
   return [main, crumbsLd(pg.crumbs), faq];
