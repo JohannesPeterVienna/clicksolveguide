@@ -248,7 +248,7 @@ ${table('The four risk labels used on every step', ['Label', 'Meaning', 'Example
     jsonld: [crumbsLd([['Home', '/'], ['Imprint', '/imprint/']])],
     body: `${crumbsHtml([['Home', '/'], ['Imprint', '/imprint/']])}${legal('Legal notice', 'Imprint', `<p>Information according to § 5 of the Austrian E-Commerce Act (ECG) and disclosure according to § 25 of the Austrian Media Act (MedienG).</p>
 <h2 id="owner">Media owner and publisher</h2>
-<p>AdStern – Agentur für digitales Marketing<br>Seilerstätte 8/8<br>1010 Wien<br>Österreich</p>
+<p>AdStern – Agentur für digitales Marketing<br>Seilerstätte 8<br>1010 Wien<br>Österreich</p>
 <p>Email: <a href="mailto:office@adstern.com">office@adstern.com</a></p>
 <h2 id="company">Business information</h2>
 <ul><li>Business activity: advertising agency (Werbeagentur)</li>
